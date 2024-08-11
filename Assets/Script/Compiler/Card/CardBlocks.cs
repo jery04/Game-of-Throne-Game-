@@ -200,26 +200,27 @@ public class EffectActivation
                             {
                                 if (Utils.ReturnTypeParams(nameEffect, param) != Parameters[i]?.GetType(scope))
                                 {
-                                    Utils.errors.Add(@$"El tipo de retorno de ""{param}"" no coincide con la definición del efecto ""{nameEffect}"" ");
+
+                                    Utils.errors.Add(@$"El tipo de retorno de ""{param}"" no coincide con la definición del efecto ""{nameEffect}"" Line: {Parameters[i]?.Location()?.Line} Column: {Parameters[i]?.Location()?.Column} ");
                                     return false;
                                 }
                             }
                             else
                             {
-                                Utils.errors.Add($@"El parámetro ""{param}"" no está declarado en ""{nameEffect}"" ");
+                                Utils.errors.Add($@"El parámetro ""{param}"" no está declarado en ""{nameEffect}"" Line: {Parameters[i]?.Location()?.Line} Column: {Parameters[i]?.Location()?.Column} ");
                                 return false;
                             }
                         }
                     }
                     else
                     {
-                        Utils.errors.Add(@$"La cantidad de parámetros no coincide con la definición del efecto ""{nameEffect}"" ");
+                        Utils.errors.Add(@$"La cantidad de parámetros no coincide con la definición del efecto ""{nameEffect}"" Line: {Name.Location()?.Line} Column: {Name.Location()?.Column} ");
                         return false;
                     }
                 }
                 else
                 {
-                    Utils.errors.Add(@$"El efecto ""{nameEffect}"" no ha sido declarado ");
+                    Utils.errors.Add(@$"El efecto ""{nameEffect}"" no ha sido declarado Line: {Name.Location()?.Line} Column: {Name.Location()?.Column} ");
                     return false;
                 }
             }

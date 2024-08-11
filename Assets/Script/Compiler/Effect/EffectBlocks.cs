@@ -263,6 +263,10 @@ public class Variable : Instructions, ISemantic
         }
         return check;
     }
+    public Token? Location()
+    {
+        return Name;
+    }
     private bool CardFieldIdentify()
     {
         if (Name != null)

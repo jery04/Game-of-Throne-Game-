@@ -93,7 +93,7 @@ public class CardCompiler : Card                                                
         this.scope = scope;
         this.isHeroe = IsHeroe(typeCard);
         this.isUnity = IsUnity(typeCard);
-        artWork = Resources.Load<Sprite>("cc");
+        artWork = ArtWork();
         portrait = Portrait(typeCard);
         this.description = Description_Maker(scope);
         
@@ -104,6 +104,23 @@ public class CardCompiler : Card                                                
     {
         effect.Evaluate();
     }                                                     // Activar los efectos correspondientes 
+    public Sprite ArtWork()
+    {
+        bool[] select = new bool[24];
+        string[] path = new string[24] 
+        { "c1", "c2", "c3", "c4", "c5", "c6","c7", "c8", "c9","c10", "c11", "c12", "c13", "c14", "c15","c16", "c17", "c18","c19", "c20", "c21", "c22", "c23", "c24" };
+
+        System.Random random = new System.Random();
+        int rand_num;
+
+        do
+        {
+            rand_num = random.Next(0, 25);
+        } while (select[rand_num]);
+        select[rand_num] = true;
+
+        return Resources.Load<Sprite>(path[rand_num]);
+    }
     private string Description_Maker(IScope scope)
     {
         string description = $"{this.name} it's a card made in a compiler. ";
