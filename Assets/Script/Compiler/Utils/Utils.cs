@@ -166,8 +166,14 @@ public static class Utils
     }
     public static bool CheckAmountParams(string? effect, int? parameters)
     {
-        if (effect is not null && effects[effect].Count != parameters)
-            return false;
+        if (effect is not null)
+        {
+            if (parameters != null && effects[effect].Count != parameters)
+                return false;
+
+            else if (parameters == null && effects[effect].Count != 0)
+                return false;
+        }
 
         return true;
     }

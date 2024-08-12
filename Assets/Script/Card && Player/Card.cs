@@ -108,14 +108,14 @@ public class CardCompiler : Card                                                
     {
         bool[] select = new bool[24];
         string[] path = new string[24] 
-        { "c1", "c2", "c3", "c4", "c5", "c6","c7", "c8", "c9","c10", "c11", "c12", "c13", "c14", "c15","c16", "c17", "c18","c19", "c20", "c21", "c22", "c23", "c24" };
+        { "cc1", "cc2", "cc3", "cc4", "cc5", "cc6","cc7", "cc8", "cc9","cc10", "cc11", "cc12", "cc13", "cc14", "cc15","cc16", "cc17", "cc18","cc19", "cc20", "cc21", "cc22", "cc23", "cc24" };
 
         System.Random random = new System.Random();
         int rand_num;
 
         do
         {
-            rand_num = random.Next(0, 25);
+            rand_num = random.Next(0, 24);
         } while (select[rand_num]);
         select[rand_num] = true;
 

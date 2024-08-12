@@ -90,7 +90,7 @@ public class CardBlock : ISemantic
         return Convert.ToDouble(Power?.Evaluate(scope));
     }
     private Card.card_position Range_Field(IScope scope)
-    {
+    {   
         return (Card.card_position)Convert.ChangeType(Range?.Evaluate(scope), typeof(Card.card_position));
     }
 }

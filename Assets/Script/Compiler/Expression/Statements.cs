@@ -584,14 +584,19 @@ public class Atom3: Atom
         string result = "";
         if (String is not null)
         {
-            foreach (Token? item in String)
+            for(int i = 0; i < String.Count; i++)
             {
-                if (item?.Type == Token.TokenType.ATAT)
-                    result += " ";
-                else if (item?.Type == Token.TokenType.AT)
-                    continue;
+                if (String[i]?.Type == Token.TokenType.ATAT)
+                    result += " " + String[++i]?.Value;
+
+                else if (String[i]?.Type == Token.TokenType.AT)
+                    result += String[++i]?.Value;
+
+                else if (i == 0)
+                    result += String[i]?.Value;
+
                 else
-                    result += item?.Value;
+                    result += " " + String[i]?.Value;
             }
             return result;
         }

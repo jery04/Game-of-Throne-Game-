@@ -302,13 +302,13 @@ public class Array : Variable
                 if (pos == "Melee")
                     position[0] = true;
 
-                else if (pos == "Range")
+                else if (pos == "Ranged")
                     position[1] = true;
 
                 else if (pos == "Distance")
                     position[2] = true;
 
-                else Utils.errors.Add(@$"La posición ""{pos}"" no existe.");
+                else Utils.errors.Add(@$"La posición ""{pos}"" no existe. Line: {Name?.Line} Column: {Name?.Column} ");
             }
         }
 
