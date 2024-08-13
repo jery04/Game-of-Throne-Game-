@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 // Statement's Class
@@ -26,6 +28,50 @@ public class Target: GeneralStatement
 }
 public class Context: GeneralStatement
 {
+    // Property
+    public static List<GameObject> Board()
+    {
+        List<GameObject> board = new List<GameObject>(); 
+        GameObject[] player1_field = GameManager.instance.player1.field;
+        GameObject[] player2_field = GameManager.instance.player2.field; 
+        
+        for(int i = 0; i < 3; i++)
+        {
+            board.Concat(player1_field[i].GetComponent<Panels>().cards);
+            board.Concat(player1_field[i].GetComponent<Panels>().cards);
+        }
+
+        return board;
+    }
+    public static List<GameObject> HandOfPlayer(string playerName)
+    {
+        GameManager game = GameManager.instance;
+        return game.GetPlayer(playerName).hand.GetComponent<Panels>().cards;
+    }
+    public static List<GameObject> FieldOfPlayer(string playerName)
+    {
+        List<GameObject> field = new List<GameObject>();    
+        GameObject[] player_field = GameManager.instance.GetPlayer(playerName).field;
+
+        for (int i = 0; i < 3; i++)
+            field.Concat(player_field[i].GetComponent<Panels>().cards);
+
+        return field;
+    }
+    public static List<Card> GraveyardOfPlayer(bool player)
+    {
+        throw new NotImplementedException();
+    }
+    public static List<GameObject> DeckOfPlayer(string playerName)
+    {
+        throw new NotImplementedException();
+    }
+    public static List<GameObject> Parent()
+    {
+        throw new NotImplementedException();
+    }
+
+    // Methods
     public override object? Evaluate(IScope scope)
     {
         return null;
@@ -184,6 +230,10 @@ public class Molecule: Instructions
     public Atom? NodeRight { get; set; }
 
     // Methods
+    public override void Evaluate(List<GameObject> target)
+    {
+        throw new NotImplementedException();
+    }
     public object? Evaluate(IScope scope)
     {
         if (!(NodeLeft is null) && !(NodeRight is null) && !(ArtOpeartor is null))

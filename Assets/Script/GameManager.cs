@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
     private Player start;                                            // (9) Jugador que comienza cada ronda
     private Player playerEnd;                                        // (10) Jugador que termina cada ronda
     static public Player currentPlayer;                              // (11) Jugador actual
+    public static GameManager instance;                              // Instancia del objeto actual
+    public GameObject panelIA;
 
     // Métodos
     private void CallPanelRound()                                    // Muestra el panel (5)
@@ -152,9 +154,43 @@ public class GameManager : MonoBehaviour
     private void GoBack() => SceneManager.LoadScene(0);              // Cambia de escena (menú principal)
     public void Yes() => currentPlayer.ButtonTrigger(true);          // Botón(Yes) tomar cartas antes de la batalla
     public void Not() => currentPlayer.ButtonNot();                  // Botón(No) tomar cartas antes de la batalla
-
-    void Start()                                                     // Inicialización de propiedades
+    public Player GetPlayer(string playerName)
     {
+        if (player1.playerName == playerName)
+            return player1;
+
+        return player2;
+    }                    // Retorna el jugador cuyo nombre es pasado como parámetro
+    public Player PlayerNotCurrent()
+    {
+        if (player1.myTurn)
+            return player1;
+
+        return player2;
+    }                              // Retorna el jugador que no está en juego
+    public void Panel_IA_Active(bool active)
+    {
+        panelIA.SetActive(active);
+    }
+    public void Active_IA(bool active)
+    {
+        if (active)
+            player1.iaActive = !player1.iaActive;
+        else
+            player2.iaActive = !player2.iaActive;
+
+        StartCoroutine(WaitAndPrintMessage());
+
+        IEnumerator WaitAndPrintMessage()
+        {
+            yield return new WaitForSeconds(0.4f);                     // Espera 1 segundos
+            Panel_IA_Active(false);
+        }
+    }
+
+    void Start()                                                      // Inicialización de propiedades
+    {
+        instance = this;
         round = 0;                                                    // Declara el inicio de ronda 1 (0)
 
         player1.deck = Chose.deck1;                                   // Asigna los decks a los jugadores

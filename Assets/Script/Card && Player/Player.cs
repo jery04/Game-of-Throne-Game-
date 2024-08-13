@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
     public bool myTurn;                                    // Dicta el turno del jugador
     public bool skipRound;                                 // Dicta si el jugador pasa la ronda
     public bool oneMove;                                   // Dicta si el jugador ya ha jugado una carta
+    public bool iaActive;                                 // IA activada
     public Text counterDeck;                               // Cantidad de cartas en el mazo
     public Text counterCementery;                          // Cantidad de cartas en el cementerio
 

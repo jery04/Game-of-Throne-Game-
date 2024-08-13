@@ -139,7 +139,7 @@ public class OnActivationBody
     // Methods
     public void Evaluate()
     {
-        List<Card> target_selector = new List<Card>();
+        List<GameObject> target_selector = new List<GameObject>();
         string effectActive = "";
         if (!(Selector is null) && !(EffectActivation is null))
         {
@@ -149,7 +149,7 @@ public class OnActivationBody
             if (Utils.program.Effect is not null)
                 foreach (EffectBlock effects in Utils.program.Effect)
                     if (effects.GetName() == effectActive)
-                        effects.Evaluate(target_selector);
+                        { effects.Evaluate(target_selector); break; }
         }
 
         if (PosAction is not null)
@@ -241,16 +241,30 @@ public class Selector
     public Predicate? Predicate { get; set; }
 
     // Methods
-    public List<Card> Evaluate()
+    public List<GameObject> Evaluate()
     {
-        throw new NotImplementedException();
+        List<GameObject> selector = new List<GameObject>();
+        List<GameObject> source = GetSource();
+        bool single = Convert.ToBoolean(Single?.Evaluate(new Scope()));
+
+        foreach (GameObject card in source)
+        {
+            bool predicate_bool = Convert.ToBoolean(Predicate?.Evaluate(card));
+            if (!single && predicate_bool)
+                { selector.Add(card); break;}
+
+            else if (predicate_bool)
+                selector.Add(card);
+        }
+        return selector;
     }
     public bool CheckSemantic(IScope scope)
     {
         bool check = true;
 
-        if (Source is not null && !Source.CheckSemantic(scope))
-            check = false;
+        if (Source is not null && Source.CheckSemantic(scope))
+            check = CheckSource();
+        else check = false;
 
         if (Single is not null && !Single.CheckSemantic(scope))
             check = false;
@@ -258,6 +272,78 @@ public class Selector
         if (Predicate is not null && !Predicate.CheckSemantic(scope))
             check = false;
 
+        return check;
+    }
+    private List<GameObject> GetSource()
+    {
+        List<GameObject> source = new List<GameObject>();
+        string current = GameManager.currentPlayer.playerName;
+        string notCurrent = GameManager.instance.PlayerNotCurrent().playerName;
+
+
+        switch (Convert.ToString(Source?.Evaluate(new Scope())))
+        {
+            case "board":
+                source = Context.Board();
+                break;
+            case "hand":
+                source = Context.HandOfPlayer(current); 
+                break;
+            case "otherHand":
+                source = Context.HandOfPlayer(notCurrent);
+                break;
+            case "deck":
+                source = Context.DeckOfPlayer(current);
+                break;
+            case "otherDeck":
+                source = Context.DeckOfPlayer(notCurrent);
+                break;
+            case "field":
+                source = Context.FieldOfPlayer(current);
+                break;
+            case "otherField":
+                source = Context.FieldOfPlayer(notCurrent);
+                break;
+            case "parent":
+                source = Context.Parent();
+                break;
+        }
+        return source;
+    }
+    private bool CheckSource()
+    {
+        bool check = false;
+        string source = Convert.ToString(Source?.Evaluate(new Scope()));
+        switch (source)
+        {
+            case "board":
+                check = true;
+                break;
+            case "hand":
+                check = true;
+                break;
+            case "otherHand":
+                check = true;
+                break;
+            case "deck":
+                check = true;
+                break;
+            case "otherDeck":
+                check = true;
+                break;
+            case "field":
+                check = true;
+                break;
+            case "otherField":
+                check = true;
+                break;
+            case "parent":
+                check = true;
+                break;
+            default:
+                Utils.errors.Add(@$"La fuente ""{source}"" es desconocida Line: {Source?.Location()?.Line} Column: {Source?.Location()?.Column} ");
+                break;
+        }
         return check;
     }
 }
@@ -268,9 +354,9 @@ public class PosAction
     public Selector? Selector { get; set; }
 
     // Methods
-    public void Evaluate(List<Card> parent_selector)
+    public void Evaluate(List<GameObject> parent_selector)
     {
-        List<Card> target_selector = new List<Card>();
+        List<GameObject> target_selector = new List<GameObject>();
         string effectActive = "";
 
         if (!(Name is null))
@@ -321,6 +407,10 @@ public class Predicate
     public Statement? Condition { get; set; }
 
     // Methods
+    public bool Evaluate(GameObject card)
+    {
+        throw new NotImplementedException();
+    }
     public bool CheckSemantic(IScope scope)
     {
         IScope child = scope.CreateChild();

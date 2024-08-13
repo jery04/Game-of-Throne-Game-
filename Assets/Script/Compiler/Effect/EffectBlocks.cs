@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using Unity.Collections.LowLevel.Unsafe;
+using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEditor.Timeline.TimelinePlaybackControls;
 using static UnityEngine.GraphicsBuffer;
@@ -17,9 +19,9 @@ public class EffectBlock: ISemantic
     public Action? Action { get; set; }
 
     // Methods
-    public void Evaluate(List<Card> target)
+    public void Evaluate(List<GameObject> target)
     {
-        throw new NotImplementedException();
+        Action?.Evaluate(target);
     }
     public bool CheckSemantic(IScope scope)
     {
@@ -83,6 +85,12 @@ public class Action
     }
 
     // Methods
+    public void Evaluate(List<GameObject> target)
+    {
+        if (Instruction is not null)
+            foreach (Instructions? item in Instruction)
+                item?.Evaluate(target);
+    }
     public bool CheckSemantic(IScope scope)
     {
         bool check = true;
@@ -103,6 +111,7 @@ public abstract class Instructions
 {
     // Abstract Class
     public abstract bool CheckSemantic(IScope scope);
+    public abstract void Evaluate(List<GameObject> target);
 }
 public class BucleWhile : Instructions
 {
@@ -111,6 +120,17 @@ public class BucleWhile : Instructions
     public List<Instructions?>? Instruction { get; set; }
 
     //Methods
+    public override void Evaluate(List<GameObject> target)
+    {
+        bool condition = Convert.ToBoolean(Condition?.Evaluate(new Scope()));
+
+        while (condition)
+        {
+            if (Instruction is not null)
+                foreach (Instructions? item in Instruction)
+                    item?.Evaluate(target);
+        }
+    }
     public override bool CheckSemantic(IScope scope)
     {
         bool check = true;
@@ -148,6 +168,12 @@ public class BucleFor : Instructions
     public List<Instructions?>? Instruction { get; set; }
 
     // Methods
+    public override void Evaluate(List<GameObject> target)
+    {
+        if (Instruction is not null)
+            foreach (Instructions? item in Instruction)
+                item?.Evaluate(target);
+    }
     public override bool CheckSemantic(IScope scope)
     {
         bool check = true;
@@ -193,6 +219,10 @@ public class Variable : Instructions, ISemantic
     }
 
     // Methods
+    public override void Evaluate(List<GameObject> target)
+    {
+        throw new NotImplementedException();
+    }
     public virtual object? Evaluate(IScope scope)
     {
         return Value?.Evaluate(scope);
