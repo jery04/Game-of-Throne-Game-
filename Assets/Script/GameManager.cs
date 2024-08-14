@@ -9,6 +9,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.XR;
+using static UnityEditor.Progress;
 
 public class GameManager : MonoBehaviour
 { 
@@ -45,7 +46,7 @@ public class GameManager : MonoBehaviour
             panelRound.SetActive(false);
         }
     }                                   
-    private void ButtonSkipTurn()                                    // Salta el turno
+    public void ButtonSkipTurn()                                    // Salta el turno
     {
         currentPlayer.oneMove = false;
         if (!skipRound)
@@ -60,11 +61,12 @@ public class GameManager : MonoBehaviour
                 player2.myTurn = false; player1.myTurn = true;
                 currentPlayer = player1;
             }
+            currentPlayer.IA_Play();
         }
         else
             ButtonSkipRound();
     }
-    private void ButtonSkipRound()                                   // Tranformaciones cuando cambia de ronda
+    public void ButtonSkipRound()                                   // Tranformaciones cuando cambia de ronda
     {
         if (playerEnd == currentPlayer)
         {
@@ -193,8 +195,8 @@ public class GameManager : MonoBehaviour
         instance = this;
         round = 0;                                                    // Declara el inicio de ronda 1 (0)
 
-        player1.deck = Chose.deck1;                                   // Asigna los decks a los jugadores
-        player2.deck = Chose.deck2;
+        player1.CreateDeckCard(Chose.deck1);
+        player2.CreateDeckCard(Chose.deck2);
 
         player1.playerName = Chose.name1;                             // Asigna los nombres a los jugadores
         player2.playerName = Chose.name2;

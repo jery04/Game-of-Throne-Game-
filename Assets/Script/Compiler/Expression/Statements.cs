@@ -58,13 +58,9 @@ public class Context: GeneralStatement
 
         return field;
     }
-    public static List<Card> GraveyardOfPlayer(bool player)
-    {
-        throw new NotImplementedException();
-    }
     public static List<GameObject> DeckOfPlayer(string playerName)
     {
-        throw new NotImplementedException();
+        return GameManager.instance.GetPlayer(playerName).deck;
     }
     public static List<GameObject> Parent()
     {

@@ -1209,7 +1209,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerName: player1
   faction: 
-  deck: []
+  decktest: []
   powerRound: 
   takeCardStartGame: 0
   myTurn: 1
@@ -1219,6 +1219,7 @@ MonoBehaviour:
   counterDeck: {fileID: 1846925426}
   counterCementery: {fileID: 1501352665}
   cementeryCards: []
+  deckCards: {fileID: 1347256373}
   leader: {fileID: 810644497}
   hand: {fileID: 1445032459}
   field:
@@ -1867,7 +1868,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerName: player2
   faction: 
-  deck: []
+  decktest: []
   powerRound: 
   takeCardStartGame: 0
   myTurn: 0
@@ -1877,6 +1878,7 @@ MonoBehaviour:
   counterDeck: {fileID: 422602417}
   counterCementery: {fileID: 356033941}
   cementeryCards: []
+  deckCards: {fileID: 599222571}
   leader: {fileID: 317765081}
   hand: {fileID: 2005503998}
   field:
@@ -2528,6 +2530,7 @@ GameObject:
   - component: {fileID: 599222577}
   - component: {fileID: 599222576}
   - component: {fileID: 599222574}
+  - component: {fileID: 599222578}
   m_Layer: 5
   m_Name: Deck2
   m_TagString: Untagged
@@ -2608,6 +2611,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 599222571}
   m_CullTransparentMesh: 1
+--- !u!114 &599222578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 599222571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5ce1dec5ef76c54f9c40975ad961f7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cards: []
+  position: 00000000010000000200000003000000040000000500000006000000070000000800000009000000
+  maxItems: 40
+  itemsCounter: 0
 --- !u!1 &615265729
 GameObject:
   m_ObjectHideFlags: 0
@@ -5428,6 +5447,7 @@ GameObject:
   - component: {fileID: 1347256378}
   - component: {fileID: 1347256377}
   - component: {fileID: 1347256381}
+  - component: {fileID: 1347256382}
   m_Layer: 5
   m_Name: Deck1
   m_TagString: Untagged
@@ -5508,6 +5528,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_AspectMode: 1
   m_AspectRatio: 0.9187694
+--- !u!114 &1347256382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1347256373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5ce1dec5ef76c54f9c40975ad961f7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cards: []
+  position: 00000000010000000200000003000000040000000500000006000000070000000800000009000000
+  maxItems: 40
+  itemsCounter: 0
 --- !u!1 &1363448892
 GameObject:
   m_ObjectHideFlags: 0

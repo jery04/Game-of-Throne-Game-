@@ -139,23 +139,24 @@ public class OnActivationBody
     // Methods
     public void Evaluate()
     {
-        List<GameObject> target_selector = new List<GameObject>();
+        List<GameObject> target = new List<GameObject>(); 
+        Dictionary<string, object> parameters = new Dictionary<string, object>();
         string effectActive = "";
         if (!(Selector is null) && !(EffectActivation is null))
         {
-            target_selector = Selector.Evaluate();
+            target = Selector.Evaluate();
             effectActive = EffectActivation.GetName();
 
             if (Utils.program.Effect is not null)
                 foreach (EffectBlock effects in Utils.program.Effect)
                     if (effects.GetName() == effectActive)
-                        { effects.Evaluate(target_selector); break; }
+                        { effects.Evaluate(target, parameters); break; }
         }
 
         if (PosAction is not null)
             foreach (PosAction? pos_action in PosAction)
                 if (pos_action is not null)
-                    pos_action.Evaluate(target_selector);
+                    pos_action.Evaluate(target);
     }
     public bool CheckSemantic(IScope scope)
     {
@@ -250,8 +251,8 @@ public class Selector
         foreach (GameObject card in source)
         {
             bool predicate_bool = Convert.ToBoolean(Predicate?.Evaluate(card));
-            if (!single && predicate_bool)
-                { selector.Add(card); break;}
+            if (single && predicate_bool)
+                { selector.Add(card); break; }
 
             else if (predicate_bool)
                 selector.Add(card);
@@ -279,7 +280,6 @@ public class Selector
         List<GameObject> source = new List<GameObject>();
         string current = GameManager.currentPlayer.playerName;
         string notCurrent = GameManager.instance.PlayerNotCurrent().playerName;
-
 
         switch (Convert.ToString(Source?.Evaluate(new Scope())))
         {
@@ -371,7 +371,7 @@ public class PosAction
             if (Utils.program.Effect is not null)
                 foreach (EffectBlock effects in Utils.program.Effect)
                     if (effects.GetName() == effectActive)
-                        effects.Evaluate(target_selector);
+                        effects.Evaluate(target_selector, null);
         }
     }
     public bool CheckSemantic(IScope scope)

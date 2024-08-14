@@ -18,11 +18,19 @@ public class Panels : MonoBehaviour
                 counter++;
         return counter;
     }
-    public void RemoveAll(List<Card> cementery)                                    // Remueve todas las cartas
+    public int CounterSilver()                                                      // Cantidad de cartas de tipo Unidad
+    {
+        int counter = 0;
+        foreach (GameObject item in cards)
+            if (item.GetComponent<CardDisplay>().card.typeCard == Card.kind_card.silver)
+                counter++;
+        return counter;
+    }
+    public void RemoveAll(List<GameObject> cementery)                                    // Remueve todas las cartas
     {
         for (int i = 0; i < cards.Count; i++)
         {
-            cementery.Add(cards[i].GetComponent<CardDisplay>().card);
+            cementery.Add(Instantiate(cards[i]));
             GameObject.Destroy(cards[i]);
             cards.RemoveAt(i);
         }

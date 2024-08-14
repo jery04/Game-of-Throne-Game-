@@ -19,9 +19,9 @@ public class EffectBlock: ISemantic
     public Action? Action { get; set; }
 
     // Methods
-    public void Evaluate(List<GameObject> target)
+    public void Evaluate(List<GameObject> target, Dictionary<string, object>? parameters)
     {
-        Action?.Evaluate(target);
+        Action?.Evaluate(target, parameters);
     }
     public bool CheckSemantic(IScope scope)
     {
@@ -85,7 +85,7 @@ public class Action
     }
 
     // Methods
-    public void Evaluate(List<GameObject> target)
+    public void Evaluate(List<GameObject> target, Dictionary<string, object>? parameters)
     {
         if (Instruction is not null)
             foreach (Instructions? item in Instruction)

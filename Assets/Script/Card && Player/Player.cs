@@ -1,12 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 using UnityEngine.XR;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class Player : MonoBehaviour
 {
@@ -14,7 +16,7 @@ public class Player : MonoBehaviour
     #region Property
     public string playerName;                              // Nombre del jugador 
     public string faction;                                 // Facción 
-    public List<Card> deck = new List<Card>();             // Mazo del jugador 
+    public List<GameObject> deck = new List<GameObject>(); // Deck
     public int[] powerRound;                               // Puntos acumulados por rondas
     public int takeCardStartGame = 0;                      // Cantidad de cartas cambiadas antes de la batalla
 
@@ -26,7 +28,9 @@ public class Player : MonoBehaviour
     public Text counterCementery;                          // Cantidad de cartas en el cementerio
 
     // Paneles
-    public List<Card> cementeryCards;                      // Cartas enviadas al cementerio
+    //public List<GameObject> cementery;
+    public List<GameObject> cementeryCards;                // Cartas enviadas al cementerio
+    public GameObject deckCards;
     public GameObject leader;                              // Carta líder
     public GameObject hand;                                // Cartas de la mano
     public GameObject[] field;                             // Cartas del campo(Melee-Range-Siege)
@@ -37,7 +41,114 @@ public class Player : MonoBehaviour
     #endregion 
 
     // Métodos 
-    public void Cementery()                                // Envía todas las cartas al cementerio
+    public void IA_Play()
+    {
+        if (iaActive && myTurn)
+        {
+            GameObject card = SelectCardIA();
+            if(card is not null)
+            {
+                StartCoroutine(Play());
+
+                IEnumerator Play()
+                {
+                    yield return new WaitForSeconds(1);
+
+                    TakeCard(card, field[0]);
+                    cementeryCards.Add(Instantiate(card));
+                    GameObject.Destroy(card);
+                    
+                    GameManager.instance.ButtonSkipTurn();
+
+                    yield return new WaitForSeconds(1);
+                }
+            }
+            else GameManager.instance.ButtonSkipRound();
+        }
+    }
+    private GameObject SelectCardIA()
+    {
+        GameObject card = null;
+        List<GameObject> hand_current = hand.GetComponent<Panels>().cards;
+
+        if (hand_current.Count > 0)
+        {          
+            // Carta héroe con mayor poder
+            foreach (GameObject item in hand_current)
+            {
+                if (item.GetComponent<CardDisplay>().card.isHeroe && item.GetComponent<CardDisplay>().Power() > 5)
+                {
+                    if (card == null)
+                        card = item;
+
+                    else if (item.GetComponent<CardDisplay>().Power() > card.GetComponent<CardDisplay>().Power())
+                        card = item;
+                }
+            }
+
+            // Carta de Aumento
+            if (card is null)
+            {
+                foreach (GameObject item in hand_current)
+                {
+                    if (item.GetComponent<CardDisplay>().card.typeCard == Card.kind_card.increase && item.GetComponent<CardDisplay>().Power() > 1)
+                    {
+                        if (card == null)
+                            card = item;
+
+                        else if (item.GetComponent<CardDisplay>().Power() > card.GetComponent<CardDisplay>().Power())
+                            card = item;
+                    }
+                }
+            }
+
+            // Carta Clima
+            if (card is null)
+            {
+                int damage = 0;
+                foreach (GameObject item in hand_current)
+                {
+                    if (item.GetComponent<CardDisplay>().card.typeCard == Card.kind_card.climate && AmountOtherRow(item) >= 2)
+                    {
+                        if (card == null)
+                            card = item;
+
+                        else if (item.GetComponent<CardDisplay>().Power() < damage)
+                            card = item;
+                    }
+                }
+
+                int AmountOtherRow(GameObject climate)
+                {
+                    GameObject[] otherField = GameManager.instance.PlayerNotCurrent().field;
+                    Panels panel = otherField[climate.GetComponent<CardDisplay>().card.affectedRow].GetComponent<Panels>();
+                    return panel.CounterSilver();
+                }
+            }
+
+            // Carta Unidad
+            if (card is null)
+            {
+                foreach (GameObject item in hand_current)
+                {
+                    if (item.GetComponent<CardDisplay>().card.isUnity && item.GetComponent<CardDisplay>().Power() > 2)
+                    {
+                        if (card == null)
+                            card = item;
+
+                        else if (item.GetComponent<CardDisplay>().Power() > card.GetComponent<CardDisplay>().Power())
+                            card = item;
+                    }
+                }
+            }
+
+            else
+                card = hand_current[0];
+        }
+
+        return card;
+    }
+    public void Cementery()                               
     {
         climate.GetComponent<Panels>().RemoveAll(cementeryCards); // Envía las cartas de climate al cementerio
 
@@ -101,15 +212,25 @@ public class Player : MonoBehaviour
                 leader.GetComponent<Panels>().cards[0].GetComponent<EventTrigger>().enabled = true;
         }
     }
-    private IEnumerator For(int max)                       // Cantidad de cartas que puede tomar del deck
+    public void CreateDeckCard(List<Card> cards) 
     {
         GameObject prefarb = Resources.Load<GameObject>("Card");
-        for (int i = 0; i < max; i++) 
+        foreach (Card item in cards)
         {
-            int rand = UnityEngine.Random.Range(0, deck.Count);
-            GameObject a = Instantiate(prefarb, hand.transform);
+            GameObject a = Instantiate(prefarb, deckCards.transform);
             a.GetComponent<EventTrigger>().enabled = false;
-            a.GetComponent<CardDisplay>().card = deck[rand];
+            a.GetComponent<CardDisplay>().card = item;
+            a.name = item.name;
+            deck.Add(a);
+        }
+    }
+    private IEnumerator For(int max)                       // Cantidad de cartas que puede tomar del deck
+    {
+        for (int i = 0; i < max; i++)
+        {
+            int rand = UnityEngine.Random.Range(0, deck.Count-1);
+            GameObject a = Instantiate(deck[rand], hand.transform);
+            a.GetComponent<EventTrigger>().enabled = false;
             a.name = deck[rand].name;
 
             hand.GetComponent<Panels>().cards.Add(a);
@@ -140,6 +261,12 @@ public class Player : MonoBehaviour
                 StartCoroutine(For(2));
         }
     }
+    public void TakeCard(GameObject card, GameObject panel)
+    {
+        GameObject newCard = Instantiate(card, panel.transform); 
+        newCard.name = card.name;
+        leader.GetComponent<Panels>().cards.Add(newCard);
+    }   // Replica un GameObject determinada en un panel determinado
     public void TakeCard(Card card, GameObject panel = null) // Crea una carta determinada en un panel determinado
     {
         GameObject newCard;

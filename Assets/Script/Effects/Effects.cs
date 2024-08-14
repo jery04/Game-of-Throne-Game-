@@ -66,30 +66,30 @@ public static class Effects
                 }
             }
             if (cardMax != null)
-                GameObject.Destroy(cardMax);
+            { player.cementeryCards.Add(GameObject.Instantiate(cardMax)); GameObject.Destroy(cardMax); }
         }
     }
     public static void RemoveMin(params object[] item)      // Eliminar la carta con menos poder del rival
     {
         if (item[0] is Player player)
         {
-            GameObject cardMax = null;
+            GameObject cardMin = null; 
             foreach (GameObject row in player.field)
             {
                 foreach (GameObject thisCard in row.GetComponent<Panels>().cards)
                 {
                     if (thisCard.GetComponent<CardDisplay>().card.isUnity && !thisCard.GetComponent<CardDisplay>().card.isHeroe)
                     {
-                        if (cardMax == null)
-                            cardMax = thisCard;
+                        if (cardMin == null)
+                            cardMin = thisCard;
 
-                        else if (thisCard.GetComponent<CardDisplay>().Power() < cardMax.GetComponent<CardDisplay>().Power())
-                            cardMax = thisCard;
+                        else if (thisCard.GetComponent<CardDisplay>().Power() < cardMin.GetComponent<CardDisplay>().Power())
+                            cardMin = thisCard;
                     }
                 }
             }
-            if (cardMax != null)
-                GameObject.Destroy(cardMax);
+            if (cardMin != null) 
+            { player.cementeryCards.Add(GameObject.Instantiate(cardMin)); GameObject.Destroy(cardMin); }
         }
     }
     public static void DrawCard(params object[] item)       // Robar una carta
@@ -156,9 +156,10 @@ public static class Effects
         if (item[0] is Player player1 && item[1] is Player player2) 
         {
             if (player1.climate.GetComponent<Panels>().cards.Count != 0)
-            { 
-                int affectedRow = player1.climate.GetComponent<Panels>().cards[0].GetComponent<CardDisplay>().card.affectedRow;
-                int delta = player1.climate.GetComponent<Panels>().cards[0].GetComponent<CardDisplay>().Power();
+            {
+                GameObject cardSelect = player1.climate.GetComponent<Panels>().cards[0];
+                int affectedRow = cardSelect.GetComponent<CardDisplay>().card.affectedRow;
+                int delta = cardSelect.GetComponent<CardDisplay>().Power();
                 Panels panel1 = player1.field[affectedRow].GetComponent<Panels>(); 
                 Panels panel2 = player2.field[affectedRow].GetComponent<Panels>();
                 for (int i = 0; i < panel1.cards.Count; i++)
@@ -173,7 +174,8 @@ public static class Effects
                     if (thisCard.card.isUnity && !thisCard.card.isHeroe)
                         thisCard.PowerDelta((-1) * delta);
                 }
-                GameObject.Destroy(player1.climate.GetComponent<Panels>().cards[0]);
+                Player owner = GameManager.instance.GetPlayer(cardSelect.GetComponent<CardDisplay>().card.faction);
+                owner.cementeryCards.Add(GameObject.Instantiate(cardSelect)); GameObject.Destroy(cardSelect);
             }
         }
     }  
@@ -206,16 +208,18 @@ public static class Effects
     {
         if (item[0] is Player player)
         {
-            Card maxPower = null;
-            foreach (Card thisCard in player.cementeryCards)
+            Card maxPower = null; int index = 0;
+            foreach (GameObject thisCard in player.cementeryCards)
             {
-                if ((thisCard.isUnity) && (maxPower == null || thisCard.power > maxPower.power))
-                    maxPower = thisCard;
+                Card card = thisCard.GetComponent<CardDisplay>().card; int i = 0;
+                if ((card.isUnity) && (maxPower == null || card.power > maxPower.power))
+                    { maxPower = card; index = i; }
+                i+=1;
             }
             if (maxPower != null)
             {
                 player.TakeCard(maxPower);
-                player.cementeryCards.Remove(maxPower);
+                player.cementeryCards.RemoveAt(index);
             }
         }
     }
