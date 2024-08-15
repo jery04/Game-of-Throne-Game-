@@ -16,9 +16,19 @@ public abstract class GeneralStatement
 }
 public class Target: GeneralStatement
 {
+    // Property
+    public List<GameObject>? target {  get; set; }
+
+    // Builder
+    public Target(List<GameObject>? target = null)
+    {
+        this.target = target;
+    }
+
+    // Methods
     public override object? Evaluate(IScope scope)
     {
-        return null;
+        return target;
     }
     public override Utils.ReturnType? GetType(IScope scope)
     {
@@ -226,7 +236,7 @@ public class Molecule: Instructions
     public Atom? NodeRight { get; set; }
 
     // Methods
-    public override void Evaluate(List<GameObject> target)
+    public override void Evaluate(IVisitor visitor)
     {
         throw new NotImplementedException();
     }

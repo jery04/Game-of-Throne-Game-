@@ -9,6 +9,7 @@ using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 using UnityEngine.XR;
 using static UnityEditor.Experimental.GraphView.GraphView;
+using static UnityEditor.Progress;
 
 public class Player : MonoBehaviour
 {
@@ -54,8 +55,8 @@ public class Player : MonoBehaviour
                 {
                     yield return new WaitForSeconds(1);
 
+                    card.GetComponent<CardDisplay>().backImage.enabled = false;
                     TakeCard(card, field[0]);
-                    cementeryCards.Add(Instantiate(card));
                     GameObject.Destroy(card);
                     
                     GameManager.instance.ButtonSkipTurn();
@@ -168,7 +169,7 @@ public class Player : MonoBehaviour
     }
     private void BackImageAndDrag()                        // Modifica el estado(Active) del Script Drag e imágenes
     {
-        if (!myTurn)                                                        // Si no está en juego...
+        if (!myTurn && !GameManager.iA)                                     // Si no está en juego...
         {
             foreach (GameObject item in hand.GetComponent<Panels>().cards)
             {
@@ -184,16 +185,16 @@ public class Player : MonoBehaviour
             if(leader.GetComponent<Panels>().cards.Count != 0)
                 leader.GetComponent<Panels>().cards[0].GetComponent<EventTrigger>().enabled = false;
         }
-        else                                                                // De lo contrario, si está en juego...
+        else if(!iaActive)                                                      // De lo contrario, si está en juego...
         {
-            if (!oneMove)                                                   // Si no ha hecho ningún movimiento
+            if (!oneMove)                                                       // Si no ha hecho ningún movimiento
             {
                 foreach (GameObject item in hand.GetComponent<Panels>().cards)
                 {
                     item.GetComponent<CardDisplay>().backImage.enabled = false; // Si está jugando se desactiva el BackImage 
                     item.GetComponent<Drag>().enabled = true;                   // Si está jugando y no ha hecho ningún movimiento se activa el Script Drag
                     
-                    if (item.GetComponent<CardDisplay>().card.isUnity)           //  Si está jugando se activa el indicador de poder(carta unidad) 
+                    if (item.GetComponent<CardDisplay>().card.isUnity)          //  Si está jugando se activa el indicador de poder(carta unidad) 
                         item.GetComponent<CardDisplay>().textPower.enabled = true;
                 }
             }
@@ -265,7 +266,7 @@ public class Player : MonoBehaviour
     {
         GameObject newCard = Instantiate(card, panel.transform); 
         newCard.name = card.name;
-        leader.GetComponent<Panels>().cards.Add(newCard);
+        panel.GetComponent<Panels>().cards.Add(newCard);
     }   // Replica un GameObject determinada en un panel determinado
     public void TakeCard(Card card, GameObject panel = null) // Crea una carta determinada en un panel determinado
     {

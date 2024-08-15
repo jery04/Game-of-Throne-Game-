@@ -142,9 +142,11 @@ public class OnActivationBody
         List<GameObject> target = new List<GameObject>(); 
         Dictionary<string, object> parameters = new Dictionary<string, object>();
         string effectActive = "";
+
         if (!(Selector is null) && !(EffectActivation is null))
         {
             target = Selector.Evaluate();
+            parameters = EffectActivation.Evaluate();
             effectActive = EffectActivation.GetName();
 
             if (Utils.program.Effect is not null)
@@ -183,6 +185,25 @@ public class EffectActivation
     public List<Variable?>? Parameters { get; set; }
 
     // Methods
+    public Dictionary<string, object> Evaluate()
+    {
+        Dictionary<string, object> parameters = new Dictionary<string, object>();
+        if (Parameters is not null)
+        {
+            foreach (Variable? variable in Parameters)
+            {
+                if(variable is not null)
+                {
+                    string? name = variable.ReturnName()?.ToLower();
+                    object? value = variable.Evaluate(new Scope());
+
+                    if (!(name is null) && !(value is null))
+                        parameters.Add(name, value);
+                }
+            }
+        }
+        return parameters;
+    }
     public bool CheckSemantic(IScope scope)
     {
         string? nameEffect = Convert.ToString(Name?.Evaluate(scope));

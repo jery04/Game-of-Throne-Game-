@@ -87,9 +87,20 @@ public class Action
     // Methods
     public void Evaluate(List<GameObject> target, Dictionary<string, object>? parameters)
     {
+        IVisitor visitor = new Visitor();
+
+        if (Parameters is not null)
+        {
+            string? firstParam = Parameters[0]?.Value; 
+            if(firstParam is not null)
+                visitor.Defined.Add(firstParam, target);
+        }
+        if (parameters is not null)
+            visitor.Defined = parameters;
+
         if (Instruction is not null)
             foreach (Instructions? item in Instruction)
-                item?.Evaluate(target);
+                item?.Evaluate(visitor);
     }
     public bool CheckSemantic(IScope scope)
     {
@@ -111,16 +122,16 @@ public abstract class Instructions
 {
     // Abstract Class
     public abstract bool CheckSemantic(IScope scope);
-    public abstract void Evaluate(List<GameObject> target);
+    public abstract void Evaluate(IVisitor visitor);
 }
-public class BucleWhile : Instructions
+public class BucleWhile: Instructions
 {
     // Property
     public Statement? Condition { get; set; }
     public List<Instructions?>? Instruction { get; set; }
 
     //Methods
-    public override void Evaluate(List<GameObject> target)
+    public override void Evaluate(IVisitor visitor)
     {
         bool condition = Convert.ToBoolean(Condition?.Evaluate(new Scope()));
 
@@ -128,7 +139,7 @@ public class BucleWhile : Instructions
         {
             if (Instruction is not null)
                 foreach (Instructions? item in Instruction)
-                    item?.Evaluate(target);
+                    item?.Evaluate(visitor);
         }
     }
     public override bool CheckSemantic(IScope scope)
@@ -160,7 +171,7 @@ public class BucleWhile : Instructions
         return check;
     }
 }
-public class BucleFor : Instructions
+public class BucleFor: Instructions
 {
     // Property
     public Token? Iterator { get; set; }
@@ -168,11 +179,11 @@ public class BucleFor : Instructions
     public List<Instructions?>? Instruction { get; set; }
 
     // Methods
-    public override void Evaluate(List<GameObject> target)
+    public override void Evaluate(IVisitor visitor)
     {
         if (Instruction is not null)
             foreach (Instructions? item in Instruction)
-                item?.Evaluate(target);
+                item?.Evaluate(visitor);
     }
     public override bool CheckSemantic(IScope scope)
     {
@@ -204,7 +215,7 @@ public class BucleFor : Instructions
         return check;
     }
 }
-public class Variable : Instructions, ISemantic
+public class Variable: Instructions, ISemantic
 {
     // Properties
     public Token? Name { get; set; }
@@ -219,7 +230,7 @@ public class Variable : Instructions, ISemantic
     }
 
     // Methods
-    public override void Evaluate(List<GameObject> target)
+    public override void Evaluate(IVisitor visitor)
     {
         throw new NotImplementedException();
     }
@@ -309,7 +320,7 @@ public class Variable : Instructions, ISemantic
         return Name?.Value;
     }
 }
-public class Array : Variable
+public class Array: Variable
 {
     // Property
     public new List<Atom?>? Value { get; set; }

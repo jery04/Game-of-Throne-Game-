@@ -12,8 +12,9 @@ using UnityEngine.XR;
 using static UnityEditor.Progress;
 
 public class GameManager : MonoBehaviour
-{ 
+{
     // Propiedades (Campo)
+    public static bool iA;                                           // IA Active
     public static int round;                                         // (1) Número de Ronda
     public bool skipRound;                                           // (2) True(si algún jugador pasa la ronda) 
     public GameObject[] numberRound;                                 // (3) Panel-Display hace referencia al número de ronda
@@ -216,6 +217,11 @@ public class GameManager : MonoBehaviour
     }
     void Update()
     {
+        if (player1.iaActive || player2.iaActive)
+            iA = true;
+        else 
+            iA = false;
+
         numberRound[round].GetComponent<CanvasGroup>().alpha = 1;    // Actualiza el panel (3) con la ronda actual
     }
 }
