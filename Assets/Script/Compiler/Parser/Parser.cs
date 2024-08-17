@@ -30,7 +30,7 @@ public class Parser : IParsing
     }   // Retorna true si hay próximo
     private Token LookAhead(int i = 1)
     {
-        if (ThereIsNext())
+        if (ThereIsNext(i))
             return Tokens[Index + i];
 
         throw new NotImplementedException();
@@ -57,12 +57,8 @@ public class Parser : IParsing
     private bool LookBeyond(params Token.TokenType[] nextTokens)
     {
         for (int i = 0; i < nextTokens.Length; i++)
-        {
             if (ThereIsNext(i + 1) && nextTokens[i] != LookAhead(i + 1)?.Type)
-            {
                 return false;
-            }
-        }
 
         return true;
     } // Retorna <true> si los siguientes Tokens corresponden con la secuencia pasada por parámetro
@@ -250,9 +246,6 @@ public class Parser : IParsing
         {
             if (LookBeyond(Token.TokenType.UnKnown, Token.TokenType.Assignment))
                 body.Add(VariableBuilder());
-
-            //else if (LookBeyond(Token.TokenType.UnKnown, Token.TokenType.Dot, Token.TokenType.UnKnown))
-            //    body.Add(DeltaBuilder());
 
             else if (LookBeyond(Token.TokenType.UnKnown, Token.TokenType.Dot, Token.TokenType.UnKnown))
             { body.Add(MoleculeBuilder()); Match(Token.TokenType.SemiColon); }

@@ -12,7 +12,7 @@ public abstract class GeneralStatement
 {
     public abstract Utils.ReturnType? GetType(IScope scope);
     public abstract bool CheckSemantic(IScope scope);
-    public abstract object? Evaluate(IScope scope);
+    public abstract object? Evaluate(IScope? scope);
 }
 public class Target: GeneralStatement
 {
@@ -26,7 +26,7 @@ public class Target: GeneralStatement
     }
 
     // Methods
-    public override object? Evaluate(IScope scope)
+    public override object? Evaluate(IScope? scope)
     {
         return target;
     }
@@ -78,7 +78,7 @@ public class Context: GeneralStatement
     }
 
     // Methods
-    public override object? Evaluate(IScope scope)
+    public override object? Evaluate(IScope? scope)
     {
         return null;
     }
@@ -100,7 +100,7 @@ public class Parameters: GeneralStatement
     }
 
     // Methods
-    public override object? Evaluate(IScope scope)
+    public override object? Evaluate(IScope? scope)
     {
         return null;
     }
@@ -112,7 +112,7 @@ public class Parameters: GeneralStatement
 }
 public class CardKey: GeneralStatement
 {
-    public override object? Evaluate(IScope scope)
+    public override object? Evaluate(IScope? scope)
     {
         return null;
     }
@@ -130,7 +130,7 @@ public class Statement: GeneralStatement
     public Statement? NodeRight { get; set; }
 
     // Methods
-    public override object? Evaluate(IScope scope)
+    public override object? Evaluate(IScope? scope)
     {
         if (!(NodeLeft is null) && !(NodeRight is null) && !(LogOperator is null))
         {
@@ -182,7 +182,7 @@ public class SubStatement
     public Statement? NodeRight { get; set; }
 
     // Methods
-    public object? Evaluate(IScope scope)
+    public object? Evaluate(IScope? scope)
     {
         if (!(NodeLeft is null) && !(NodeRight is null) && !(LogOperator is null))
         {
@@ -236,22 +236,19 @@ public class Molecule: Instructions
     public Atom? NodeRight { get; set; }
 
     // Methods
-    public override void Evaluate(IVisitor visitor)
+    public override void Evaluate(Visitor visitor)
     {
         throw new NotImplementedException();
     }
-    public object? Evaluate(IScope scope)
+    public object? Evaluate(IScope? scope)
     {
         if (!(NodeLeft is null) && !(NodeRight is null) && !(ArtOpeartor is null))
         {
-            if (ArtOpeartor.Type != Token.TokenType.Assignment && ArtOpeartor.Type != Token.TokenType.Increase)
+            if (ArtOpeartor.Type != Token.TokenType.Assignment && ArtOpeartor.Type != Token.TokenType.Increase && ArtOpeartor.Type != Token.TokenType.Decrease)
                 return Utils.LogOperator(NodeLeft.Evaluate(scope), NodeRight.Evaluate(scope), ArtOpeartor, NodeLeft.GetType(scope));
 
             else
-            {
-                //Type Code Here...
                 throw new NotImplementedException();
-            }
         }
         else
             return NodeLeft?.Evaluate(scope);
@@ -309,9 +306,9 @@ public class Molecule: Instructions
 public abstract class Atom
 {
     // Abstract class
-    public abstract Utils.ReturnType? GetType(IScope scope);
+    public abstract Utils.ReturnType? GetType(IScope? scope);
     public abstract bool CheckSemantic(IScope scope);
-    public abstract object? Evaluate(IScope scope);
+    public abstract object? Evaluate(IScope? scope);
     public abstract Token? Location();
 }
 public class Atom0: Atom
@@ -320,7 +317,7 @@ public class Atom0: Atom
     public Token? Boolean { get; set; }
 
     //Methods
-    public override object? Evaluate(IScope scope)
+    public override object? Evaluate(IScope? scope)
     {
         if (Boolean is not null)
         {
@@ -331,7 +328,7 @@ public class Atom0: Atom
         }
         return null;
     }
-    public override Utils.ReturnType? GetType(IScope scope)
+    public override Utils.ReturnType? GetType(IScope? scope)
     {
         return Utils.ReturnType.Bool;
     }
@@ -351,7 +348,7 @@ public class Atom1: Atom
     public Token? OpIncrease { get; set; }
 
     //Methods
-    public override object? Evaluate(IScope scope)
+    public override object? Evaluate(IScope? scope)
     {
         if (OpIncrease is null)
             return Expression?.Evaluate(scope);
@@ -361,7 +358,7 @@ public class Atom1: Atom
         }
         return null;
     }
-    public override Utils.ReturnType? GetType(IScope scope)
+    public override Utils.ReturnType? GetType(IScope? scope)
     {
         return Expression?.GetType(scope);
     }
@@ -404,7 +401,7 @@ public class Atom2: Atom
     }
 
     //Methods
-    public override object? Evaluate(IScope scope)
+    public override object? Evaluate(IScope? scope)
     {
         throw new NotImplementedException();
     }
@@ -414,12 +411,12 @@ public class Atom2: Atom
             for (int i = 0; i < 6; i++)
                 Call.Add(null);
     }
-    public override Utils.ReturnType? GetType(IScope scope)
+    public override Utils.ReturnType? GetType(IScope? scope)
     {
         NullFill();
         if (Call is not null)
         {
-            if (scope.GetType(Call[0]?.Value, scope) == Utils.ReturnType.Card)
+            if (scope?.GetType(Call[0]?.Value, scope) == Utils.ReturnType.Card)
             {
                 if (Call[1] is not null)
                 {
@@ -430,7 +427,7 @@ public class Atom2: Atom
                 }
                 else return Utils.ReturnType.Card;
             }
-            else if (scope.GetType(Call[0]?.Value, scope) == Utils.ReturnType.Context)
+            else if (scope?.GetType(Call[0]?.Value, scope) == Utils.ReturnType.Context)
             {
                 if (Call[1] is not null)
                 {
@@ -455,7 +452,7 @@ public class Atom2: Atom
                 }
                 else return Utils.ReturnType.Context;
             }
-            else if (scope.GetType(Call[0]?.Value, scope) == Utils.ReturnType.List)
+            else if (scope?.GetType(Call[0]?.Value, scope) == Utils.ReturnType.List)
             {
                 if (Call[1] is not null)
                 {
@@ -471,7 +468,7 @@ public class Atom2: Atom
                 else return Utils.ReturnType.List;
             }
             else
-                return scope.GetType(Call[0]?.Value, scope);
+                return scope?.GetType(Call[0]?.Value, scope);
         }
         return Utils.ReturnType.Void;
     }
@@ -635,7 +632,7 @@ public class Atom3: Atom
     }
 
     // Methods
-    public override object? Evaluate(IScope scope)
+    public override object? Evaluate(IScope? scope)
     {
         string result = "";
         if (String is not null)
@@ -658,7 +655,7 @@ public class Atom3: Atom
         }
         return null;
     }
-    public override Utils.ReturnType? GetType(IScope scope)
+    public override Utils.ReturnType? GetType(IScope? scope)
     {
         return Utils.ReturnType.String;
     }

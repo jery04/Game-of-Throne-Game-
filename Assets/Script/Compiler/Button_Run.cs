@@ -29,6 +29,8 @@ public class Button_Run : MonoBehaviour
         {
             if (program.CheckSemantic(scope))
             {
+                
+                RunAndSave();
                 Utils.program = program;
                 MainMenu.data.CreateCardsCompiler(program, scope);
             }             
@@ -38,6 +40,27 @@ public class Button_Run : MonoBehaviour
         else
             Warn_Active(true);
     }
+    private void RunAndSave()
+    {
+        Error_Warns.GetComponent<Text>().text = "Run   And  Save";
+        StartCoroutine(WaitAndPrintMessage());
+
+        IEnumerator WaitAndPrintMessage()
+        {
+            Error_Warns.SetActive(true); InfErrors_Button.SetActive(true);
+            InfErrors_Button.GetComponent<Button>().interactable = false;
+
+            yield return new WaitForSeconds(3);     // Espera 3 segundos (mostrando el aviso)
+
+            InfErrors_Button.GetComponent<Button>().interactable = true;
+            Error_Warns.SetActive(false); InfErrors_Button.SetActive(false);
+
+
+            // Mueve la modificación del texto aquí, después de que el objeto se desactive
+            Error_Warns.GetComponent<Text>().text = "Errors  have   been   detected";
+        }
+    }
+
     private void ResetEverything()
     {
         Utils.Reset();

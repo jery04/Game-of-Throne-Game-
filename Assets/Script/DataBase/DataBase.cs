@@ -86,7 +86,7 @@ public class DataBase : MonoBehaviour
         deckStark.Add(new Card("Wall Door", "Stark", 0, false, false, Resources.Load<Sprite>("d2"), Resources.Load<Sprite>("silver"), Card.kind_card.clear, Card.card_position.MRS, txt[9] + txt[18], Effects.ClimateOut));
 
         // Clima
-        deckStark.Add(new Card("Arciano", "Stark", -1, 2, false, false, Resources.Load<Sprite>("c1"), Resources.Load<Sprite>("emerald"), Card.kind_card.climate, Card.card_position.C, txt[1], Effects.Climate));  
+        deckStark.Add( new Card("Arciano", "Stark", -1, 2, false, false, Resources.Load<Sprite>("c1"), Resources.Load<Sprite>("emerald"), Card.kind_card.climate, Card.card_position.C, txt[1], Effects.Climate));  
         deckStark.Add(new Card("Boys' Wood", "Stark", -2, 1, false, false, Resources.Load<Sprite>("c2"), Resources.Load<Sprite>("emerald"), Card.kind_card.climate, Card.card_position.C, txt[1], Effects.Climate));
         deckStark.Add(new Card("Girl's Wood", "Stark", -1, 0, false, false, Resources.Load<Sprite>("c3"), Resources.Load<Sprite>("emerald"), Card.kind_card.climate, Card.card_position.C, txt[1], Effects.Climate));
 

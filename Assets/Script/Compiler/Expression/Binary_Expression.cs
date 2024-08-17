@@ -15,7 +15,7 @@ public class Expressions
     public Token? Opeartor { get; set; }
 
     // Methods
-    public double Evaluate(IScope scope)
+    public double Evaluate(IScope? scope)
     {
         double num1 = 0, num2 = 0;
 
@@ -29,7 +29,7 @@ public class Expressions
 
         return Utils.Operation(num1, num2, Opeartor);
     }
-    public Utils.ReturnType? GetType(IScope scope)
+    public Utils.ReturnType? GetType(IScope? scope)
     {
         if (Term is not null)
             return Term.GetType(scope);
@@ -66,7 +66,7 @@ public class Terms
     public Token? Opeartor { get; set; }
 
     // Methods
-    public double Evaluate(IScope scope)
+    public double Evaluate(IScope? scope)
     {
         double num1 = 0, num2 = 0;
 
@@ -80,7 +80,7 @@ public class Terms
 
         return Utils.Operation(num1, num2, Opeartor);
     }
-    public Utils.ReturnType? GetType(IScope scope)
+    public Utils.ReturnType? GetType(IScope? scope)
     {
         if (Factor is not null)
             return Factor.GetType(scope);
@@ -116,7 +116,7 @@ public class Factor
     public Expressions? Expression { get; set; }
 
     // Methods
-    public double Evaluate(IScope scope)
+    public double Evaluate(IScope? scope)
     {
         if (Expression is null)
         {
@@ -124,14 +124,14 @@ public class Factor
                 return Convert.ToInt32(Leaf.Value);
 
             else if (Leaf?.Type == Token.TokenType.UnKnown)
-                return Convert.ToDouble(scope.Defined[Leaf.Value]?.Evaluate(scope));
+                return Convert.ToDouble(scope?.Defined[Leaf.Value]?.Evaluate(scope));
         }
         else
             return Expression.Evaluate(scope);
 
         return -1;
     }
-    public Utils.ReturnType? GetType(IScope scope)
+    public Utils.ReturnType? GetType(IScope? scope)
     {
         if (Expression is not null)
         {
@@ -139,7 +139,7 @@ public class Factor
         }
         else if (Leaf?.Type == Token.TokenType.UnKnown)
         {
-            if (scope.IsDefined(Leaf.Value))
+            if (!(scope is null) && scope.IsDefined(Leaf.Value))
                 return scope.GetType(Leaf.Value, scope);
 
             else

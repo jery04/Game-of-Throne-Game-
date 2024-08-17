@@ -63,16 +63,27 @@ public class CardBlock : ISemantic
         switch (Convert.ToString(Type?.Evaluate(scope)))
         {
             case "oro":
+            case "golden":
                 return kind_card.golden;
+
+            case "plata":
             case "silver":
                 return kind_card.silver;
+
+            case "clima":
             case "climate":
                 return kind_card.climate;
+
             case "despeje":
+            case "clear":
                 return kind_card.clear;
+
             case "señuelo":
+            case "bait":
                 return kind_card.bait;
+
             case "aumento":
+            case "increase":
                 return kind_card.increase;
         }
         return kind_card.leader;

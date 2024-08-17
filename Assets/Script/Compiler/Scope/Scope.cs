@@ -56,11 +56,12 @@ public class Scope : IScope
         return child;
     }
 }
-public class Visitor : IVisitor
+public class Visitor 
 {
     // Property
-    public IVisitor? Parent { get; set; }
+    public Visitor? Parent { get; set; }
     public Dictionary<string, object> Defined { get; set; }
+    public IScope? Scope { get; set; }
 
     // Builder
     public Visitor()
@@ -68,17 +69,23 @@ public class Visitor : IVisitor
         this.Defined = new Dictionary<string, object>();
         this.Parent = null;
     }
+    public Visitor(IScope? scope)
+    {
+        this.Scope = scope;
+        this.Defined = new Dictionary<string, object>();
+        this.Parent = null;
+    }
 
     // Methods
-    public object? GetValue(string search, IVisitor scope)
+    public object? GetValue(string search)
     {
-        if ((search != null) && scope.IsDefined(search))
+        if ((search != null) && this.IsDefined(search))
         {
-            if (scope.Defined.ContainsKey(search))
-                return scope.Defined[search];
+            if (this.Defined.ContainsKey(search))
+                return this.Defined[search];
 
-            else if (scope.Parent != null)
-                return scope.Parent.GetValue(search, scope.Parent);
+            else if (this.Parent != null)
+                return this.Parent.GetValue(search);
         }
 
         return null;
@@ -90,6 +97,17 @@ public class Visitor : IVisitor
 
         if (!(name is null) && !(value is null) && !Defined.ContainsKey(name))
             Defined.Add(name, value);
+    }
+    public void Define(string? name, object? value)
+    {
+        if (!(name is null) && !(value is null))
+        {
+            if(!Defined.ContainsKey(name))
+                Defined.Add(name, value);
+            else
+                Defined[name] = value;
+        }
+            
     }
     public bool IsDefined(string? search)
     {
@@ -104,9 +122,9 @@ public class Visitor : IVisitor
 
         return false;
     }
-    public IVisitor CreateChild()
+    public Visitor CreateChild(IScope? scope)
     {
-        Visitor child = new Visitor();
+        Visitor child = new Visitor(scope);
         child.Parent = this;
 
         return child;

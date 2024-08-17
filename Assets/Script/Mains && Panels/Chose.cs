@@ -128,7 +128,7 @@ public class Chose : MonoBehaviour
             IEnumerator WaitAndPrintMessage()
             {
                 warn_Panel.SetActive(true);
-                yield return new WaitForSeconds(4);     // Espera 4 segundos (mostrando el aviso)
+                yield return new WaitForSeconds(3);     // Espera 3 segundos (mostrando el aviso)
                 warn_Panel.SetActive(false);
             }
         }
