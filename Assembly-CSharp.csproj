@@ -86,6 +86,7 @@
     <Compile Include="Assets\Script\Drag &amp;&amp; Drop\Drop.cs" />
     <Compile Include="Assets\Script\Card &amp;&amp; Player\Card.cs" />
     <Compile Include="Assets\Script\Compiler\Expression\Binary_Expression.cs" />
+    <Compile Include="Assets\Script\IA.cs" />
     <Compile Include="Assets\Script\Mains &amp;&amp; Panels\Chose.cs" />
     <Compile Include="Assets\Script\Compiler\Scope\Scope.cs" />
   </ItemGroup>

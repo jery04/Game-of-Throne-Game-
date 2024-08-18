@@ -44,110 +44,8 @@ public class Player : MonoBehaviour
     // Métodos 
     public void IA_Play()
     {
-        if (iaActive && myTurn)
-        {
-            GameObject card = SelectCardIA();
-            if(card is not null)
-            {
-                StartCoroutine(Play());
-
-                IEnumerator Play()
-                {
-                    yield return new WaitForSeconds(1);
-
-                    card.GetComponent<CardDisplay>().backImage.enabled = false;
-                    TakeCard(card, field[0]);
-                    GameObject.Destroy(card);
-                    
-                    GameManager.instance.ButtonSkipTurn();
-
-                    yield return new WaitForSeconds(1);
-                }
-            }
-            else GameManager.instance.ButtonSkipRound();
-        }
-    }
-    private GameObject SelectCardIA()
-    {
-        GameObject card = null;
-        List<GameObject> hand_current = hand.GetComponent<Panels>().cards;
-
-        if (hand_current.Count > 0)
-        {          
-            // Carta héroe con mayor poder
-            foreach (GameObject item in hand_current)
-            {
-                if (item.GetComponent<CardDisplay>().card.isHeroe && item.GetComponent<CardDisplay>().Power() > 5)
-                {
-                    if (card == null)
-                        card = item;
-
-                    else if (item.GetComponent<CardDisplay>().Power() > card.GetComponent<CardDisplay>().Power())
-                        card = item;
-                }
-            }
-
-            // Carta de Aumento
-            if (card is null)
-            {
-                foreach (GameObject item in hand_current)
-                {
-                    if (item.GetComponent<CardDisplay>().card.typeCard == Card.kind_card.increase && item.GetComponent<CardDisplay>().Power() > 1)
-                    {
-                        if (card == null)
-                            card = item;
-
-                        else if (item.GetComponent<CardDisplay>().Power() > card.GetComponent<CardDisplay>().Power())
-                            card = item;
-                    }
-                }
-            }
-
-            // Carta Clima
-            if (card is null)
-            {
-                int damage = 0;
-                foreach (GameObject item in hand_current)
-                {
-                    if (item.GetComponent<CardDisplay>().card.typeCard == Card.kind_card.climate && AmountOtherRow(item) >= 2)
-                    {
-                        if (card == null)
-                            card = item;
-
-                        else if (item.GetComponent<CardDisplay>().Power() < damage)
-                            card = item;
-                    }
-                }
-
-                int AmountOtherRow(GameObject climate)
-                {
-                    GameObject[] otherField = GameManager.instance.PlayerNotCurrent().field;
-                    Panels panel = otherField[climate.GetComponent<CardDisplay>().card.affectedRow].GetComponent<Panels>();
-                    return panel.CounterSilver();
-                }
-            }
-
-            // Carta Unidad
-            if (card is null)
-            {
-                foreach (GameObject item in hand_current)
-                {
-                    if (item.GetComponent<CardDisplay>().card.isUnity && item.GetComponent<CardDisplay>().Power() > 2)
-                    {
-                        if (card == null)
-                            card = item;
-
-                        else if (item.GetComponent<CardDisplay>().Power() > card.GetComponent<CardDisplay>().Power())
-                            card = item;
-                    }
-                }
-            }
-
-            else
-                card = hand_current[0];
-        }
-
-        return card;
+        if(iaActive && myTurn)
+            GameManager.artificial_player.Play();
     }
     public void Cementery()                               
     {
@@ -286,7 +184,7 @@ public class Player : MonoBehaviour
     }
     public void ButtonInfoTakeCard()                       // Modifica la visibilidad del botón Info
     {
-        if(GameManager.round == 0 && myTurn && takeCardStartGame < 2)
+        if(!iaActive && GameManager.round == 0 && myTurn && takeCardStartGame < 2)
             infoTakeCard.SetActive(true);
         else 
             infoTakeCard.SetActive(false);

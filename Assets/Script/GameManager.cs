@@ -14,6 +14,7 @@ using static UnityEditor.Progress;
 public class GameManager : MonoBehaviour
 {
     // Propiedades (Campo)
+    public static IA artificial_player;                              // Objeto IA
     public static bool iA;                                           // IA Active
     public static int round;                                         // (1) Número de Ronda
     public bool skipRound;                                           // (2) True(si algún jugador pasa la ronda) 
@@ -47,7 +48,7 @@ public class GameManager : MonoBehaviour
             panelRound.SetActive(false);
         }
     }                                   
-    public void ButtonSkipTurn()                                    // Salta el turno
+    public void ButtonSkipTurn()                                     // Salta el turno
     {
         currentPlayer.oneMove = false;
         if (!skipRound)
@@ -67,7 +68,7 @@ public class GameManager : MonoBehaviour
         else
             ButtonSkipRound();
     }
-    public void ButtonSkipRound()                                   // Tranformaciones cuando cambia de ronda
+    public void ButtonSkipRound()                                    // Tranformaciones cuando cambia de ronda
     {
         if (playerEnd == currentPlayer)
         {
@@ -171,17 +172,18 @@ public class GameManager : MonoBehaviour
 
         return player2;
     }                              // Retorna el jugador que no está en juego
-    public void Panel_IA_Active(bool active)
+    public void Panel_IA_Active(bool active) 
     {
         panelIA.SetActive(active);
     }
-    public void Active_IA(bool active)
+    public void IA_Active(bool active_player1) 
     {
-        if (active)
-            player1.iaActive = !player1.iaActive;
-        else
-            player2.iaActive = !player2.iaActive;
+        if (active_player1)
+            artificial_player.MoveCtrl(player1, player2);
 
+        else
+            artificial_player.MoveCtrl(player2, player1);
+         
         StartCoroutine(WaitAndPrintMessage());
 
         IEnumerator WaitAndPrintMessage()
@@ -193,6 +195,7 @@ public class GameManager : MonoBehaviour
 
     void Start()                                                      // Inicialización de propiedades
     {
+        artificial_player = new IA();                                 // Instancia la IA
         instance = this;
         round = 0;                                                    // Declara el inicio de ronda 1 (0)
 

@@ -40,11 +40,10 @@ public class Panels : MonoBehaviour
         if(cards.Count > 0) 
         { 
             for (int i = 0; i < cards.Count; i++) 
-            { 
+            {
                 if (cards[i] == null) 
-                {
                     cards.RemoveAt(i);
-                } 
+
                 else if (cards[i].GetComponent<CardDisplay>().card.isUnity && cards[i].GetComponent<CardDisplay>().Power() <= 0)
                 {
                     GameObject.Destroy(cards[i]);
