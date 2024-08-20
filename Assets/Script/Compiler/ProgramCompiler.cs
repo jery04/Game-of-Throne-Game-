@@ -26,16 +26,18 @@ public class ProgramCompiler : ISemantic
     }
     public bool CheckSemantic(IScope scope)
     {
+        bool check = true;
+
         if (Effect != null)
             foreach (EffectBlock effect in Effect)
                 if (!effect.CheckSemantic(scope))
-                    return false;
+                    check = false;
 
         if (Card != null)
             foreach (CardBlock card in Card)
                 if (!card.CheckSemantic(scope))
-                    return false;
+                    check = false;
 
-        return true;
+        return check;
     }
 }

@@ -28,8 +28,7 @@ public class Button_Run : MonoBehaviour
         else if (Utils.NotError)
         {
             if (program.CheckSemantic(scope))
-            {
-                
+            {        
                 RunAndSave();
                 Utils.program = program;
                 MainMenu.data.CreateCardsCompiler(program, scope);

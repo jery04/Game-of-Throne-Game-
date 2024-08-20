@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 #nullable enable
@@ -56,27 +58,48 @@ public class Scope : IScope
         return child;
     }
 }
-public class Visitor 
+public class Visitor : IVisitor
 {
     // Property
-    public Visitor? Parent { get; set; }
+    public IVisitor? Parent { get; set; }
     public Dictionary<string, object> Defined { get; set; }
+    public List<string> Increase {  get; set; } 
     public IScope? Scope { get; set; }
 
     // Builder
     public Visitor()
     {
+        this.Increase = new List<string>();
         this.Defined = new Dictionary<string, object>();
         this.Parent = null;
     }
     public Visitor(IScope? scope)
     {
+        this.Increase = new List<string>();
         this.Scope = scope;
         this.Defined = new Dictionary<string, object>();
         this.Parent = null;
     }
 
     // Methods
+    public void AddInstance()
+    {
+        if(Scope is not null)
+        {
+            Dictionary<string, GeneralStatement?> instance = Scope.Defined;
+
+            foreach (string variable in instance.Keys)
+                Define(variable, instance[variable]?.Evaluate(Scope));
+        }
+    }
+    public void AddIncrease()
+    {
+        foreach(string variable in Increase)
+        {
+            int value = Convert.ToInt32(GetValue(variable));
+            Define(variable, value+1);
+        }
+    }
     public object? GetValue(string search)
     {
         if ((search != null) && this.IsDefined(search))
@@ -95,8 +118,13 @@ public class Visitor
         string? name = variable.Name?.Value;
         GeneralStatement? value = variable.Value;
 
-        if (!(name is null) && !(value is null) && !Defined.ContainsKey(name))
-            Defined.Add(name, value);
+        if (!(name is null) && !(value is null))
+        {
+            if (!Defined.ContainsKey(name))
+                Defined.Add(name, value);
+            else
+                Defined[name] = value;
+        }
     }
     public void Define(string? name, object? value)
     {
@@ -106,8 +134,7 @@ public class Visitor
                 Defined.Add(name, value);
             else
                 Defined[name] = value;
-        }
-            
+        }          
     }
     public bool IsDefined(string? search)
     {
@@ -122,9 +149,16 @@ public class Visitor
 
         return false;
     }
-    public Visitor CreateChild(IScope? scope)
+    public IVisitor CreateChild(IScope? scope)
     {
         Visitor child = new Visitor(scope);
+        child.Parent = this;
+
+        return child;
+    }
+    public IVisitor CreateChild()
+    {
+        Visitor child = new Visitor();
         child.Parent = this;
 
         return child;

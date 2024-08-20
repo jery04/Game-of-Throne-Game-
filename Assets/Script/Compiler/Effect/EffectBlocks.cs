@@ -24,6 +24,7 @@ public class EffectBlock: ISemantic
     // Methods
     public void Evaluate(List<GameObject> target, Dictionary<string, object>? parameters)
     {
+        Debug.Log("Effect");
         Action?.Evaluate(target, parameters);
     }
     public bool CheckSemantic(IScope scope)
@@ -91,6 +92,7 @@ public class Action
     // Methods
     public void Evaluate(List<GameObject> target, Dictionary<string, object>? parameters)
     {
+        Debug.Log("Effect");
         Visitor visitor = new Visitor(this.Scope);
 
         if (parameters is not null)
@@ -101,6 +103,7 @@ public class Action
             if(firstParam is not null)
                 visitor.Defined.Add(firstParam, target);
         }
+        visitor.AddInstance();
 
         if (Instruction is not null)
             foreach (Instructions? item in Instruction)
@@ -126,7 +129,7 @@ public abstract class Instructions
 {
     // Abstract Class
     public abstract bool CheckSemantic(IScope scope);
-    public abstract void Evaluate(Visitor scope);
+    public abstract void Evaluate(IVisitor scope);
 }
 public class BucleWhile: Instructions
 {
@@ -136,17 +139,21 @@ public class BucleWhile: Instructions
     private IScope? Scope { get; set; }
 
     //Methods
-    public override void Evaluate(Visitor visitor)
+    public override void Evaluate(IVisitor visitor)
     {
-        Visitor child;
+        Debug.Log("While");
+        IVisitor child;
 
         while (Convert.ToBoolean(Condition?.Evaluate(Scope)))
         {
-            child = visitor.CreateChild(Scope);
+            child = visitor.CreateChild(Scope); child.AddInstance();
 
             if (Instruction is not null)
                 foreach (Instructions? item in Instruction)
                     item?.Evaluate(child);
+
+            visitor.AddIncrease();
+
         }
     }
     public override bool CheckSemantic(IScope scope)
@@ -187,9 +194,10 @@ public class BucleFor: Instructions
     private IScope? Scope { get; set; }
 
     // Methods
-    public override void Evaluate(Visitor visitor)
+    public override void Evaluate(IVisitor visitor)
     {
-        Visitor child;
+        Debug.Log("For");
+        IVisitor child;
         IEnumerable<GameObject>? list = new List<GameObject>();
 
         if (List is not null)
@@ -200,12 +208,14 @@ public class BucleFor: Instructions
 
         foreach (GameObject card in list.AsEnumerable())
         {
-            child = visitor.CreateChild(Scope);
+            child = visitor.CreateChild(Scope); child.AddInstance();
             visitor.Define(Iterator?.Value, card);
 
             if (Instruction is not null)
                 foreach (Instructions? item in Instruction)
                     item?.Evaluate(child);
+
+            visitor.AddIncrease();
         }
     }
     public override bool CheckSemantic(IScope scope)
@@ -253,9 +263,10 @@ public class Variable: Instructions, ISemantic
     }
 
     // Methods
-    public override void Evaluate(Visitor visitor)
+    public override void Evaluate(IVisitor visitor)
     {
-        visitor.Define(Name?.Value, Value?.Evaluate(visitor.Scope));
+        Debug.Log("Variable");
+        visitor.Define(Name?.Value, Value?.Evaluate(visitor.Scope, visitor));
     }
     public virtual object? Evaluate(IScope scope)
     {

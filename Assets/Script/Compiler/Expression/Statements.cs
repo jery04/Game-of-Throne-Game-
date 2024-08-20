@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using static Unity.VisualScripting.Antlr3.Runtime.Tree.TreeWizard;
 
 // Statement's Class
 #region
@@ -12,7 +13,7 @@ public abstract class GeneralStatement
 {
     public abstract Utils.ReturnType? GetType(IScope scope);
     public abstract bool CheckSemantic(IScope scope);
-    public abstract object? Evaluate(IScope? scope);
+    public abstract object? Evaluate(IScope? scope, IVisitor? visitor = null);
 }
 public class Target: GeneralStatement
 {
@@ -26,7 +27,7 @@ public class Target: GeneralStatement
     }
 
     // Methods
-    public override object? Evaluate(IScope? scope)
+    public override object? Evaluate(IScope? scope = null, IVisitor? visitor = null)
     {
         return target;
     }
@@ -78,7 +79,7 @@ public class Context: GeneralStatement
     }
 
     // Methods
-    public override object? Evaluate(IScope? scope)
+    public override object? Evaluate(IScope? scope, IVisitor? visitor = null)
     {
         return null;
     }
@@ -100,7 +101,7 @@ public class Parameters: GeneralStatement
     }
 
     // Methods
-    public override object? Evaluate(IScope? scope)
+    public override object? Evaluate(IScope? scope, IVisitor? visitor = null)
     {
         return null;
     }
@@ -112,7 +113,8 @@ public class Parameters: GeneralStatement
 }
 public class CardKey: GeneralStatement
 {
-    public override object? Evaluate(IScope? scope)
+    // Methods
+    public override object? Evaluate(IScope? scope, IVisitor? visitor = null)
     {
         return null;
     }
@@ -130,12 +132,12 @@ public class Statement: GeneralStatement
     public Statement? NodeRight { get; set; }
 
     // Methods
-    public override object? Evaluate(IScope? scope)
+    public override object? Evaluate(IScope? scope, IVisitor? visitor = null)
     {
         if (!(NodeLeft is null) && !(NodeRight is null) && !(LogOperator is null))
         {
-            bool boolean1 = Convert.ToBoolean(NodeLeft.Evaluate(scope));
-            bool boolean2 = Convert.ToBoolean(NodeRight.Evaluate(scope));
+            bool boolean1 = Convert.ToBoolean(NodeLeft.Evaluate(scope, visitor)); 
+            bool boolean2 = Convert.ToBoolean(NodeRight.Evaluate(scope, visitor));
 
             if (LogOperator.Type == Token.TokenType.AND)
                 return boolean1 && boolean2;
@@ -143,7 +145,7 @@ public class Statement: GeneralStatement
                 return boolean1 || boolean2;
         }
         else
-            return NodeLeft?.Evaluate(scope);
+            return NodeLeft?.Evaluate(scope, visitor);
     }
     public override Utils.ReturnType? GetType(IScope scope)
     {
@@ -182,12 +184,12 @@ public class SubStatement
     public Statement? NodeRight { get; set; }
 
     // Methods
-    public object? Evaluate(IScope? scope)
+    public object? Evaluate(IScope? scope, IVisitor? visitor = null)
     {
         if (!(NodeLeft is null) && !(NodeRight is null) && !(LogOperator is null))
         {
-            bool boolean1 = Convert.ToBoolean(NodeLeft.Evaluate(scope));
-            bool boolean2 = Convert.ToBoolean(NodeRight.Evaluate(scope));
+            bool boolean1 = Convert.ToBoolean(NodeLeft.Evaluate(scope, visitor));
+            bool boolean2 = Convert.ToBoolean(NodeRight.Evaluate(scope, visitor));
 
             if (LogOperator.Type == Token.TokenType.AND)
                 return boolean1 && boolean2;
@@ -195,7 +197,7 @@ public class SubStatement
                 return boolean1 || boolean2;
         }
         else
-            return NodeLeft?.Evaluate(scope);
+            return NodeLeft?.Evaluate(scope, visitor);
     }
     public Utils.ReturnType? GetType(IScope scope)
     {
@@ -236,11 +238,13 @@ public class Molecule: Instructions
     public Atom? NodeRight { get; set; }
 
     // Methods
-    public override void Evaluate(Visitor visitor)
+    public override void Evaluate(IVisitor visitor)
     {
-        throw new NotImplementedException();
+        Debug.Log("Molecule");
+
+        Evaluate(null, visitor);
     }
-    public object? Evaluate(IScope? scope)
+    public object? Evaluate(IScope? scope, IVisitor? visitor = null)
     {
         if (!(NodeLeft is null) && !(NodeRight is null) && !(ArtOpeartor is null))
         {
@@ -248,10 +252,15 @@ public class Molecule: Instructions
                 return Utils.LogOperator(NodeLeft.Evaluate(scope), NodeRight.Evaluate(scope), ArtOpeartor, NodeLeft.GetType(scope));
 
             else
-                throw new NotImplementedException();
+            {
+
+
+
+                return null;
+            }
         }
         else
-            return NodeLeft?.Evaluate(scope);
+            return NodeLeft?.Evaluate(scope, visitor);
     }
     public Utils.ReturnType? GetType(IScope scope)
     {
@@ -308,7 +317,7 @@ public abstract class Atom
     // Abstract class
     public abstract Utils.ReturnType? GetType(IScope? scope);
     public abstract bool CheckSemantic(IScope scope);
-    public abstract object? Evaluate(IScope? scope);
+    public abstract object? Evaluate(IScope? scope, IVisitor? visitor = null);
     public abstract Token? Location();
 }
 public class Atom0: Atom
@@ -317,7 +326,7 @@ public class Atom0: Atom
     public Token? Boolean { get; set; }
 
     //Methods
-    public override object? Evaluate(IScope? scope)
+    public override object? Evaluate(IScope? scope, IVisitor? visitor = null)
     {
         if (Boolean is not null)
         {
@@ -345,18 +354,11 @@ public class Atom1: Atom
 {
     // Property
     public Expressions? Expression { get; set; }
-    public Token? OpIncrease { get; set; }
 
     //Methods
-    public override object? Evaluate(IScope? scope)
+    public override object? Evaluate(IScope? scope, IVisitor? visitor = null)
     {
-        if (OpIncrease is null)
-            return Expression?.Evaluate(scope);
-        else
-        {
-            // Type Code Here..
-        }
-        return null;
+        return Expression?.Evaluate(scope , visitor);
     }
     public override Utils.ReturnType? GetType(IScope? scope)
     {
@@ -364,21 +366,7 @@ public class Atom1: Atom
     }
     public override bool CheckSemantic(IScope scope)
     {
-        if (OpIncrease is not null)
-        {
-            if (Expression is not null)
-            {
-                if (!Expression.CheckSemantic(scope))
-                    return false;
-
-                if (Expression.GetType(scope) != Utils.ReturnType.Number)
-                {
-                    Utils.errors.Add(@$"No se puede asignar el operador ""{OpIncrease.Value}"" a un tipo ""{Expression.GetType(scope)}"" ");
-                    return false;
-                }
-            }
-        }
-        else if (Expression is not null && !Expression.CheckSemantic(scope))
+        if (!(Expression is null) && !Expression.CheckSemantic(scope))
             return false;
 
         return true;
@@ -401,7 +389,7 @@ public class Atom2: Atom
     }
 
     //Methods
-    public override object? Evaluate(IScope? scope)
+    public override object? Evaluate(IScope? scope, IVisitor? visitor = null)
     {
         throw new NotImplementedException();
     }
@@ -632,7 +620,7 @@ public class Atom3: Atom
     }
 
     // Methods
-    public override object? Evaluate(IScope? scope)
+    public override object? Evaluate(IScope? scope, IVisitor? visitor = null)
     {
         string result = "";
         if (String is not null)

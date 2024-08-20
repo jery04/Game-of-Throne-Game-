@@ -441,7 +441,10 @@ public class Predicate
     // Methods
     public bool Evaluate(GameObject card)
     {
-        throw new NotImplementedException();
+        Visitor visitor = new Visitor(); 
+        visitor.Define(Card?.Value, card);
+
+        return Convert.ToBoolean(Condition?.Evaluate(null, visitor));
     }
     public bool CheckSemantic(IScope scope)
     {

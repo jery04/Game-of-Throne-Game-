@@ -15,19 +15,17 @@ public class Expressions
     public Token? Opeartor { get; set; }
 
     // Methods
-    public double Evaluate(IScope? scope)
+    public object? Evaluate(IScope? scope, IVisitor? visitor = null)
     {
-        double num1 = 0, num2 = 0;
+        if(!(Expression is null) && !(Term is null))
+        {
+            double num1 = 0, num2 = 0;
+            num1 = Convert.ToDouble(Term.Evaluate(scope, visitor));
+            num2 = Convert.ToDouble(Expression.Evaluate(scope, visitor));
 
-        if (Term is not null)
-            num1 = Term.Evaluate(scope);
-
-        if (Expression is not null)
-            num2 = Expression.Evaluate(scope);
-
-        else return num1;
-
-        return Utils.Operation(num1, num2, Opeartor);
+            return Utils.Operation(num1, num2, Opeartor);
+        }
+        return Term?.Evaluate(scope, visitor);
     }
     public Utils.ReturnType? GetType(IScope? scope)
     {
@@ -66,19 +64,18 @@ public class Terms
     public Token? Opeartor { get; set; }
 
     // Methods
-    public double Evaluate(IScope? scope)
+    public object? Evaluate(IScope? scope, IVisitor? visitor = null)
     {
-        double num1 = 0, num2 = 0;
+        if (!(Term is null) && !(Factor is null))
+        {
+            double num1 = 0, num2 = 0;
+            num1 = Convert.ToDouble(Factor.Evaluate(scope, visitor));
+            num2 = Convert.ToDouble(Term.Evaluate(scope, visitor));
 
-        if (Factor is not null)
-            num1 = Factor.Evaluate(scope);
+            return Utils.Operation(num1, num2, Opeartor);
+        }
 
-        if (Term is not null)
-            num2 = Term.Evaluate(scope);
-
-        else return num1;
-
-        return Utils.Operation(num1, num2, Opeartor);
+        return Factor?.Evaluate(scope, visitor);
     }
     public Utils.ReturnType? GetType(IScope? scope)
     {
@@ -114,22 +111,32 @@ public class Factor
     // Property
     public Token? Leaf { get; set; }
     public Expressions? Expression { get; set; }
+    public bool Increase {  get; set; }
 
     // Methods
-    public double Evaluate(IScope? scope)
+    public object? Evaluate(IScope? scope, IVisitor? visitor = null)
     {
         if (Expression is null)
         {
             if (Leaf?.Type == Token.TokenType.Digit)
-                return Convert.ToInt32(Leaf.Value);
+                return Convert.ToDouble(Leaf.Value);
 
             else if (Leaf?.Type == Token.TokenType.UnKnown)
-                return Convert.ToDouble(scope?.Defined[Leaf.Value]?.Evaluate(scope));
-        }
-        else
-            return Expression.Evaluate(scope);
+            {
 
-        return -1;
+                if(visitor is not null)
+                {
+                    if (Increase && !visitor.Increase.Contains(Leaf.Value))
+                        visitor.Increase.Add(Leaf.Value);
+
+                    return visitor.GetValue(Leaf.Value);
+                }
+                else
+                    return Convert.ToDouble(scope?.Defined[Leaf.Value]?.Evaluate(scope));
+            }
+        }
+       
+        return Expression?.Evaluate(scope, visitor);
     }
     public Utils.ReturnType? GetType(IScope? scope)
     {
@@ -158,7 +165,18 @@ public class Factor
         {
             if (Leaf?.Type == Token.TokenType.UnKnown)
             {
-                if (!scope.IsDefined(Leaf.Value))
+                if (scope.IsDefined(Leaf.Value))
+                {
+                    if (Increase)
+                    {
+                        if(scope.GetType(Leaf.Value, scope) != Utils.ReturnType.Number)
+                        {
+                            Utils.errors.Add(@$"No se puede asignar el operador ""++"" al tipo ""{scope.GetType(Leaf.Value, scope)}"" Line: {Leaf.Line} Column: {Leaf.Column} ");
+                            return false;
+                        }
+                    }
+                }
+                else
                 {
                     Utils.errors.Add(@$"La variable ""{Leaf.Value}"" no existe en el contexto actual Line: {Leaf.Line} Column: {Leaf.Column}");
                     return false;

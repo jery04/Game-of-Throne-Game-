@@ -33,7 +33,7 @@ public class Parser : IParsing
         if (ThereIsNext(i))
             return Tokens[Index + i];
 
-        throw new NotImplementedException();
+        return CurrentToken;
     }   // Retorna el (i)próximo elemento (Sin avanzar)
     private bool LookAhead(bool chose, params Token.TokenType[] nextTokens)
     {
@@ -76,10 +76,11 @@ public class Parser : IParsing
             else
             {
                 Utils.errors.Add($"Error: No se esperaba un \"{LookAhead()?.Value}\" Line: {LookAhead()?.Line}, Column: {LookAhead()?.Column}");
-                this.CurrentToken = Tokens[++Index];
+                if(ThereIsNext())
+                    this.CurrentToken = Tokens[++Index];
             }
         }
-    }   // Avanza en el orden de parametros de entrada
+    }   // Avanza en el orden de parámetros de entrada
     private Token? MatchReturn(params Token.TokenType[] nextTokens)
     {
         if (nextTokens.Length != 0)
@@ -93,7 +94,8 @@ public class Parser : IParsing
                 }
             }
             Utils.errors.Add($"Error: No se esperaba un \"{LookAhead()?.Value}\" Line: {LookAhead()?.Line}, Column: {LookAhead()?.Column}");
-            this.CurrentToken = Tokens[++Index];
+            if (ThereIsNext())
+                this.CurrentToken = Tokens[++Index];
         }
         else
         {
@@ -110,11 +112,17 @@ public class Parser : IParsing
     {
         ProgramCompiler ast = new ProgramCompiler();
 
-        while (LookAhead(false, Token.TokenType.Effect))
-            ast.Effect?.Add(EffectBuilder());
+        // Effects
+        if(LookAhead(false, Token.TokenType.Effect))
+            while (LookAhead(false, Token.TokenType.Effect))
+                ast.Effect?.Add(EffectBuilder());
 
-        while (LookAhead(false, Token.TokenType.Card))
-            ast.Card?.Add(CardBuilder());
+        // Cards
+        if (LookAhead(false, Token.TokenType.Card))
+            while (LookAhead(false, Token.TokenType.Card))
+                ast.Card?.Add(CardBuilder());
+        else
+            Match(Token.TokenType.Card);
 
         return ast;
     }
@@ -524,7 +532,17 @@ public class Parser : IParsing
             Match(Token.TokenType.ClosedParan);
         }
         else
-            factor.Leaf = MatchReturn(Token.TokenType.Digit, Token.TokenType.UnKnown);
+        {
+            if (LookAhead(false, Token.TokenType.Digit))
+                factor.Leaf = MatchReturn(Token.TokenType.Digit);
+
+            else if(LookAhead(false, Token.TokenType.UnKnown))
+            {
+                factor.Leaf = MatchReturn(Token.TokenType.UnKnown);
+                if (LookAhead(true, Token.TokenType.PlusPlus))
+                    factor.Increase = true;
+            }
+        }
 
         return factor;
     }
@@ -610,9 +628,6 @@ public class Parser : IParsing
     {
         Atom1 atom1 = new Atom1();
         atom1.Expression = ExpressionBuilder();
-
-        if (LookAhead(false, Token.TokenType.PlusPlus))
-            atom1.OpIncrease = MatchReturn();
 
         return atom1;
     }
