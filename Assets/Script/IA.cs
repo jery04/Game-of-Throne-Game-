@@ -87,7 +87,7 @@ public class IA : MonoBehaviour
             {
                 foreach (GameObject item in hand_current)
                 {
-                    if (item.GetComponent<CardDisplay>().card.typeCard == Card.kind_card.increase && item.GetComponent<CardDisplay>().Power() > 1)
+                    if (item.GetComponent<CardDisplay>().card.type == Card.kind_card.increase && item.GetComponent<CardDisplay>().Power() > 1)
                     {
                         if (card == null)
                             card = item;
@@ -104,7 +104,7 @@ public class IA : MonoBehaviour
                 int damage = 0;
                 foreach (GameObject item in hand_current)
                 {
-                    if (item.GetComponent<CardDisplay>().card.typeCard == Card.kind_card.climate && AmountOtherRow(item) >= 2)
+                    if (item.GetComponent<CardDisplay>().card.type == Card.kind_card.climate && AmountOtherRow(item) >= 2)
                     {
                         if (card == null)
                             card = item;

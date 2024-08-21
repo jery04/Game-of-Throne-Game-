@@ -25,7 +25,7 @@ public interface IVisitor
     public IVisitor? Parent { get; set; }
     public void AddIncrease();
     public IScope? Scope { get; set; }
-    public List<string> Increase { get; set; }
+    public List<string> IncreaseVariables { get; set; }
     public Dictionary<string, object> Defined { get; set; }
     public bool IsDefined(string search);
     public void Define(Variable variable);
@@ -33,5 +33,5 @@ public interface IVisitor
     public IVisitor CreateChild(IScope? scope);
     public IVisitor CreateChild();
     public void AddInstance();
-    public object? GetValue(string search);
+    public object? GetValue(string? search);
 }

@@ -23,7 +23,7 @@ public class Expressions
             num1 = Convert.ToDouble(Term.Evaluate(scope, visitor));
             num2 = Convert.ToDouble(Expression.Evaluate(scope, visitor));
 
-            return Utils.Operation(num1, num2, Opeartor);
+            return Utils.ArtOperation(num1, num2, Opeartor);
         }
         return Term?.Evaluate(scope, visitor);
     }
@@ -72,7 +72,7 @@ public class Terms
             num1 = Convert.ToDouble(Factor.Evaluate(scope, visitor));
             num2 = Convert.ToDouble(Term.Evaluate(scope, visitor));
 
-            return Utils.Operation(num1, num2, Opeartor);
+            return Utils.ArtOperation(num1, num2, Opeartor);
         }
 
         return Factor?.Evaluate(scope, visitor);
@@ -123,13 +123,12 @@ public class Factor
 
             else if (Leaf?.Type == Token.TokenType.UnKnown)
             {
-
                 if(visitor is not null)
                 {
-                    if (Increase && !visitor.Increase.Contains(Leaf.Value))
-                        visitor.Increase.Add(Leaf.Value);
+                    if (Increase && !visitor.IncreaseVariables.Contains(Leaf.Value))
+                        visitor.IncreaseVariables.Add(Leaf.Value);
 
-                    return visitor.GetValue(Leaf.Value);
+                    return visitor.GetValue(Leaf?.Value);
                 }
                 else
                     return Convert.ToDouble(scope?.Defined[Leaf.Value]?.Evaluate(scope));

@@ -99,12 +99,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   card: {fileID: 0}
-  textPower: {fileID: 2512134465393078206}
+  power: {fileID: 2512134465393078206}
   artWork: {fileID: 5550093308497448100}
   portrait: {fileID: 1443074159576760818}
   backImage: {fileID: 4318210015432970224}
   type_Card: 0
   cardPosition: 0
+  name: 
+  faction: 
+  owner: 
 --- !u!114 &5728242484522748464
 MonoBehaviour:
   m_ObjectHideFlags: 0

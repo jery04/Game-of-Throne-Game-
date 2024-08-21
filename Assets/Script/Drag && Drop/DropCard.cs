@@ -45,7 +45,7 @@ public class DropCard : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoin
             case Card.kind_card.bait:
                 return "Bait";
             case Card.kind_card.increase:
-                return "Increase";
+                return "IncreaseVariables";
             case Card.kind_card.leader:
                 return "Leader";
         }
@@ -58,7 +58,7 @@ public class DropCard : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoin
         {
             GameObject.Find("Panel_Card").transform.GetChild(3).GetComponent<Text>().text = this.name;                                                // Nombre
             GameObject.Find("Panel_Card").transform.GetChild(5).GetComponent<Text>().text = this.GetComponent<CardDisplay>().card.faction;            // Facción
-            GameObject.Find("Panel_Card").transform.GetChild(7).GetComponent<Text>().text = this.GetComponent<CardDisplay>().textPower.text;          // Poder
+            GameObject.Find("Panel_Card").transform.GetChild(7).GetComponent<Text>().text = this.GetComponent<CardDisplay>().power.text;          // Poder
             GameObject.Find("Panel_Card").transform.GetChild(9).GetComponent<Text>().text = KindCard(this.GetComponent<CardDisplay>().type_Card);     // Tipo de carta
             GameObject.Find("Panel_Card").transform.GetChild(11).GetComponent<Text>().text = Position(this.GetComponent<CardDisplay>().cardPosition); // Posición
             GameObject.Find("Panel_Card").transform.GetChild(13).GetComponent<Text>().text = this.GetComponent<CardDisplay>().card.description;       // Descripción

@@ -92,7 +92,7 @@ public class Action
     // Methods
     public void Evaluate(List<GameObject> target, Dictionary<string, object>? parameters)
     {
-        Debug.Log("Effect");
+        Debug.Log("Action");
         Visitor visitor = new Visitor(this.Scope);
 
         if (parameters is not null)
@@ -129,7 +129,7 @@ public abstract class Instructions
 {
     // Abstract Class
     public abstract bool CheckSemantic(IScope scope);
-    public abstract void Evaluate(IVisitor scope);
+    public abstract void Evaluate(IVisitor visitor);
 }
 public class BucleWhile: Instructions
 {
@@ -144,7 +144,7 @@ public class BucleWhile: Instructions
         Debug.Log("While");
         IVisitor child;
 
-        while (Convert.ToBoolean(Condition?.Evaluate(Scope)))
+        while (Convert.ToBoolean(Condition?.Evaluate(Scope, visitor)))
         {
             child = visitor.CreateChild(Scope); child.AddInstance();
 
@@ -153,7 +153,6 @@ public class BucleWhile: Instructions
                     item?.Evaluate(child);
 
             visitor.AddIncrease();
-
         }
     }
     public override bool CheckSemantic(IScope scope)
@@ -345,7 +344,7 @@ public class Variable: Instructions, ISemantic
     private bool CardFieldIdentify()
     {
         if (Name != null)
-            return (Utils.fieldCard.Contains(Name.Type));
+            return (Utils.cardField.Contains(Name.Type));
         else
             return false;
     }

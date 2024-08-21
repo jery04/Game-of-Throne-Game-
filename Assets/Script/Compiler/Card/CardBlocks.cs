@@ -163,7 +163,7 @@ public class OnActivationBody
             if (Utils.program.Effect is not null)
                 foreach (EffectBlock effects in Utils.program.Effect)
                     if (effects.GetName() == effectActive)
-                        { effects.Evaluate(target, parameters); break; }
+                        { Debug.Log(effectActive);  effects.Evaluate(target, parameters); break; }
         }
 
         if (PosAction is not null)
@@ -224,14 +224,14 @@ public class EffectActivation
             {
                 if (Utils.ContainsEffect(nameEffect))
                 {
-                    if (Utils.CheckAmountParams(nameEffect, Parameters?.Count))
+                    if (Utils.CheckParamsAmount(nameEffect, Parameters?.Count))
                     {
                         for (int i = 0; i < Parameters?.Count; i++)
                         {
                             string? param = Convert.ToString(Parameters[i]?.ReturnName())?.ToLower();
                             if (Utils.ContainsParameter(nameEffect, param))
                             {
-                                if (Utils.ReturnTypeParams(nameEffect, param) != Parameters[i]?.GetType(scope))
+                                if (Utils.ReturnParamsType(nameEffect, param) != Parameters[i]?.GetType(scope))
                                 {
 
                                     Utils.errors.Add(@$"El tipo de retorno de ""{param}"" no coincide con la definición del efecto ""{nameEffect}"" Line: {Parameters[i]?.Location()?.Line} Column: {Parameters[i]?.Location()?.Column} ");
@@ -274,10 +274,10 @@ public class Selector
     public Predicate? Predicate { get; set; }
 
     // Methods
-    public List<GameObject> Evaluate()
+    public List<GameObject> Evaluate(List<GameObject>? parent = null)
     {
         List<GameObject> selector = new List<GameObject>();
-        List<GameObject> source = GetSource();
+        List<GameObject> source = GetSource(parent);
         bool single = Convert.ToBoolean(Single?.Evaluate(new Scope()));
 
         foreach (GameObject card in source)
@@ -307,7 +307,7 @@ public class Selector
 
         return check;
     }
-    private List<GameObject> GetSource()
+    private List<GameObject> GetSource(List<GameObject>? parent = null)
     {
         List<GameObject> source = new List<GameObject>();
         string current = GameManager.currentPlayer.playerName;
@@ -337,7 +337,8 @@ public class Selector
                 source = Context.FieldOfPlayer(notCurrent);
                 break;
             case "parent":
-                source = Context.Parent();
+                if(parent is not null)
+                    source = parent;
                 break;
         }
         return source;
@@ -396,7 +397,7 @@ public class PosAction
             if (Selector is null)
                 target_selector = parent_selector;
             else
-                target_selector = Selector.Evaluate();
+                target_selector = Selector.Evaluate(parent_selector);
 
             effectActive = Convert.ToString(Name.Evaluate(new Scope()));
 
@@ -437,6 +438,7 @@ public class Predicate
     // Property
     public Token? Card { get; set; }
     public Statement? Condition { get; set; }
+    private IScope? Scope { get; set; }
 
     // Methods
     public bool Evaluate(GameObject card)
@@ -444,11 +446,11 @@ public class Predicate
         Visitor visitor = new Visitor(); 
         visitor.Define(Card?.Value, card);
 
-        return Convert.ToBoolean(Condition?.Evaluate(null, visitor));
+        return Convert.ToBoolean(Condition?.Evaluate(Scope, visitor));
     }
     public bool CheckSemantic(IScope scope)
     {
-        IScope child = scope.CreateChild();
+        IScope child = scope.CreateChild(); this.Scope = child;
 
         child.Define(new Variable(Card, new CardKey()));
 

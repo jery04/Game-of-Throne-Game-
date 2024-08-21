@@ -35,7 +35,7 @@ public class LineNumberDisplay : MonoBehaviour
         }
         // Actualizar el texto que muestra los números de línea
         lineNumbersText.text = lineNumbers;
-        code = lines;
+         code = lines;
     }
     private void OnScrollbarValueChanged(float value)
     {

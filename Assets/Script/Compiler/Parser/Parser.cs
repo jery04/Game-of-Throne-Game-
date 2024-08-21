@@ -33,7 +33,7 @@ public class Parser : IParsing
         if (ThereIsNext(i))
             return Tokens[Index + i];
 
-        return CurrentToken;
+        return Tokens[Index-1];
     }   // Retorna el (i)próximo elemento (Sin avanzar)
     private bool LookAhead(bool chose, params Token.TokenType[] nextTokens)
     {
@@ -362,7 +362,7 @@ public class Parser : IParsing
         Variable field = new Variable();
 
         if (Utils.card.Contains(LookAhead().Value))
-            LookAhead().Type = Utils.fieldCard[Utils.card.IndexOf(LookAhead().Value)];
+            LookAhead().Type = Utils.cardField[Utils.card.IndexOf(LookAhead().Value)];
 
         field.Name = MatchReturn(tokenField);
         Match(Token.TokenType.Colon);

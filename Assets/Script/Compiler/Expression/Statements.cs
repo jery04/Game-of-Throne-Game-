@@ -2,9 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
+using static Card;
 using static Unity.VisualScripting.Antlr3.Runtime.Tree.TreeWizard;
+using static Unity.VisualScripting.Member;
 
 // Statement's Class
 #region
@@ -39,46 +43,41 @@ public class Target: GeneralStatement
 }
 public class Context: GeneralStatement
 {
-    // Property
+    // Methods-List
     public static List<GameObject> Board()
     {
-        List<GameObject> board = new List<GameObject>(); 
+        List<GameObject> board = new List<GameObject>();
         GameObject[] player1_field = GameManager.instance.player1.field;
-        GameObject[] player2_field = GameManager.instance.player2.field; 
-        
-        for(int i = 0; i < 3; i++)
-        {
-            board.Concat(player1_field[i].GetComponent<Panels>().cards);
-            board.Concat(player1_field[i].GetComponent<Panels>().cards);
-        }
+        GameObject[] player2_field = GameManager.instance.player2.field;
 
+        for (int i = 0; i < 3; i++)
+        {
+            board.AddRange(player1_field[i].GetComponent<Panels>().cards);
+            board.AddRange(player2_field[i].GetComponent<Panels>().cards);
+        }
         return board;
     }
-    public static List<GameObject> HandOfPlayer(string playerName)
+    public static List<GameObject> HandOfPlayer(string? playerName)
     {
         GameManager game = GameManager.instance;
         return game.GetPlayer(playerName).hand.GetComponent<Panels>().cards;
     }
-    public static List<GameObject> FieldOfPlayer(string playerName)
+    public static List<GameObject> FieldOfPlayer(string? playerName)
     {
         List<GameObject> field = new List<GameObject>();    
         GameObject[] player_field = GameManager.instance.GetPlayer(playerName).field;
 
         for (int i = 0; i < 3; i++)
-            field.Concat(player_field[i].GetComponent<Panels>().cards);
+            field.AddRange(player_field[i].GetComponent<Panels>().cards);
 
         return field;
     }
-    public static List<GameObject> DeckOfPlayer(string playerName)
+    public static List<GameObject> DeckOfPlayer(string? playerName)
     {
         return GameManager.instance.GetPlayer(playerName).deck;
     }
-    public static List<GameObject> Parent()
-    {
-        throw new NotImplementedException();
-    }
 
-    // Methods
+    // Methods-Ctrls
     public override object? Evaluate(IScope? scope, IVisitor? visitor = null)
     {
         return null;
@@ -249,7 +248,7 @@ public class Molecule: Instructions
         if (!(NodeLeft is null) && !(NodeRight is null) && !(ArtOpeartor is null))
         {
             if (ArtOpeartor.Type != Token.TokenType.Assignment && ArtOpeartor.Type != Token.TokenType.Increase && ArtOpeartor.Type != Token.TokenType.Decrease)
-                return Utils.LogOperator(NodeLeft.Evaluate(scope), NodeRight.Evaluate(scope), ArtOpeartor, NodeLeft.GetType(scope));
+                return Utils.LogOperator(NodeLeft.Evaluate(scope, visitor), NodeRight.Evaluate(scope, visitor), ArtOpeartor, NodeLeft.GetType(scope));
 
             else
             {
@@ -391,7 +390,138 @@ public class Atom2: Atom
     //Methods
     public override object? Evaluate(IScope? scope, IVisitor? visitor = null)
     {
-        throw new NotImplementedException();
+        if (Call is not null)
+        {
+            if (scope?.GetType(Call[0]?.Value, scope) == Utils.ReturnType.Card)
+            {
+                GameObject? card = (GameObject?)visitor?.GetValue(Call[0]?.Value);
+                if (Call[1] is not null)
+                    return CardProperty(Call[1]?.Value, card);
+
+                else return card;
+            }
+            else if (scope?.GetType(Call[0]?.Value, scope) == Utils.ReturnType.Context)
+            {
+                if (Call[1] is not null)
+                {
+                    if (Call[2] is not null)
+                    {
+                        List<GameObject>? list = (List<GameObject>?)GetList(Call[1]?.Value);
+                        return Methods(Call[2]?.Value, list, visitor);
+                    }
+                    else if (Call[1]?.Value == "TriggerPlayer")
+                        return GameManager.currentPlayer.playerName;
+                    else
+                        return GetList(Call[1]?.Value, Convert.ToString(Nested?.Evaluate(scope, visitor)));
+                }
+                else new Context();
+            }
+            else if (scope?.GetType(Call[0]?.Value, scope) == Utils.ReturnType.List)
+            {
+                List<GameObject>? list = (List<GameObject>?)visitor?.GetValue(Call[0]?.Value);
+                if (Call[1] is not null)
+                    return Methods(Call[1]?.Value, list, visitor); 
+
+                else return list;
+            }
+            else
+                return visitor?.GetValue(Call[0]?.Value);
+        }
+        return null;
+    }
+    private object? Methods(string? method, List<GameObject>? list, IVisitor? visitor)
+    {
+        switch (method)
+        {
+            case "Pop":
+                GameObject? clone = GameObject.Instantiate(list?[list.Count - 1]);  
+                list?.RemoveAt(list.Count - 1);
+                return clone;
+
+            case "SendBottom":
+                GameObject? card1 = (GameObject?)Nested?.Evaluate(null, visitor);
+                if(card1 is not null)
+                    list?.Insert(0, card1);
+                break;
+
+            case "Add":
+            case "Push":
+                GameObject? card2 = (GameObject?)Nested?.Evaluate(null, visitor);
+                if (card2 is not null)
+                    list?.Add(card2);
+                break;
+
+            case "Remove":
+                GameObject? card3 = (GameObject?)Nested?.Evaluate(null, visitor);
+                if(card3 is not null)
+                    list?.Remove(card3);
+                break;
+
+            case "Shuffle":
+                if (list is not null)
+                {
+                    int dimen = list.Count;
+                    for (int i = 0; i < dimen / 2; i++)
+                    {
+                        int random = UnityEngine.Random.Range(i+1, dimen);
+                        GameObject swap = list[i]; 
+                        list[i] = list[random]; list[random] = swap;
+                    }
+                }
+                break;
+
+            case "Find":
+                throw new NotImplementedException();
+        }
+        return null;
+    }
+    private object CardProperty(string? property, GameObject? card)
+    {
+        if(card is not null)
+        {
+            switch (property)
+            {
+                case "Name":
+                    return card.GetComponent<CardDisplay>().name;
+
+                case "Faction":
+                    return card.GetComponent<CardDisplay>().faction;
+
+                case "Power":
+                    return card.GetComponent<CardDisplay>().Power();
+
+                case "Type":
+                    return GetTypeCard(card.GetComponent<CardDisplay>().type_Card);
+
+                case "Range":
+                    throw new NotImplementedException();
+
+                case "Owner":
+                    return card.GetComponent<CardDisplay>().owner;
+            }
+        }
+        return "";
+    }
+    private string GetTypeCard(Card.kind_card type)
+    {
+        switch (type)
+        {
+            case Card.kind_card.golden:
+                return "oro";
+
+            case Card.kind_card.silver:
+                return "plata";
+
+            case  Card.kind_card.climate:
+                return "clima";
+
+            case Card.kind_card.increase:
+                return "aumento";
+
+            case Card.kind_card.bait:
+                return "señuelo";
+        }
+        return "líder";
     }
     private void NullFill()
     {
@@ -602,6 +732,40 @@ public class Atom2: Atom
         }
 
         return true;
+    }
+    private List<GameObject>? GetList(string? list, string? player = null)
+    {
+        string current = GameManager.currentPlayer.playerName;
+        switch (list)
+        {
+            case "Board":
+                return Context.Board();
+
+            case "Hand":
+                return Context.HandOfPlayer(current);
+
+            case "HandOfPlayer":
+                return Context.HandOfPlayer(player);
+
+            case "Field":
+                return Context.HandOfPlayer(current);
+
+            case "FieldOfPlayer":
+                return Context.HandOfPlayer(player);
+
+            case "Deck":
+                return Context.DeckOfPlayer(current);
+
+            case "DeckOfPlayer":
+                return Context.DeckOfPlayer(player);
+
+            case "Graveyard":
+                return Context.DeckOfPlayer(current);
+
+            case "GraveyardOfPlayer":
+                return Context.DeckOfPlayer(player);
+        }
+        return null;
     }
     public override Token? Location()
     {

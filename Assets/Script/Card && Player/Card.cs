@@ -11,15 +11,15 @@ public class Card : ScriptableObject
 {
     // Propiedades (Campo) 
     public new string name;                                                             // Nombre de la carta
-    public string faction;                                                              // Faccion de la carta
+    public string faction;                                                              // Facción de la carta
     public int power;                                                                   // Poder(unidad), daño(clima) o incremento(aumento)
-    public string description;
+    public string description;                                                          // Descripción de la carta
     public Sprite artWork;                                                              // Imagen principal
     public Sprite portrait;                                                             // Imagen del marco
     public enum card_position { M, R, S, MR, MS, RS, MRS, I, C, L};                     // Posiciones en que se puede ubicar
     public enum kind_card { golden, silver, climate, clear, bait, increase, leader };   // Tipos de carta
-    public kind_card typeCard;                                                          // Tipo de carta
-    public card_position cardPosition;                                                  // Tipo de posición
+    public kind_card type;                                                              // Tipo de carta
+    public card_position position;                                                      // Tipo de posición
     public bool isUnity;                                                                // Es carta unidad?
     public bool isHeroe;                                                                // Es carta héroe?
     public delegate void EffectDelegate(params object[] item);
@@ -37,8 +37,8 @@ public class Card : ScriptableObject
         this.isHeroe = IsHeroe;
         this.artWork = artWork;
         this.portrait = portrait;
-        this.typeCard = typeCard;
-        this.cardPosition = cardPosition;
+        this.type = typeCard;
+        this.position = cardPosition;
         this.description = description;
         this.effect = effect;
         this.clip = clip;
@@ -53,8 +53,8 @@ public class Card : ScriptableObject
         this.isHeroe = IsHeroe;
         this.artWork = artWork;
         this.portrait = portrait;
-        this.typeCard = typeCard;
-        this.cardPosition = cardPosition;
+        this.type = typeCard;
+        this.position = cardPosition;
         this.description = description;
         this.effect = effect;
         this.clip = clip;
@@ -64,8 +64,8 @@ public class Card : ScriptableObject
         this.name = name;
         this.faction = faction;
         this.power = power;
-        this.typeCard = typeCard;
-        this.cardPosition = cardPosition;
+        this.type = typeCard;
+        this.position = cardPosition;
     }
 
     // Métodos
@@ -85,16 +85,16 @@ public class CardCompiler : Card                                                
     public new OnActivation effect { get; private set; }                                // Effectos otorgados a la carta
     private IScope scope { get; set; }                                                  // Alcance de variables
 
-    // Builder
-    public CardCompiler(string name, string faction, int power, kind_card typeCard, card_position cardPosition, OnActivation effects, IScope scope)
-        : base(name, faction, power, typeCard, cardPosition)
+    // Builder 
+    public CardCompiler(string name, string faction, int power, kind_card type, card_position position, OnActivation effects, IScope scope)
+        : base(name, faction, power, type, position)
     {
         this.effect = effects;
         this.scope = scope;
-        this.isHeroe = IsHeroe(typeCard);
-        this.isUnity = IsUnity(typeCard);
+        this.isHeroe = IsHeroe(type);
+        this.isUnity = IsUnity(type);
         artWork = ArtWork();
-        portrait = Portrait(typeCard);
+        portrait = Portrait(type);
         this.description = Description_Maker(scope);
         
     }

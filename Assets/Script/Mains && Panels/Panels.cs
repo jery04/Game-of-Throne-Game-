@@ -22,7 +22,7 @@ public class Panels : MonoBehaviour
     {
         int counter = 0;
         foreach (GameObject item in cards)
-            if (item.GetComponent<CardDisplay>().card.typeCard == Card.kind_card.silver)
+            if (item.GetComponent<CardDisplay>().card.type == Card.kind_card.silver)
                 counter++;
         return counter;
     }

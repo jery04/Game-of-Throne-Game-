@@ -10,8 +10,8 @@ public static class Utils
     public static ProgramCompiler program = new ProgramCompiler();
 
     // Listados de palabras claves
-    public enum ReturnType { Bool, String, Number, Context, List, Card, Owner, Void }
-    public static List<Token.TokenType> fieldCard = new List<Token.TokenType>()
+    public enum ReturnType { Bool, String, Number, Context, List, Card, Owner, Void } 
+    public static List<Token.TokenType> cardField = new List<Token.TokenType>()
     {
         Token.TokenType.Name, Token.TokenType.Type, Token.TokenType.Faction,
         Token.TokenType.Power, Token.TokenType.Range
@@ -49,7 +49,7 @@ public static class Utils
     }
 
     // Evaluador de operaciones
-    public static double Operation(double a, double b, Token? operation)
+    public static double ArtOperation(double a, double b, Token? operation)
     {
         switch (operation?.Type)
         {
@@ -73,7 +73,7 @@ public static class Utils
                 return Math.Pow(a, b);
         }
         return -1;
-    }
+    } 
     public static bool? LogOperator(object? object1, object? object2, Token operation, Utils.ReturnType? type)
     {
         if (!(object1 is null || object2 is null || operation is null))
@@ -157,14 +157,14 @@ public static class Utils
 
         return true;
     }
-    public static Utils.ReturnType? ReturnTypeParams(string? effect, string? parameter)
+    public static Utils.ReturnType? ReturnParamsType(string? effect, string? parameter)
     {
         if (!(effect is null) && !(parameter is null))
             return effects[effect][parameter];
 
         return null;
-    }
-    public static bool CheckAmountParams(string? effect, int? parameters)
+    }  
+    public static bool CheckParamsAmount(string? effect, int? parameters)
     {
         if (effect is not null)
         {

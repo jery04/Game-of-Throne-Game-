@@ -75,7 +75,7 @@ public class Player : MonoBehaviour
                 item.GetComponent<Drag>().enabled = false;                  // Si no está jugando se desactiva el Script Drag
 
                 if(item.GetComponent<CardDisplay>().card.isUnity)           //  Si no está jugando se desactiva el indicador de poder(carta unidad)
-                    item.GetComponent<CardDisplay>().textPower.enabled = false;
+                    item.GetComponent<CardDisplay>().power.enabled = false;
             }
             foreach(GameObject item in field)                               // Desactiva el Script Drop de field
                 item.GetComponent<Drop>().enabled = false;
@@ -93,7 +93,7 @@ public class Player : MonoBehaviour
                     item.GetComponent<Drag>().enabled = true;                   // Si está jugando y no ha hecho ningún movimiento se activa el Script Drag
                     
                     if (item.GetComponent<CardDisplay>().card.isUnity)          //  Si está jugando se activa el indicador de poder(carta unidad) 
-                        item.GetComponent<CardDisplay>().textPower.enabled = true;
+                        item.GetComponent<CardDisplay>().power.enabled = true;
                 }
             }
             else
@@ -114,25 +114,26 @@ public class Player : MonoBehaviour
     public void CreateDeckCard(List<Card> cards) 
     {
         GameObject prefarb = Resources.Load<GameObject>("Card");
-        foreach (Card item in cards)
+        foreach (Card item in cards) 
         {
-            GameObject a = Instantiate(prefarb, deckCards.transform);
-            a.GetComponent<EventTrigger>().enabled = false;
-            a.GetComponent<CardDisplay>().card = item;
-            a.name = item.name;
-            deck.Add(a);
+            GameObject new_card = Instantiate(prefarb, deckCards.transform);
+            new_card.GetComponent<EventTrigger>().enabled = false;
+            new_card.GetComponent<CardDisplay>().card = item;
+            new_card.name = item.name;
+            deck.Add(new_card);
         }
     }
     private IEnumerator For(int max)                       // Cantidad de cartas que puede tomar del deck
     {
-        for (int i = 0; i < max; i++)
+        for (int i = 0; i < max; i++) 
         {
             int rand = UnityEngine.Random.Range(0, deck.Count-1);
-            GameObject a = Instantiate(deck[rand], hand.transform);
-            a.GetComponent<EventTrigger>().enabled = false;
-            a.name = deck[rand].name;
+            GameObject new_card = Instantiate(deck[rand], hand.transform);
+            new_card.GetComponent<EventTrigger>().enabled = false;
+            new_card.GetComponent<CardDisplay>().owner = playerName;
+            new_card.name = deck[rand].name;
 
-            hand.GetComponent<Panels>().cards.Add(a);
+            hand.GetComponent<Panels>().cards.Add(new_card);
             deck.RemoveAt(rand);
 
             yield return new WaitForSeconds(0.08f);
@@ -163,7 +164,8 @@ public class Player : MonoBehaviour
     public void TakeCard(GameObject card, GameObject panel)
     {
         GameObject newCard = Instantiate(card, panel.transform); 
-        newCard.name = card.name;
+        newCard.name = card.name; 
+        newCard.GetComponent<CardDisplay>().owner = playerName;
         panel.GetComponent<Panels>().cards.Add(newCard);
     }   // Replica un GameObject determinada en un panel determinado
     public void TakeCard(Card card, GameObject panel = null) // Crea una carta determinada en un panel determinado
@@ -176,6 +178,7 @@ public class Player : MonoBehaviour
 
         newCard.GetComponent<EventTrigger>().enabled = false;
         newCard.GetComponent<CardDisplay>().card = card;
+        newCard.GetComponent<CardDisplay>().owner = playerName;
         newCard.name = card.name;
 
         if(panel == null)

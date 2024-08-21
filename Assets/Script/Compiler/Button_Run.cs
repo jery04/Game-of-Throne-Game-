@@ -18,26 +18,31 @@ public class Button_Run : MonoBehaviour
         IScope scope = new Scope();
         Lexer lexer = new Lexer(code);
         Parser parser = new Parser(lexer.GetLexer());
-        ProgramCompiler program = parser.Parse();
+        ProgramCompiler program;
 
         if (code.Length == 1 && code[0] == "")
         {
             Utils.errors.Add("No se ha escrito ninguna sentencia de código");
             Warn_Active(true);
         }
-        else if (Utils.NotError)
+        else
         {
-            if (program.CheckSemantic(scope))
-            {        
-                RunAndSave();
-                Utils.program = program;
-                MainMenu.data.CreateCardsCompiler(program, scope);
-            }             
+            program = parser.Parse();
+
+            if (Utils.NotError)
+            {
+                if (program.CheckSemantic(scope))
+                {
+                    RunAndSave();
+                    Utils.program = program;
+                    MainMenu.data.CreateCardsCompiler(program, scope);
+                }
+                else
+                    Warn_Active(true);
+            }
             else
                 Warn_Active(true);
         }
-        else
-            Warn_Active(true);
     }
     private void RunAndSave()
     {
@@ -53,7 +58,6 @@ public class Button_Run : MonoBehaviour
 
             InfErrors_Button.GetComponent<Button>().interactable = true;
             Error_Warns.SetActive(false); InfErrors_Button.SetActive(false);
-
 
             // Mueve la modificación del texto aquí, después de que el objeto se desactive
             Error_Warns.GetComponent<Text>().text = "Errors  have   been   detected";

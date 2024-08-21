@@ -63,19 +63,19 @@ public class Visitor : IVisitor
     // Property
     public IVisitor? Parent { get; set; }
     public Dictionary<string, object> Defined { get; set; }
-    public List<string> Increase {  get; set; } 
+    public List<string> IncreaseVariables {  get; set; }  
     public IScope? Scope { get; set; }
 
     // Builder
     public Visitor()
     {
-        this.Increase = new List<string>();
+        this.IncreaseVariables = new List<string>();
         this.Defined = new Dictionary<string, object>();
         this.Parent = null;
     }
     public Visitor(IScope? scope)
     {
-        this.Increase = new List<string>();
+        this.IncreaseVariables = new List<string>();
         this.Scope = scope;
         this.Defined = new Dictionary<string, object>();
         this.Parent = null;
@@ -94,16 +94,16 @@ public class Visitor : IVisitor
     }
     public void AddIncrease()
     {
-        foreach(string variable in Increase)
+        foreach(string variable in IncreaseVariables)
         {
             int value = Convert.ToInt32(GetValue(variable));
             Define(variable, value+1);
         }
     }
-    public object? GetValue(string search)
+    public object? GetValue(string? search)
     {
         if ((search != null) && this.IsDefined(search))
-        {
+        {  
             if (this.Defined.ContainsKey(search))
                 return this.Defined[search];
 
