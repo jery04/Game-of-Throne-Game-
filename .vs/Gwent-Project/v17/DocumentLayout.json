@@ -3,16 +3,36 @@
   "WorkspaceRootPath": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{D6795D5F-7996-CD5D-8237-5A5C2F061456}|Assembly-CSharp.csproj|D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\assets\\script\\compiler\\card\\cardblocks.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D6795D5F-7996-CD5D-8237-5A5C2F061456}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\compiler\\card\\cardblocks.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D6795D5F-7996-CD5D-8237-5A5C2F061456}|Assembly-CSharp.csproj|D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\assets\\script\\mains \u0026\u0026 panels\\panels.cs||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{D6795D5F-7996-CD5D-8237-5A5C2F061456}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\mains \u0026\u0026 panels\\panels.cs||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D6795D5F-7996-CD5D-8237-5A5C2F061456}|Assembly-CSharp.csproj|D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\assets\\script\\compiler\\expression\\statements.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D6795D5F-7996-CD5D-8237-5A5C2F061456}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\compiler\\expression\\statements.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D6795D5F-7996-CD5D-8237-5A5C2F061456}|Assembly-CSharp.csproj|D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\assets\\script\\compiler\\effect\\effectblocks.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D6795D5F-7996-CD5D-8237-5A5C2F061456}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\compiler\\effect\\effectblocks.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D6795D5F-7996-CD5D-8237-5A5C2F061456}|Assembly-CSharp.csproj|D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\assets\\script\\effects\\effects.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D6795D5F-7996-CD5D-8237-5A5C2F061456}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\effects\\effects.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D6795D5F-7996-CD5D-8237-5A5C2F061456}|Assembly-CSharp.csproj|D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\assets\\script\\card \u0026\u0026 player\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D6795D5F-7996-CD5D-8237-5A5C2F061456}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\card \u0026\u0026 player\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{D6795D5F-7996-CD5D-8237-5A5C2F061456}|Assembly-CSharp.csproj|d:\\cibern\u00E9tica\\proyecto\\gwent-project\\assets\\script\\card \u0026\u0026 player\\carddisplay.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D6795D5F-7996-CD5D-8237-5A5C2F061456}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\card \u0026\u0026 player\\carddisplay.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D6795D5F-7996-CD5D-8237-5A5C2F061456}|Assembly-CSharp.csproj|D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\assets\\script\\drag \u0026\u0026 drop\\dropcard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D6795D5F-7996-CD5D-8237-5A5C2F061456}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\drag \u0026\u0026 drop\\dropcard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D6795D5F-7996-CD5D-8237-5A5C2F061456}|Assembly-CSharp.csproj|d:\\cibern\u00E9tica\\proyecto\\gwent-project\\assets\\script\\card \u0026\u0026 player\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6795D5F-7996-CD5D-8237-5A5C2F061456}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\card \u0026\u0026 player\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D6795D5F-7996-CD5D-8237-5A5C2F061456}|Assembly-CSharp.csproj|D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\assets\\script\\mains \u0026\u0026 panels\\chose.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -47,10 +67,6 @@
       "RelativeMoniker": "D:0:0:{D6795D5F-7996-CD5D-8237-5A5C2F061456}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\compiler\\lexer\\token.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D6795D5F-7996-CD5D-8237-5A5C2F061456}|Assembly-CSharp.csproj|D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\assets\\script\\compiler\\card\\cardblocks.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6795D5F-7996-CD5D-8237-5A5C2F061456}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\compiler\\card\\cardblocks.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{D6795D5F-7996-CD5D-8237-5A5C2F061456}|Assembly-CSharp.csproj|D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\assets\\script\\mains \u0026\u0026 panels\\mainmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D6795D5F-7996-CD5D-8237-5A5C2F061456}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\mains \u0026\u0026 panels\\mainmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -71,14 +87,6 @@
       "RelativeMoniker": "D:0:0:{D6795D5F-7996-CD5D-8237-5A5C2F061456}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\compiler\\scope\\scope.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D6795D5F-7996-CD5D-8237-5A5C2F061456}|Assembly-CSharp.csproj|D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\assets\\script\\compiler\\expression\\statements.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6795D5F-7996-CD5D-8237-5A5C2F061456}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\compiler\\expression\\statements.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D6795D5F-7996-CD5D-8237-5A5C2F061456}|Assembly-CSharp.csproj|D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\assets\\script\\compiler\\effect\\effectblocks.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6795D5F-7996-CD5D-8237-5A5C2F061456}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\compiler\\effect\\effectblocks.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{D6795D5F-7996-CD5D-8237-5A5C2F061456}|Assembly-CSharp.csproj|D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\assets\\script\\compiler\\button_run.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D6795D5F-7996-CD5D-8237-5A5C2F061456}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\compiler\\button_run.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -87,16 +95,8 @@
       "RelativeMoniker": "D:0:0:{D6795D5F-7996-CD5D-8237-5A5C2F061456}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\compiler\\programcompiler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D6795D5F-7996-CD5D-8237-5A5C2F061456}|Assembly-CSharp.csproj|D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\assets\\script\\effects\\effects.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6795D5F-7996-CD5D-8237-5A5C2F061456}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\effects\\effects.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{D6795D5F-7996-CD5D-8237-5A5C2F061456}|Assembly-CSharp.csproj|D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\assets\\script\\ia.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D6795D5F-7996-CD5D-8237-5A5C2F061456}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\ia.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D6795D5F-7996-CD5D-8237-5A5C2F061456}|Assembly-CSharp.csproj|D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\assets\\script\\mains \u0026\u0026 panels\\panels.cs||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{D6795D5F-7996-CD5D-8237-5A5C2F061456}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\mains \u0026\u0026 panels\\panels.cs||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D6795D5F-7996-CD5D-8237-5A5C2F061456}|Assembly-CSharp.csproj|D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\assets\\script\\drag \u0026\u0026 drop\\drop.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -110,7 +110,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -122,69 +122,70 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Player.cs",
-              "DocumentMoniker": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Card \u0026\u0026 Player\\Player.cs",
-              "RelativeDocumentMoniker": "Assets\\Script\\Card \u0026\u0026 Player\\Player.cs",
-              "ToolTip": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Card \u0026\u0026 Player\\Player.cs",
-              "RelativeToolTip": "Assets\\Script\\Card \u0026\u0026 Player\\Player.cs",
-              "ViewState": "AQIAAAYAAAAAAAAAAAAAAHgAAAA8AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-05T02:32:47.22Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Card.cs",
-              "DocumentMoniker": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Card \u0026\u0026 Player\\Card.cs",
-              "RelativeDocumentMoniker": "Assets\\Script\\Card \u0026\u0026 Player\\Card.cs",
-              "ToolTip": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Card \u0026\u0026 Player\\Card.cs",
-              "RelativeToolTip": "Assets\\Script\\Card \u0026\u0026 Player\\Card.cs",
-              "ViewState": "AQIAAA4AAAAAAAAAAAAAwFcAAAAPAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-04T03:27:39.294Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "CardDisplay.cs",
-              "DocumentMoniker": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Card \u0026\u0026 Player\\CardDisplay.cs",
-              "RelativeDocumentMoniker": "Assets\\Script\\Card \u0026\u0026 Player\\CardDisplay.cs",
-              "ToolTip": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Card \u0026\u0026 Player\\CardDisplay.cs",
-              "RelativeToolTip": "Assets\\Script\\Card \u0026\u0026 Player\\CardDisplay.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAswBgAAAB8AAAA",
+              "Title": "CardBlocks.cs",
+              "DocumentMoniker": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Compiler\\Card\\CardBlocks.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\Compiler\\Card\\CardBlocks.cs",
+              "ToolTip": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Compiler\\Card\\CardBlocks.cs",
+              "RelativeToolTip": "Assets\\Script\\Compiler\\Card\\CardBlocks.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAALMBAAAWAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-06T06:30:35.196Z",
+              "WhenOpened": "2024-08-08T21:04:34.455Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "Binary_Expression.cs",
-              "DocumentMoniker": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Compiler\\Expression\\Binary_Expression.cs",
-              "RelativeDocumentMoniker": "Assets\\Script\\Compiler\\Expression\\Binary_Expression.cs",
-              "ToolTip": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Compiler\\Expression\\Binary_Expression.cs",
-              "RelativeToolTip": "Assets\\Script\\Compiler\\Expression\\Binary_Expression.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAGwAAAATAAAA",
+              "DocumentIndex": 3,
+              "Title": "EffectBlocks.cs",
+              "DocumentMoniker": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Compiler\\Effect\\EffectBlocks.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\Compiler\\Effect\\EffectBlocks.cs",
+              "ToolTip": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Compiler\\Effect\\EffectBlocks.cs",
+              "RelativeToolTip": "Assets\\Script\\Compiler\\Effect\\EffectBlocks.cs",
+              "ViewState": "AQIAAGoAAAAAAAAAAAAAAGQAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-04T03:03:40.764Z"
+              "WhenOpened": "2024-08-04T03:02:01.351Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "Token.cs",
-              "DocumentMoniker": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Compiler\\Lexer\\Token.cs",
-              "RelativeDocumentMoniker": "Assets\\Script\\Compiler\\Lexer\\Token.cs",
-              "ToolTip": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Compiler\\Lexer\\Token.cs",
-              "RelativeToolTip": "Assets\\Script\\Compiler\\Lexer\\Token.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAZAAAA",
+              "DocumentIndex": 2,
+              "Title": "Statements.cs",
+              "DocumentMoniker": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Compiler\\Expression\\Statements.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\Compiler\\Expression\\Statements.cs",
+              "ToolTip": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Compiler\\Expression\\Statements.cs",
+              "RelativeToolTip": "Assets\\Script\\Compiler\\Expression\\Statements.cs",
+              "ViewState": "AQIAANcBAAAAAAAAAAAAAOUBAABEAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-04T02:52:11.27Z"
+              "WhenOpened": "2024-08-04T03:05:21.6Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 12,
+              "Title": "Utils.cs",
+              "DocumentMoniker": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Compiler\\Utils\\Utils.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\Compiler\\Utils\\Utils.cs",
+              "ToolTip": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Compiler\\Utils\\Utils.cs",
+              "RelativeToolTip": "Assets\\Script\\Compiler\\Utils\\Utils.cs",
+              "ViewState": "AQIAAAsAAAAAAAAAAAAAwKUAAAAHAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-04T02:57:03.609Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "MainMenu.cs",
+              "DocumentMoniker": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Mains \u0026\u0026 Panels\\MainMenu.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\Mains \u0026\u0026 Panels\\MainMenu.cs",
+              "ToolTip": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Mains \u0026\u0026 Panels\\MainMenu.cs",
+              "RelativeToolTip": "Assets\\Script\\Mains \u0026\u0026 Panels\\MainMenu.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAADEAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-05T04:38:50.589Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
               "Title": "Interfaces.cs",
               "DocumentMoniker": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Compiler\\Utils\\Interfaces.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\Compiler\\Utils\\Interfaces.cs",
@@ -197,91 +198,19 @@
             {
               "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "Display_Compiler.cs",
-              "DocumentMoniker": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Compiler\\Display_Compiler.cs",
-              "RelativeDocumentMoniker": "Assets\\Script\\Compiler\\Display_Compiler.cs",
-              "ToolTip": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Compiler\\Display_Compiler.cs",
-              "RelativeToolTip": "Assets\\Script\\Compiler\\Display_Compiler.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAB8AAAAvAAAA",
+              "Title": "Player.cs",
+              "DocumentMoniker": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Card \u0026\u0026 Player\\Player.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\Card \u0026\u0026 Player\\Player.cs",
+              "ToolTip": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Card \u0026\u0026 Player\\Player.cs",
+              "RelativeToolTip": "Assets\\Script\\Card \u0026\u0026 Player\\Player.cs",
+              "ViewState": "AQIAACgAAAAAAAAAAAAYwEMAAABzAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-05T02:15:27.083Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "DataBase.cs",
-              "DocumentMoniker": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\DataBase\\DataBase.cs",
-              "RelativeDocumentMoniker": "Assets\\Script\\DataBase\\DataBase.cs",
-              "ToolTip": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\DataBase\\DataBase.cs",
-              "RelativeToolTip": "Assets\\Script\\DataBase\\DataBase.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAD4AAAD1AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-05T04:33:09.76Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Chose.cs",
-              "DocumentMoniker": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Mains \u0026\u0026 Panels\\Chose.cs",
-              "RelativeDocumentMoniker": "Assets\\Script\\Mains \u0026\u0026 Panels\\Chose.cs",
-              "ToolTip": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Mains \u0026\u0026 Panels\\Chose.cs",
-              "RelativeToolTip": "Assets\\Script\\Mains \u0026\u0026 Panels\\Chose.cs",
-              "ViewState": "AQIAAGgAAAAAAAAAAIAwwHoAAAAJAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-06T07:50:46.674Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "DropCard.cs",
-              "DocumentMoniker": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Drag \u0026\u0026 Drop\\DropCard.cs",
-              "RelativeDocumentMoniker": "Assets\\Script\\Drag \u0026\u0026 Drop\\DropCard.cs",
-              "ToolTip": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Drag \u0026\u0026 Drop\\DropCard.cs",
-              "RelativeToolTip": "Assets\\Script\\Drag \u0026\u0026 Drop\\DropCard.cs",
-              "ViewState": "AQIAAC4AAAAAAAAAAAAswEEAAACmAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-05T04:12:15.915Z",
+              "WhenOpened": "2024-08-05T02:32:47.22Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Utils.cs",
-              "DocumentMoniker": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Compiler\\Utils\\Utils.cs",
-              "RelativeDocumentMoniker": "Assets\\Script\\Compiler\\Utils\\Utils.cs",
-              "ToolTip": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Compiler\\Utils\\Utils.cs",
-              "RelativeToolTip": "Assets\\Script\\Compiler\\Utils\\Utils.cs",
-              "ViewState": "AQIAAAsAAAAAAAAAAAAAwKUAAAAHAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-04T02:57:03.609Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "CardBlocks.cs",
-              "DocumentMoniker": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Compiler\\Card\\CardBlocks.cs",
-              "RelativeDocumentMoniker": "Assets\\Script\\Compiler\\Card\\CardBlocks.cs",
-              "ToolTip": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Compiler\\Card\\CardBlocks.cs",
-              "RelativeToolTip": "Assets\\Script\\Compiler\\Card\\CardBlocks.cs",
-              "ViewState": "AQIAAAsAAAAAAAAAAAA8wLMBAAAWAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-08T21:04:34.455Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "MainMenu.cs",
-              "DocumentMoniker": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Mains \u0026\u0026 Panels\\MainMenu.cs",
-              "RelativeDocumentMoniker": "Assets\\Script\\Mains \u0026\u0026 Panels\\MainMenu.cs",
-              "ToolTip": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Mains \u0026\u0026 Panels\\MainMenu.cs",
-              "RelativeToolTip": "Assets\\Script\\Mains \u0026\u0026 Panels\\MainMenu.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAADEAAAAFAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-05T04:38:50.589Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 17,
               "Title": "GameManager.cs",
               "DocumentMoniker": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\GameManager.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\GameManager.cs",
@@ -293,7 +222,130 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Panels.cs",
+              "DocumentMoniker": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Mains \u0026\u0026 Panels\\Panels.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\Mains \u0026\u0026 Panels\\Panels.cs",
+              "ToolTip": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Mains \u0026\u0026 Panels\\Panels.cs",
+              "RelativeToolTip": "Assets\\Script\\Mains \u0026\u0026 Panels\\Panels.cs",
+              "ViewState": "AQIAACIAAAAAAAAAAAAuwC8AAABJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-14T02:55:22.918Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Effects.cs",
+              "DocumentMoniker": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Effects\\Effects.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\Effects\\Effects.cs",
+              "ToolTip": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Effects\\Effects.cs",
+              "RelativeToolTip": "Assets\\Script\\Effects\\Effects.cs",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAwwF4AAABOAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-05T02:01:29.342Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "DropCard.cs",
+              "DocumentMoniker": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Drag \u0026\u0026 Drop\\DropCard.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\Drag \u0026\u0026 Drop\\DropCard.cs",
+              "ToolTip": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Drag \u0026\u0026 Drop\\DropCard.cs",
+              "RelativeToolTip": "Assets\\Script\\Drag \u0026\u0026 Drop\\DropCard.cs",
+              "ViewState": "AQIAAC4AAAAAAAAAAAAswEEAAACmAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-05T04:12:15.915Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Chose.cs",
+              "DocumentMoniker": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Mains \u0026\u0026 Panels\\Chose.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\Mains \u0026\u0026 Panels\\Chose.cs",
+              "ToolTip": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Mains \u0026\u0026 Panels\\Chose.cs",
+              "RelativeToolTip": "Assets\\Script\\Mains \u0026\u0026 Panels\\Chose.cs",
+              "ViewState": "AQIAAGgAAAAAAAAAAIAwwHoAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-06T07:50:46.674Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "DataBase.cs",
+              "DocumentMoniker": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\DataBase\\DataBase.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\DataBase\\DataBase.cs",
+              "ToolTip": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\DataBase\\DataBase.cs",
+              "RelativeToolTip": "Assets\\Script\\DataBase\\DataBase.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAD4AAAD1AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-05T04:33:09.76Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Display_Compiler.cs",
+              "DocumentMoniker": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Compiler\\Display_Compiler.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\Compiler\\Display_Compiler.cs",
+              "ToolTip": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Compiler\\Display_Compiler.cs",
+              "RelativeToolTip": "Assets\\Script\\Compiler\\Display_Compiler.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAB8AAAAvAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-05T02:15:27.083Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "Token.cs",
+              "DocumentMoniker": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Compiler\\Lexer\\Token.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\Compiler\\Lexer\\Token.cs",
+              "ToolTip": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Compiler\\Lexer\\Token.cs",
+              "RelativeToolTip": "Assets\\Script\\Compiler\\Lexer\\Token.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAZAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-04T02:52:11.27Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 14,
+              "Title": "Binary_Expression.cs",
+              "DocumentMoniker": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Compiler\\Expression\\Binary_Expression.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\Compiler\\Expression\\Binary_Expression.cs",
+              "ToolTip": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Compiler\\Expression\\Binary_Expression.cs",
+              "RelativeToolTip": "Assets\\Script\\Compiler\\Expression\\Binary_Expression.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAGwAAAATAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-04T03:03:40.764Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "CardDisplay.cs",
+              "DocumentMoniker": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Card \u0026\u0026 Player\\CardDisplay.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\Card \u0026\u0026 Player\\CardDisplay.cs",
+              "ToolTip": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Card \u0026\u0026 Player\\CardDisplay.cs",
+              "RelativeToolTip": "Assets\\Script\\Card \u0026\u0026 Player\\CardDisplay.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAswBgAAAB8AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-06T06:30:35.196Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "Card.cs",
+              "DocumentMoniker": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Card \u0026\u0026 Player\\Card.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\Card \u0026\u0026 Player\\Card.cs",
+              "ToolTip": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Card \u0026\u0026 Player\\Card.cs",
+              "RelativeToolTip": "Assets\\Script\\Card \u0026\u0026 Player\\Card.cs",
+              "ViewState": "AQIAAA4AAAAAAAAAAAAAwFcAAAAPAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-04T03:27:39.294Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
               "Title": "Lexer.cs",
               "DocumentMoniker": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Compiler\\Lexer\\Lexer.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\Compiler\\Lexer\\Lexer.cs",
@@ -305,7 +357,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 19,
               "Title": "Parser.cs",
               "DocumentMoniker": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Compiler\\Parser\\Parser.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\Compiler\\Parser\\Parser.cs",
@@ -317,7 +369,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 20,
               "Title": "Scope.cs",
               "DocumentMoniker": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Compiler\\Scope\\Scope.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\Compiler\\Scope\\Scope.cs",
@@ -329,32 +381,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "Statements.cs",
-              "DocumentMoniker": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Compiler\\Expression\\Statements.cs",
-              "RelativeDocumentMoniker": "Assets\\Script\\Compiler\\Expression\\Statements.cs",
-              "ToolTip": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Compiler\\Expression\\Statements.cs",
-              "RelativeToolTip": "Assets\\Script\\Compiler\\Expression\\Statements.cs",
-              "ViewState": "AQIAAAgAAAAAAAAAAAAmwHkBAAASAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-04T03:05:21.6Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "EffectBlocks.cs",
-              "DocumentMoniker": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Compiler\\Effect\\EffectBlocks.cs",
-              "RelativeDocumentMoniker": "Assets\\Script\\Compiler\\Effect\\EffectBlocks.cs",
-              "ToolTip": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Compiler\\Effect\\EffectBlocks.cs",
-              "RelativeToolTip": "Assets\\Script\\Compiler\\Effect\\EffectBlocks.cs",
-              "ViewState": "AQIAADMAAAAAAAAAAAAQwJoAAAAaAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-04T03:02:01.351Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 21,
               "Title": "Button_Run.cs",
               "DocumentMoniker": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Compiler\\Button_Run.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\Compiler\\Button_Run.cs",
@@ -366,20 +393,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
-              "Title": "Effects.cs",
-              "DocumentMoniker": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Effects\\Effects.cs",
-              "RelativeDocumentMoniker": "Assets\\Script\\Effects\\Effects.cs",
-              "ToolTip": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Effects\\Effects.cs",
-              "RelativeToolTip": "Assets\\Script\\Effects\\Effects.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAGIAAAAGAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-05T02:01:29.342Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 22,
               "Title": "ProgramCompiler.cs",
               "DocumentMoniker": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Compiler\\ProgramCompiler.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\Compiler\\ProgramCompiler.cs",
@@ -399,25 +413,11 @@
               "RelativeToolTip": "Assets\\Script\\Drag \u0026\u0026 Drop\\Drop.cs",
               "ViewState": "AQIAADIAAAAAAAAAAAAgwEIAAAA/AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-08T21:26:56.158Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-08T21:26:56.158Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 23,
-              "Title": "Panels.cs",
-              "DocumentMoniker": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Mains \u0026\u0026 Panels\\Panels.cs",
-              "RelativeDocumentMoniker": "Assets\\Script\\Mains \u0026\u0026 Panels\\Panels.cs",
-              "ToolTip": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\Mains \u0026\u0026 Panels\\Panels.cs",
-              "RelativeToolTip": "Assets\\Script\\Mains \u0026\u0026 Panels\\Panels.cs",
-              "ViewState": "AQIAABQAAAAAAAAAAAAQwCoAAAANAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-14T02:55:22.918Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 22,
               "Title": "IA.cs",
               "DocumentMoniker": "D:\\Cibern\u00E9tica\\Proyecto\\Gwent-Project\\Assets\\Script\\IA.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\IA.cs",
@@ -425,8 +425,7 @@
               "RelativeToolTip": "Assets\\Script\\IA.cs",
               "ViewState": "AQIAAAYAAAAAAAAAAAAAACgAAAAsAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-18T04:15:33.555Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-18T04:15:33.555Z"
             }
           ]
         }

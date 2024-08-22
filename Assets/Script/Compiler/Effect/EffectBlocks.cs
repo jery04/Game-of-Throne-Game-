@@ -103,7 +103,7 @@ public class Action
             if(firstParam is not null)
                 visitor.Defined.Add(firstParam, target);
         }
-        visitor.AddInstance();
+        //visitor.AddInstance();
 
         if (Instruction is not null)
             foreach (Instructions? item in Instruction)

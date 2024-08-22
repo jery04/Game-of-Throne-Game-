@@ -241,7 +241,7 @@ public class Molecule: Instructions
     {
         Debug.Log("Molecule");
 
-        Evaluate(null, visitor);
+        Evaluate(visitor.Scope, visitor);
     }
     public object? Evaluate(IScope? scope, IVisitor? visitor = null)
     {
@@ -390,6 +390,9 @@ public class Atom2: Atom
     //Methods
     public override object? Evaluate(IScope? scope, IVisitor? visitor = null)
     {
+        Debug.Log("Atom2");
+        if (scope is null)
+            Debug.Log("Siu");
         if (Call is not null)
         {
             if (scope?.GetType(Call[0]?.Value, scope) == Utils.ReturnType.Card)
@@ -402,6 +405,7 @@ public class Atom2: Atom
             }
             else if (scope?.GetType(Call[0]?.Value, scope) == Utils.ReturnType.Context)
             {
+                Debug.Log("Context");
                 if (Call[1] is not null)
                 {
                     if (Call[2] is not null)
@@ -434,9 +438,18 @@ public class Atom2: Atom
         switch (method)
         {
             case "Pop":
-                GameObject? clone = GameObject.Instantiate(list?[list.Count - 1]);  
-                list?.RemoveAt(list.Count - 1);
-                return clone;
+                if(list?.Count > 0)
+                {
+                    foreach (var item in list)
+                        Debug.Log(item.GetComponent<CardDisplay>().name);
+
+                    GameObject? clone = GameObject.Instantiate(list?[list.Count - 1]);
+                    Debug.Log("Pop " + clone.GetComponent<CardDisplay>().name);
+
+                    list?.RemoveAt(list.Count - 1);
+                    return clone;
+                }
+                return null;
 
             case "SendBottom":
                 GameObject? card1 = (GameObject?)Nested?.Evaluate(null, visitor);
@@ -446,7 +459,11 @@ public class Atom2: Atom
 
             case "Add":
             case "Push":
-                GameObject? card2 = (GameObject?)Nested?.Evaluate(null, visitor);
+                Debug.Log("Add");
+
+                GameObject? card2 = (GameObject?)Nested?.Evaluate(visitor?.Scope, visitor);
+                Debug.Log("Add Card "+ card2?.GetComponent<CardDisplay>().name);
+                
                 if (card2 is not null)
                     list?.Add(card2);
                 break;
@@ -463,6 +480,7 @@ public class Atom2: Atom
                     int dimen = list.Count;
                     for (int i = 0; i < dimen / 2; i++)
                     {
+                        // Index
                         int random = UnityEngine.Random.Range(i+1, dimen);
                         GameObject swap = list[i]; 
                         list[i] = list[random]; list[random] = swap;
