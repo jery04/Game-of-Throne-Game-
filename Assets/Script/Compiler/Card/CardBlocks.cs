@@ -9,15 +9,15 @@ using static Card;
 // Card Block
 #region
 #nullable enable
-public class CardBlock : ISemantic
+public class CardBlock: ISemantic
 {
     //Property 
-    public Variable? Type { get; set; }
-    public Variable? Name { get; set; }
-    public Variable? Faction { get; set; }
-    public Variable? Power { get; set; }
-    public Variable? Range { get; set; }
-    public OnActivation? OnActivation { get; set; }
+    public Variable? Type { get; set; }     // Campo "Type" (tipo de carta)
+    public Variable? Name { get; set; }     // Campo "Name" (nombre de la carta)
+    public Variable? Faction { get; set; }  // Campo "Faction" (facción de la carta)
+    public Variable? Power { get; set; }    // Campo "Power" (poder de la carta)
+    public Variable? Range { get; set; }    // Campo "Range" (posición de la carta)
+    public OnActivation? OnActivation { get; set; } // Bloque de activación y selector de los efecto
 
     // Methods
     public CardCompiler Evaluate(IScope scope)
@@ -33,7 +33,7 @@ public class CardBlock : ISemantic
         card_compiler = new CardCompiler(name, faction, power, type, range, this.OnActivation, scope);
 
         return card_compiler;
-    }
+    }      // Crea un instancia de la carta (evalúa sus propiedades)
     public bool CheckSemantic(IScope scope)
     {
         bool check = true;
@@ -57,7 +57,7 @@ public class CardBlock : ISemantic
             check = false;
 
         return check;
-    }
+    }         // Analiza la semántica del bloque "Card" 
     private Card.kind_card Type_Field(IScope scope)
     {
         switch (Convert.ToString(Type?.Evaluate(scope)))
@@ -87,28 +87,28 @@ public class CardBlock : ISemantic
                 return kind_card.increase;
         }
         return kind_card.leader;
-    }
+    } // Retorna el tipo (enum) de carta dado el campo "Type"
     private string Name_Field(IScope scope)
     {
         return Convert.ToString(Name?.Evaluate(scope));
-    }
+    }         // Retorna el nombre (string) de la carta dado el campo "Name"
     private string Faction_Field(IScope scope)
     {
         return Convert.ToString(Faction?.Evaluate(scope));
-    }
+    }      // Retorna la facción de la carta dado el campo "Faction"
     private double Power_Field(IScope scope)
     {
         return Convert.ToDouble(Power?.Evaluate(scope));
-    }
+    }        // Retorna el poder de la carta dado el campo "Power"
     private Card.card_position Range_Field(IScope scope)
     {   
         return (Card.card_position)Convert.ChangeType(Range?.Evaluate(scope), typeof(Card.card_position));
-    }
-}
+    }   // Retorna la posición (enum) de la carta dado el campo "Range"
+}          // Estructura del bloque "Card"
 public class OnActivation
 {
     // Property
-    public List<OnActivationBody?>? Body { get; set; }
+    public List<OnActivationBody?>? Body { get; set; }  // Listado de las estructura de cada activación
 
     // Builder 
     public OnActivation()
@@ -123,7 +123,7 @@ public class OnActivation
             foreach (OnActivationBody? body in Body)
                 if (body is not null)
                     body.Evaluate();
-    }
+    }                    // Llama al evaluador de cada bloque de activación
     public bool CheckSemantic(IScope scope)
     {
         if (Body != null && Body.Count > 0)
@@ -132,14 +132,14 @@ public class OnActivation
                     return false;
 
         return true;
-    }
-}
+    }   // Llama al "CheckSemantic" de cada bloque de activación
+}       // Estructura del bloque "OnActivation"
 public class OnActivationBody
 {
     // Property
-    public EffectActivation? EffectActivation { get; set; }
-    public Selector? Selector { get; set; }
-    public List<PosAction?>? PosAction { get; set; }
+    public EffectActivation? EffectActivation { get; set; } // Estructura del bloque que nombre el efecto a llamar
+    public Selector? Selector { get; set; }                 // Estructura del bloque "Selector"
+    public List<PosAction?>? PosAction { get; set; }        // Listado de estructuras del bloque "PosAction"
 
     // Builder
     public OnActivationBody()
@@ -170,7 +170,7 @@ public class OnActivationBody
             foreach (PosAction? pos_action in PosAction)
                 if (pos_action is not null)
                     pos_action.Evaluate(target);
-    }
+    }                    // Evalua cada bloque de activación
     public bool CheckSemantic(IScope scope)
     {
         bool check = true;
@@ -187,13 +187,13 @@ public class OnActivationBody
                     check = false;
 
         return check;
-    }
-}
+    }   // Analiza el semántico de cada bloque de activación
+}   // Estructura del bloque de cada activación
 public class EffectActivation
 {
     // Property
-    public Variable? Name { get; set; }
-    public List<Variable?>? Parameters { get; set; }
+    public Variable? Name { get; set; }              // Almacena el nombre del efecto a invocar
+    public List<Variable?>? Parameters { get; set; } // Listado de parámetros que pasar al efecto
 
     // Methods
     public Dictionary<string, object> Evaluate()
@@ -214,7 +214,7 @@ public class EffectActivation
             }
         }
         return parameters;
-    }
+    }  // Retorna un listado (nombre-valor) de los parámetros
     public bool CheckSemantic(IScope scope)
     {
         string? nameEffect = Convert.ToString(Name?.Evaluate(scope));
@@ -260,18 +260,18 @@ public class EffectActivation
             else return false;
         }
         return true;
-    }
+    }       // Analiza la semántica de este bloque
     public string GetName()
     {
         return Convert.ToString(Name?.Evaluate(new Scope()));
-    }
-}
+    }                       // Retorna el nombre del efecto a invocar
+}   // Estructura del bloque que nombre el efecto a llamar
 public class Selector
 {
     // Property
-    public Variable? Source { get; set; }
-    public Variable? Single { get; set; }
-    public Predicate? Predicate { get; set; }
+    public Variable? Source { get; set; }      // Campo "Source" (fuente de cartas)
+    public Variable? Single { get; set; }      // Campo "Single" 
+    public Predicate? Predicate { get; set; }  // Estructura del predicado
 
     // Methods
     public List<GameObject> Evaluate(List<GameObject>? parent = null)
@@ -290,7 +290,7 @@ public class Selector
                 selector.Add(card);
         }
         return selector;
-    }
+    }   // Retorna un listado de las cartas a aplicar el efecto
     public bool CheckSemantic(IScope scope)
     {
         bool check = true;
@@ -306,7 +306,7 @@ public class Selector
             check = false;
 
         return check;
-    }
+    }                             // Analiza la semántica del bloque "Selector"
     private List<GameObject> GetSource(List<GameObject>? parent = null)
     {
         List<GameObject> source = new List<GameObject>();
@@ -342,7 +342,7 @@ public class Selector
                 break;
         }
         return source;
-    }
+    } // Retorna las cartas de la fuente seleccionada
     private bool CheckSource()
     {
         bool check = false;
@@ -378,13 +378,13 @@ public class Selector
                 break;
         }
         return check;
-    }
-}
+    }                                          // Verifica si la fuente ingresada es conocida
+}           // Estructura del bloque "Selector"
 public class PosAction
 {
     // Property
-    public Variable? Name { get; set; }
-    public Selector? Selector { get; set; }
+    public Variable? Name { get; set; }     // Nombre del próximo efecto a evaluar
+    public Selector? Selector { get; set; } // Bloque del "Selector" para el próximo efecto
 
     // Methods
     public void Evaluate(List<GameObject> parent_selector)
@@ -406,7 +406,7 @@ public class PosAction
                     if (effects.GetName() == effectActive)
                         effects.Evaluate(target_selector, null);
         }
-    }
+    }  // Evalúa el bloque "PosAction" (Llama al evaluador del efecto seleccionado)
     public bool CheckSemantic(IScope scope)
     {
         bool check = true;
@@ -431,14 +431,14 @@ public class PosAction
                 check = false;
 
         return check;
-    }
-}
+    }                 // Analiza la semántica del bloque "PosAction"
+}          // Estructura del bloque "PosAction"
 public class Predicate
 {
     // Property
-    public Token? Card { get; set; }
-    public Statement? Condition { get; set; }
-    private IScope? Scope { get; set; }
+    public Token? Card { get; set; }           // Nombre de la variable que se la aplica el predicado
+    public Statement? Condition { get; set; }  // Predicado en sí (Condición)
+    private IScope? Scope { get; set; }        // Alcance correspondiente a esta estructura (Scope)
 
     // Methods
     public bool Evaluate(GameObject card)
@@ -447,7 +447,7 @@ public class Predicate
         visitor.Define(Card?.Value, card);
 
         return Convert.ToBoolean(Condition?.Evaluate(Scope, visitor));
-    }
+    }   // Evalúa el predicado dado la carta especificada
     public bool CheckSemantic(IScope scope)
     {
         IScope child = scope.CreateChild(); this.Scope = child;
@@ -458,6 +458,6 @@ public class Predicate
             return false;
 
         return true;
-    }
-}
+    } // Analiza la semántica la estructura "Predicate" 
+}          // Estructura del Predicado 
 #endregion

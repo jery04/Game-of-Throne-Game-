@@ -94,7 +94,7 @@ public class Lexer
         }
         private set { }
     }                               // Retorna un array de los tokens
-    public string[]? Code { get; private set; }                // Retorna un array de las lineas de códigos     
+    public string[]? Code { get; private set; }                // Retorna un array de las líneas de códigos     
 
     // Builder 
     public Lexer(string[] code)
