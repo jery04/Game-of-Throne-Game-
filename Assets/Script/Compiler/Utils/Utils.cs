@@ -105,6 +105,7 @@ public static class Utils
                     {
                         double num1 = Convert.ToDouble(object1);
                         double num2 = Convert.ToDouble(object2);
+                        Debug.Log(num1 + " " + num2);
                         return num1 < num2;
                     }
                     return false;

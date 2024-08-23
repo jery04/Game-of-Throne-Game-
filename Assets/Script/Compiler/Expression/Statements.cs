@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
@@ -252,8 +253,13 @@ public class Molecule: Instructions
 
             else
             {
-
-
+                Debug.Log(NodeLeft.Evaluate(scope, visitor) 
+                    +" "+NodeRight.Evaluate(scope, visitor));
+                if(visitor is not null)
+                {
+                    visitor.Assig = new Assig(NodeRight.Evaluate(scope, visitor), ArtOpeartor);
+                    NodeLeft.Evaluate(scope, visitor);
+                }
 
                 return null;
             }
@@ -399,7 +405,7 @@ public class Atom2: Atom
             {
                 GameObject? card = (GameObject?)visitor?.GetValue(Call[0]?.Value);
                 if (Call[1] is not null)
-                    return CardProperty(Call[1]?.Value, card);
+                    return CardProperty(Call[1]?.Value, card, visitor?.GetAssig());
 
                 else return card;
             }
@@ -432,120 +438,6 @@ public class Atom2: Atom
                 return visitor?.GetValue(Call[0]?.Value);
         }
         return null;
-    }
-    private object? Methods(string? method, List<GameObject>? list, IVisitor? visitor)
-    {
-        switch (method)
-        {
-            case "Pop":
-                if(list?.Count > 0)
-                {
-                    foreach (var item in list)
-                        Debug.Log(item.GetComponent<CardDisplay>().name);
-
-                    GameObject? clone = GameObject.Instantiate(list?[list.Count - 1]);
-                    Debug.Log("Pop " + clone.GetComponent<CardDisplay>().name);
-
-                    list?.RemoveAt(list.Count - 1);
-                    return clone;
-                }
-                return null;
-
-            case "SendBottom":
-                GameObject? card1 = (GameObject?)Nested?.Evaluate(null, visitor);
-                if(card1 is not null)
-                    list?.Insert(0, card1);
-                break;
-
-            case "Add":
-            case "Push":
-                Debug.Log("Add");
-
-                GameObject? card2 = (GameObject?)Nested?.Evaluate(visitor?.Scope, visitor);
-                Debug.Log("Add Card "+ card2?.GetComponent<CardDisplay>().name);
-                
-                if (card2 is not null)
-                    list?.Add(card2);
-                break;
-
-            case "Remove":
-                GameObject? card3 = (GameObject?)Nested?.Evaluate(null, visitor);
-                if(card3 is not null)
-                    list?.Remove(card3);
-                break;
-
-            case "Shuffle":
-                if (list is not null)
-                {
-                    int dimen = list.Count;
-                    for (int i = 0; i < dimen / 2; i++)
-                    {
-                        // Index
-                        int random = UnityEngine.Random.Range(i+1, dimen);
-                        GameObject swap = list[i]; 
-                        list[i] = list[random]; list[random] = swap;
-                    }
-                }
-                break;
-
-            case "Find":
-                throw new NotImplementedException();
-        }
-        return null;
-    }
-    private object CardProperty(string? property, GameObject? card)
-    {
-        if(card is not null)
-        {
-            switch (property)
-            {
-                case "Name":
-                    return card.GetComponent<CardDisplay>().name;
-
-                case "Faction":
-                    return card.GetComponent<CardDisplay>().faction;
-
-                case "Power":
-                    return card.GetComponent<CardDisplay>().Power();
-
-                case "Type":
-                    return GetTypeCard(card.GetComponent<CardDisplay>().type_Card);
-
-                case "Range":
-                    throw new NotImplementedException();
-
-                case "Owner":
-                    return card.GetComponent<CardDisplay>().owner;
-            }
-        }
-        return "";
-    }
-    private string GetTypeCard(Card.kind_card type)
-    {
-        switch (type)
-        {
-            case Card.kind_card.golden:
-                return "oro";
-
-            case Card.kind_card.silver:
-                return "plata";
-
-            case  Card.kind_card.climate:
-                return "clima";
-
-            case Card.kind_card.increase:
-                return "aumento";
-
-            case Card.kind_card.bait:
-                return "señuelo";
-        }
-        return "líder";
-    }
-    private void NullFill()
-    {
-        if (Call is not null && Call.Count < 7)
-            for (int i = 0; i < 6; i++)
-                Call.Add(null);
     }
     public override Utils.ReturnType? GetType(IScope? scope)
     {
@@ -751,6 +643,66 @@ public class Atom2: Atom
 
         return true;
     }
+    private object? Methods(string? method, List<GameObject>? list, IVisitor? visitor)
+    {
+        switch (method)
+        {
+            case "Pop":
+                if(list?.Count > 0)
+                {
+                    foreach (var item in list)
+                        Debug.Log(item.GetComponent<CardDisplay>().name);
+
+                    GameObject? clone = GameObject.Instantiate(list?[list.Count - 1]);
+                    Debug.Log("Pop " + clone.GetComponent<CardDisplay>().name);
+
+                    list?.RemoveAt(list.Count - 1);
+                    return clone;
+                }
+                return null;
+
+            case "SendBottom":
+                GameObject? card1 = (GameObject?)Nested?.Evaluate(null, visitor);
+                if(card1 is not null)
+                    list?.Insert(0, card1);
+                break;
+
+            case "Add":
+            case "Push":
+                Debug.Log("Add");
+
+                GameObject? card2 = (GameObject?)Nested?.Evaluate(visitor?.Scope, visitor);
+                Debug.Log("Add Card "+ card2?.GetComponent<CardDisplay>().name);
+                
+                if (card2 is not null)
+                    list?.Add(card2);
+                break;
+
+            case "Remove":
+                GameObject? card3 = (GameObject?)Nested?.Evaluate(null, visitor);
+                if(card3 is not null)
+                    list?.Remove(card3);
+                break;
+
+            case "Shuffle":
+                if (list is not null)
+                {
+                    int dimen = list.Count;
+                    for (int i = 0; i < dimen / 2; i++)
+                    {
+                        // Index
+                        int random = UnityEngine.Random.Range(i+1, dimen);
+                        GameObject swap = list[i]; 
+                        list[i] = list[random]; list[random] = swap;
+                    }
+                }
+                break;
+
+            case "Find":
+                throw new NotImplementedException();
+        }
+        return null;
+    }
     private List<GameObject>? GetList(string? list, string? player = null)
     {
         string current = GameManager.currentPlayer.playerName;
@@ -785,10 +737,93 @@ public class Atom2: Atom
         }
         return null;
     }
+    private object CardProperty(string? property, GameObject? card, Assig? assig)
+    {
+        if(card is not null)
+        {
+            switch (property)
+            {
+                case "Name":
+                    if (assig is null)
+                        return card.GetComponent<CardDisplay>().name;
+                    else
+                        card.GetComponent<CardDisplay>().name = Convert.ToString(assig.Value);
+                    break;
+
+                case "Faction":
+                    if (assig is null)
+                        return card.GetComponent<CardDisplay>().faction;
+                    else
+                        card.GetComponent<CardDisplay>().faction = Convert.ToString(assig.Value);
+                break;
+
+                case "Power":
+                    if (assig is null)
+                        return card.GetComponent<CardDisplay>().Power();
+                    else
+                    {
+                        if (assig.Token.Type == Token.TokenType.Assignment)
+                            card.GetComponent<CardDisplay>().NewPower(Convert.ToInt32(assig.Value));
+
+                        else if(assig.Token.Type == Token.TokenType.Increase)
+                            card.GetComponent<CardDisplay>().PowerDelta(Convert.ToInt32(assig.Value));
+                        else
+                            card.GetComponent<CardDisplay>().PowerDelta(-1*Convert.ToInt32(assig.Value));
+                    }
+                    break;
+
+                case "Type":
+                    if (assig is null)
+                        return card.GetComponent<CardDisplay>().type_Card;
+                    else
+                        card.GetComponent<CardDisplay>().type_Card = (kind_card)assig.Value;
+                    break;
+
+                case "Range":
+                    throw new NotImplementedException();
+
+                case "Owner":
+                    if (assig is null)
+                        return card.GetComponent<CardDisplay>().owner;
+                    else
+                        card.GetComponent<CardDisplay>().owner = Convert.ToString(assig.Value);
+                    break;
+            }
+        }
+        return "";
+    }
+    private string GetTypeCard(Card.kind_card type)
+    {
+        switch (type)
+        {
+            case Card.kind_card.golden:
+                return "oro";
+
+            case Card.kind_card.silver:
+                return "plata";
+
+            case  Card.kind_card.climate:
+                return "clima";
+
+            case Card.kind_card.increase:
+                return "aumento";
+
+            case Card.kind_card.bait:
+                return "señuelo";
+        }
+        return "líder";
+    }
     public override Token? Location()
     {
         return Call?[0];
     }
+    private void NullFill()
+    {
+        if (Call is not null && Call.Count < 7)
+            for (int i = 0; i < 6; i++)
+                Call.Add(null);
+    }
+
 }
 public class Atom3: Atom
 {

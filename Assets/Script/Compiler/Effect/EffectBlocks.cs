@@ -103,6 +103,7 @@ public class Action
             if(firstParam is not null)
                 visitor.Defined.Add(firstParam, target);
         }
+        Debug.Log(visitor.GetValue("amount"));
         //visitor.AddInstance();
 
         if (Instruction is not null)
@@ -146,6 +147,7 @@ public class BucleWhile: Instructions
 
         while (Convert.ToBoolean(Condition?.Evaluate(Scope, visitor)))
         {
+            Debug.Log("Siuuuuu");
             child = visitor.CreateChild(Scope); child.AddInstance();
 
             if (Instruction is not null)
@@ -379,7 +381,7 @@ public class Array: Variable
                 else if (pos == "Ranged")
                     position[1] = true;
 
-                else if (pos == "Distance")
+                else if (pos == "Siege")
                     position[2] = true;
 
                 else Utils.errors.Add(@$"La posición ""{pos}"" no existe. Line: {Name?.Line} Column: {Name?.Column} ");

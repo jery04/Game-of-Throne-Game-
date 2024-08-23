@@ -23,7 +23,6 @@ public class GameManager : MonoBehaviour
     public GameObject panelRound;                                    // (5) Panel que muestra los resultados a final de ronda
     public  Player player1;                                          // (7) Jugador 1
     public  Player player2;                                          // (8) Jugador 2
-    private Player start;                                            // (9) Jugador que comienza cada ronda
     private Player playerEnd;                                        // (10) Jugador que termina cada ronda
     static public Player currentPlayer;                              // (11) Jugador actual
     public static GameManager instance;                              // Instancia del objeto actual
@@ -82,12 +81,12 @@ public class GameManager : MonoBehaviour
                 if (player1.powerRound[round] > player2.powerRound[round])
                 {
                     player1.myTurn = true; player2.myTurn = false;
-                    currentPlayer = player1; start = player1; playerEnd = player2;
+                    currentPlayer = player1; playerEnd = player2;
                 }
                 else
                 {
                     player1.myTurn = false; player2.myTurn = true;
-                    currentPlayer = player2; start = player2; playerEnd = player1;
+                    currentPlayer = player2; playerEnd = player1;
                 }
                 round += 1;
 
@@ -172,11 +171,11 @@ public class GameManager : MonoBehaviour
 
         return player2;
     }                              // Retorna el jugador que no está en juego
-    public void Panel_IA_Active(bool active) 
+    public void Panel_IA_Active(bool active)
     {
         panelIA.SetActive(active);
-    }
-    public void IA_Active(bool active_player1) 
+    }                      // Muestra el panel selector de IA
+    public void IA_Active(bool active_player1)
     {
         if (active_player1)
             artificial_player.MoveCtrl(player1, player2);
@@ -191,15 +190,22 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(0.4f);                     // Espera 1 segundos
             Panel_IA_Active(false);
         }
-    }
+    }                    // Asigna la IA a un jugador
+    private void Check_IA_On()
+    {
+        if (player1.iaActive || player2.iaActive)
+            iA = true;
+        else
+            iA = false;
+    }                                    // Chequea si se activó la IA
 
     void Start()                                                      // Inicialización de propiedades
     {
+        instance = this;                                              // Crea una copia del GameManager
         artificial_player = new IA();                                 // Instancia la IA
-        instance = this;
         round = 0;                                                    // Declara el inicio de ronda 1 (0)
 
-        player1.CreateDeckCard(Chose.deck1);
+        player1.CreateDeckCard(Chose.deck1);                          // Instancia ambos mazos 
         player2.CreateDeckCard(Chose.deck2);
 
         player1.playerName = Chose.name1;                             // Asigna los nombres a los jugadores
@@ -211,7 +217,6 @@ public class GameManager : MonoBehaviour
         player1.faction = Chose.faction1;                             // Asigna la facción a los jugadores
         player2.faction = Chose.faction2;
 
-        start = player1;                                              // Declara el jugador que empieza la ronda
         playerEnd = player2;                                          // Declara el jugador que termina la ronda
         currentPlayer = player1;                                      // Declara el jugador que comienza la ronda 1
 
@@ -220,11 +225,7 @@ public class GameManager : MonoBehaviour
     }
     void Update()
     {
-        if (player1.iaActive || player2.iaActive)
-            iA = true;
-        else 
-            iA = false;
-
+        Check_IA_On();                                               // Chequea si se activó la IA  
         numberRound[round].GetComponent<CanvasGroup>().alpha = 1;    // Actualiza el panel (3) con la ronda actual
     }
 }

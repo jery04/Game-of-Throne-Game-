@@ -15,18 +15,25 @@ public class Player : MonoBehaviour
 {
     // Propiedades
     #region Property
+    // String
     public string playerName;                              // Nombre del jugador 
     public string faction;                                 // Facción 
-    public List<GameObject> deck = new List<GameObject>(); // Deck
+
+    // Int
     public int[] powerRound;                               // Puntos acumulados por rondas
     public int takeCardStartGame = 0;                      // Cantidad de cartas cambiadas antes de la batalla
 
+    // Bool
     public bool myTurn;                                    // Dicta el turno del jugador
     public bool skipRound;                                 // Dicta si el jugador pasa la ronda
     public bool oneMove;                                   // Dicta si el jugador ya ha jugado una carta
     public bool iaActive;                                 // IA activada
+
+    // Text and Others
     public Text counterDeck;                               // Cantidad de cartas en el mazo
     public Text counterCementery;                          // Cantidad de cartas en el cementerio
+    public List<GameObject> deck = new List<GameObject>(); // Deck
+
 
     // Paneles
     //public List<GameObject> cementery;
@@ -46,8 +53,8 @@ public class Player : MonoBehaviour
     {
         if(iaActive && myTurn)
             GameManager.artificial_player.Play();
-    }
-    public void Cementery()                               
+    }                               // Activa la IA
+    public void Cementery()
     {
         climate.GetComponent<Panels>().RemoveAll(cementeryCards); // Envía las cartas de climate al cementerio
 
@@ -56,7 +63,7 @@ public class Player : MonoBehaviour
 
         foreach (GameObject item in increase)                     // Envía las cartas Melee, Range y Siege al cementerio
             item.GetComponent<Panels>().RemoveAll(cementeryCards);
-    }
+    }                             // Envía las cartas al cementerio
     private void GeneralPower(int round)                   // Devuelve la puntuación del jugador al finalizar la ronda
     {
         int power = 0;
@@ -111,18 +118,6 @@ public class Player : MonoBehaviour
                 leader.GetComponent<Panels>().cards[0].GetComponent<EventTrigger>().enabled = true;
         }
     }
-    public void CreateDeckCard(List<Card> cards) 
-    {
-        GameObject prefarb = Resources.Load<GameObject>("Card");
-        foreach (Card item in cards) 
-        {
-            GameObject new_card = Instantiate(prefarb, deckCards.transform);
-            new_card.GetComponent<EventTrigger>().enabled = false;
-            new_card.GetComponent<CardDisplay>().card = item;
-            new_card.name = item.name;
-            deck.Add(new_card);
-        }
-    }
     private IEnumerator For(int max)                       // Cantidad de cartas que puede tomar del deck
     {
         for (int i = 0; i < max; i++) 
@@ -139,6 +134,18 @@ public class Player : MonoBehaviour
             yield return new WaitForSeconds(0.08f);
         }
     }
+    public void CreateDeckCard(List<Card> cards)
+    {
+        GameObject prefarb = Resources.Load<GameObject>("Card");
+        foreach (Card item in cards)
+        {
+            GameObject new_card = Instantiate(prefarb, deckCards.transform);
+            new_card.GetComponent<EventTrigger>().enabled = false;
+            new_card.GetComponent<CardDisplay>().card = item;
+            new_card.name = item.name;
+            deck.Add(new_card);
+        }
+    }       // Instancia toda un lista (deck) de cartas
     public void TakeCard(int num = 0)                      // Tomar cartas del deck
     {
         int numChild = hand.GetComponent<Panels>().itemsCounter;
