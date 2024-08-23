@@ -78,11 +78,11 @@ public class Lexer
             {"[a-zA-Z_]\\w*", Token.TokenType.UnKnown},
             {"\\d+", Token.TokenType.Digit},
 
-        };
-    private string[] code;
-    private List<Token> tokensList;
+        };  // Lenguaje de palabras reservadas y claves
+    private string[] code;                                     // Líneas de códigos
+    private List<Token> tokensList;                            // Lista de tokens
 
-    // Properties
+    // Poperties
     public Token[] TokensList
     {
         get
@@ -93,8 +93,8 @@ public class Lexer
                 return tokensList.ToArray();
         }
         private set { }
-    }
-    public string[]? Code { get; private set; }
+    }                               // Retorna un array de los tokens
+    public string[]? Code { get; private set; }                // Retorna un array de las lineas de códigos     
 
     // Builder 
     public Lexer(string[] code)
@@ -131,5 +131,5 @@ public class Lexer
             }
         }
         return tokensList.ToArray();
-    }
+    }                               // Transforma los caracteres (palabras) a tokens
 }

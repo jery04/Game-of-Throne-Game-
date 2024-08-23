@@ -17,11 +17,13 @@ public class Chose : MonoBehaviour
 
     public void ActionEvent(string nameMethod)                                   // Llama a la próxima escena
     {
-        if (deck1 != null && deck2 != null)                                      // Verifica que los mazos estén selecionados
+        if (deck1 != null && deck2 != null)                                      // Verifica que los mazos estén seleccionados
         {
             Invoke(nameMethod, 0.2f);
         }
     }
+    public void ButtonGoBack() => Invoke("GoBack", 0.2f);                        // Volver al Menú Principal
+    private void GoBack() => SceneManager.LoadScene(0);                          // Cambia de escena (menú principal)
     private void GoPlay()                                                        // Llama a la próxima escena
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);

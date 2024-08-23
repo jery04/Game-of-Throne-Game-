@@ -39,7 +39,7 @@ public class MainMenu : MonoBehaviour
     public void CreateCard()
     {
         SceneManager.LoadScene("CreateCard");
-    }
+    }                   // LLama a ala escena "Crear Carta"
     private void Out()                            // Cierra la aplicación
     {
         Application.Quit();

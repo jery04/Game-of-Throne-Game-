@@ -104,10 +104,10 @@ public class Token
     }
 
     // Properties
-    public TokenType Type { get; set; }     // Tipo en enum 
-    public string Value { get; set; }       // Valor correspondiente
-    public int Line { get; set; }           // Linea en la que se encuentra 
-    public int Column { get; set; }         // Carcater de la linea correspondiente 
+    public TokenType Type { get; set; }                         // Tipo en enum 
+    public string Value { get; set; }                           // Valor correspondiente
+    public int Line { get; set; }                               // Línea en la que se encuentra 
+    public int Column { get; set; }                             // Caracter de la línea correspondiente 
 
     // Builder
     public Token(TokenType Type, string Value, int Line, int Column)
@@ -130,7 +130,7 @@ public class Token
                 counter++;
         }
         return counter;
-    }
+    }     // Encuentra la línea del Token
     public static int SearchColumn(string input, int index)
     {
         for (int i = index; i >= 1; i--)
@@ -138,5 +138,5 @@ public class Token
                 return (index - i) - 1;
 
         return index;
-    }
+    }   // Encuentra la columna del Token
 }

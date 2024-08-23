@@ -5,21 +5,26 @@ using UnityEngine.UI;
 
 public class Button_Run : MonoBehaviour
 {
-    public GameObject Errors_Panel;
-    public GameObject InfErrors_Button;
-    public GameObject Error_Warns;
-
+    // Properties
+    public GameObject Error_Warns;                    // Text_Comunicado (Error o Listo)
+    public GameObject InfErrors_Button;               // Botón para mostrar errores
+    public GameObject Errors_Panel;                   // Panel de errores
+    
+    // Methods
     public void Run()
     {
+        // Resetear 
         ResetEverything();
         Warn_Active(false);
 
-        string[] code = LineNumberDisplay.code;
-        IScope scope = new Scope();
-        Lexer lexer = new Lexer(code);
-        Parser parser = new Parser(lexer.GetLexer());
-        ProgramCompiler program;
+        // Campo
+        string[] code = LineNumberDisplay.code;       // Líneas de códigos
+        IScope scope = new Scope();                   // Alcance  
+        Lexer lexer = new Lexer(code);                // Léxico
+        Parser parser = new Parser(lexer.GetLexer()); // Analizador sintáctico
+        ProgramCompiler program;                      // Program_Clase_Madre
 
+        // Lógica de inicio
         if (code.Length == 1 && code[0] == "")
         {
             Utils.errors.Add("No se ha escrito ninguna sentencia de código");
@@ -43,7 +48,7 @@ public class Button_Run : MonoBehaviour
             else
                 Warn_Active(true);
         }
-    }
+    }                             // Chequear y Evaluar  
     private void RunAndSave()
     {
         Error_Warns.GetComponent<Text>().text = "Run   And  Save";
@@ -62,13 +67,12 @@ public class Button_Run : MonoBehaviour
             // Mueve la modificación del texto aquí, después de que el objeto se desactive
             Error_Warns.GetComponent<Text>().text = "Errors  have   been   detected";
         }
-    }
-
+    }                     // Activa el Comunicado 
     private void ResetEverything()
     {
         Utils.Reset();
         Errors_Panel.transform.GetChild(1).GetComponent<Text>().text = "";
-    }
+    }                // Resetea valores
     private void Warn_Active(bool active)
     {
         InfErrors_Button.SetActive(active);
@@ -77,15 +81,15 @@ public class Button_Run : MonoBehaviour
         if (active)
             for (int i = 0; i < Utils.errors.Count; i++)
                 Errors_Panel.transform.GetChild(1).GetComponent<Text>().text += $"{i + 1}) " + Utils.errors[i] + "\n";
-    }
+    }         // Muestra los errores
     public void Button_ErrorsWarn()
     {
         Errors_Panel.SetActive(true);
-    }
+    }               // Activa el panel de errores
     public void Button_BackCompiler()
     {
         Errors_Panel.SetActive(false);
-    }
+    }             // Desactiva el panel de errores
 
     // Start is called before the first frame update
     void Start()

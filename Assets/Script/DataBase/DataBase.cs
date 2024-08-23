@@ -5,16 +5,16 @@ using UnityEngine;
 
 public class DataBase : MonoBehaviour
 {
-    public List<Card> deckStark = new List<Card>();         // Mazo1 (Stark)
-    public List<Card> deckTargaryen = new List<Card>();     // Mazo2 (Targaryen)
-    public List<Card> deckDead = new List<Card>();          // Mazo3 (Caminantes Blancos)(Dead)
-    public static List<Card> deckCompiler = new List<Card>();      // Mazo3 (Compiler)
+    public List<Card> deckStark = new List<Card>();             // Mazo1 (Stark)
+    public List<Card> deckTargaryen = new List<Card>();         // Mazo2 (Targaryen)
+    public List<Card> deckDead = new List<Card>();              // Mazo3 (Caminantes Blancos)(Dead)
+    public static List<Card> deckCompiler = new List<Card>();   // Mazo4 (Compiler)
 
     public DataBase() => CreateCard();
     
-    public void CreateCardsCompiler(ProgramCompiler program, IScope scope)                 // Crea las instancias de las cartas del compilador
+    public void CreateCardsCompiler(ProgramCompiler program, IScope scope)  // Crea las instancias de las cartas del compilador
     {
-        program.Evaluate(scope);
+        program.Evaluate(scope);                            // Evalua la clase ProgramCompiler
     }
     private void CreateCard()                               // Crea las instancias de las cartas
     {
