@@ -9,10 +9,14 @@ using UnityEngine.XR;
 public class IA : MonoBehaviour
 {   
     // Property 
-    public Player Player {  get; set; }
+    public Player Player {  get; set; }                     // Jugador con la IA activada
 
-    // Builder
+    // Builders
     public IA() { }
+    public IA(Player player)
+    {
+        this.Player = player;
+    }
 
     // Methods
     public void Play()
@@ -36,13 +40,13 @@ public class IA : MonoBehaviour
             GameManager.instance.ButtonSkipTurn();
         }
         else
-            GameManager.instance.ButtonSkipRound();       
-    }
+            GameManager.instance.ButtonSkipRound();
+    }                                   // Jugar por cada turno
     private void ActiveCard(GameObject card)
     {
         card.GetComponent<CardDisplay>().backImage.enabled = false;
-        Player.TakeCard(card, Player.field[0]);
-    }
+        Player.TakeCard(card, GetPosition(card));
+    }             // Activar la carta en el campo
     private void EffectActive(GameObject card)
     {
         CardDisplay displayCard = card.GetComponent<CardDisplay>();
@@ -52,7 +56,7 @@ public class IA : MonoBehaviour
 
         else if (displayCard.card.effect != null)            // Si es de tipo Card
             Drop.ActiveEffect(displayCard);
-    }
+    }           // Activar el efecto correspondiente
     private void ActiveClip()
     {
         // Clip IA's Path
@@ -61,7 +65,7 @@ public class IA : MonoBehaviour
         AudioSource audioEffect = GameObject.Find("MusicCards").GetComponent<AudioSource>();
         audioEffect.clip = Resources.Load<AudioClip>($"Audios/{clipPath[UnityEngine.Random.Range(0, 9)]}");
         audioEffect.Play();
-    }
+    }                            // Reproducir el audio del jugador artificial
     private  GameObject CardSelect(GameObject hand)
     {
         GameObject card = null;
@@ -72,12 +76,13 @@ public class IA : MonoBehaviour
             // Carta héroe con mayor poder
             foreach (GameObject item in hand_current)
             {
-                if (item.GetComponent<CardDisplay>().card.isHeroe && item.GetComponent<CardDisplay>().Power() > 5)
+                CardDisplay card_selected = item.GetComponent<CardDisplay>();
+                if (card_selected.card.isHeroe && card_selected.Power() > 5)
                 {
                     if (card == null)
                         card = item;
 
-                    else if (item.GetComponent<CardDisplay>().Power() > card.GetComponent<CardDisplay>().Power())
+                    else if (card_selected.Power() > card.GetComponent<CardDisplay>().Power())
                         card = item;
                 }
             }
@@ -85,14 +90,15 @@ public class IA : MonoBehaviour
             // Carta de Aumento
             if (card is null)
             {
-                foreach (GameObject item in hand_current)
+                foreach (GameObject item in hand_current) 
                 {
-                    if (item.GetComponent<CardDisplay>().card.type == Card.kind_card.increase && item.GetComponent<CardDisplay>().Power() > 1)
+                    CardDisplay card_selected = item.GetComponent<CardDisplay>();
+                    if (card_selected.card.type == Card.kind_card.increase && card_selected.Power() > 1) 
                     {
                         if (card == null)
                             card = item;
 
-                        else if (item.GetComponent<CardDisplay>().Power() > card.GetComponent<CardDisplay>().Power())
+                        else if (card_selected.Power() > card.GetComponent<CardDisplay>().Power())
                             card = item;
                     }
                 }
@@ -104,12 +110,13 @@ public class IA : MonoBehaviour
                 int damage = 0;
                 foreach (GameObject item in hand_current)
                 {
-                    if (item.GetComponent<CardDisplay>().card.type == Card.kind_card.climate && AmountOtherRow(item) >= 2)
+                    CardDisplay card_selected = item.GetComponent<CardDisplay>();
+                    if (card_selected.card.type == Card.kind_card.climate && AmountOtherRow(item) >= 2)
                     {
                         if (card == null)
                             card = item;
 
-                        else if (item.GetComponent<CardDisplay>().Power() < damage)
+                        else if (card_selected.Power() < damage)
                             card = item;
                     }
                 }
@@ -127,12 +134,13 @@ public class IA : MonoBehaviour
             {
                 foreach (GameObject item in hand_current)
                 {
-                    if (item.GetComponent<CardDisplay>().card.isUnity && item.GetComponent<CardDisplay>().Power() > 2)
+                    CardDisplay card_selected = item.GetComponent<CardDisplay>();
+                    if (card_selected.card.isUnity && card_selected.Power() > 2)
                     {
                         if (card == null)
                             card = item;
 
-                        else if (item.GetComponent<CardDisplay>().Power() > card.GetComponent<CardDisplay>().Power())
+                        else if (card_selected.Power() > card.GetComponent<CardDisplay>().Power())
                             card = item;
                     }
                 }
@@ -140,11 +148,30 @@ public class IA : MonoBehaviour
         }
 
         return card;
-    }
+    }      // Seleccionar la mejor jugada (carta)
     private GameObject GetPosition(GameObject card)
     {
-        throw new NotImplementedException();
-    }
+        // Clima
+        if (Player.climate.GetComponent<Panels>().PutCard() && card.GetComponent<CardDisplay>().type_Card == Card.kind_card.climate)
+            return Player.climate;
+
+        // Field
+        foreach (GameObject place in Player.field)
+            if (Drop.CardPosition(place.GetComponent<Drop>(), card) && place.GetComponent<Panels>().PutCard())
+                return place;
+
+        // Increase
+        for(int i = 0; i < 3; i++)
+        {
+            GameObject panel = Player.increase[i];
+            int amount_field = Player.field[i].GetComponent<Panels>().itemsCounter;
+
+            if (Drop.CardPosition(panel.GetComponent<Drop>(), card) && panel.GetComponent<Panels>().PutCard() && amount_field > 0)
+                return panel;
+        }
+
+        return null;
+    }      // Posición dónde se jugará la carta
     public void MoveCtrl(Player player1, Player player2)
     {
         if (player1.iaActive)
@@ -160,7 +187,7 @@ public class IA : MonoBehaviour
             }
             this.Player = player1;
         }
-    }
+    } // Ajustar la IA al jugador seleccionado (Lógica)
 
     // Start is called before the first frame update
     void Start()

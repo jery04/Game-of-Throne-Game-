@@ -22,7 +22,7 @@ public class CardDisplay : MonoBehaviour
     public string faction;
     public string owner;
 
-    public int Power() => Convert.ToInt32(power.text);                                                   // Retorna su poder
+    public int Power() => int.Parse(power.text);                                                   // Retorna su poder
     public void NewPower(int delta) => power.text = delta.ToString();                                    // Coloca un nuevo poder
     public void PowerDelta(int delta) => power.text = (int.Parse(power.text) + delta).ToString();    // Variar su poder (Aumentar-Disminuir)
     void Start()                                    // Inicializa propiedades

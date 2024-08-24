@@ -167,9 +167,9 @@ public class GameManager : MonoBehaviour
     public Player PlayerNotCurrent()
     {
         if (player1.myTurn)
-            return player1;
+            return player2;
 
-        return player2;
+        return player1;
     }                              // Retorna el jugador que no está en juego
     public void Panel_IA_Active(bool active)
     {

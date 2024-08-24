@@ -173,10 +173,10 @@ public class Visitor: IVisitor
 }        // Alcance de las variables (Proceso para Evaluar)   
 public class Assig
 {
-    public object Value;
+    public object? Value;
     public Token Token { get; set; }
 
-    public Assig(object value, Token token)
+    public Assig(object? value, Token token)
     {
         this.Value = value;
         this.Token = token;

@@ -67,9 +67,9 @@ public class Parser : IParsing                   // Analizador sintáctico
         if (ThereIsNext())
             CurrentToken = Tokens[++Index];
     }                // Avanza sin importar el siguiente Token
-    private void Match(params Token.TokenType[] nextTokens)
+    private void Match(params Token.TokenType?[] nextTokens)
     {
-        foreach (Token.TokenType item in nextTokens)
+        foreach (Token.TokenType? item in nextTokens)
         {
             if (item == LookAhead()?.Type)
                 this.CurrentToken = Tokens[++Index];
@@ -367,6 +367,7 @@ public class Parser : IParsing                   // Analizador sintáctico
         field.Name = MatchReturn(tokenField);   // Almacena el nombre del campo
         Match(Token.TokenType.Colon);
 
+        Debug.Log(LookAhead().Value +" "+LookAhead(2).Type);
         field.Value = StatementBuilder();       // Almacena el valor
         Match(Token.TokenType.Comma);
 
@@ -452,9 +453,12 @@ public class Parser : IParsing                   // Analizador sintáctico
         {
             Match(Token.TokenType.OpenKey);
 
+            Debug.Log(LookAhead().Value);
+
             if (LookAhead().Value == "Name")
                 LookAhead().Type = Token.TokenType.Name;
 
+            Debug.Log(LookAhead().Value);
             effect.Name = FieldBuilder(Token.TokenType.Name);  // Almacena el nombre del efecto a activar
 
             if (LookAhead(false, Token.TokenType.UnKnown))
@@ -478,21 +482,26 @@ public class Parser : IParsing                   // Analizador sintáctico
         Match(Token.TokenType.Selector, Token.TokenType.Colon, Token.TokenType.OpenKey);
         selector.Source = FieldBuilder(Token.TokenType.Source); // Construye el campo "Source"
         selector.Single = FieldBuilder(Token.TokenType.Single); // Construye el campo "Single"
-        selector.Predicate = PredicateBuilder();                // Construye el predicado
+        selector.Predicate = PredicateBuilder(Token.TokenType.Predicate); // Construye el predicado
         Match(Token.TokenType.ClosedKey);
 
         return selector;
     }                     // Construye la sintaxis del bloque "Selector"
-    private Predicate PredicateBuilder()
+    private Predicate PredicateBuilder(Token.TokenType? token = null)
     {
         Predicate predicate = new Predicate();                // Almacena el predicado a retornar 
-        Match(Token.TokenType.Predicate, Token.TokenType.Colon, Token.TokenType.OpenParan);
+
+        if(token is null)
+            Match(Token.TokenType.OpenParan);
+        else
+            Match(token, Token.TokenType.Colon, Token.TokenType.OpenParan);
+
         predicate.Card = MatchReturn(Token.TokenType.UnKnown);// Almacena el nombre de la variable_carta
         Match(Token.TokenType.ClosedParan, Token.TokenType.Arrow);
         predicate.Condition = StatementBuilder();             // Construye el condicional (predicado en sí)
 
         return predicate;
-    }                   // Construye la sintaxis de un predicado
+    }  // Construye la sintaxis de un predicado
     #endregion
 
     // Binary's Expressions   
@@ -514,9 +523,9 @@ public class Parser : IParsing                   // Analizador sintáctico
         Terms term = new Terms();
         term.Factor = FactorBuilder(); // Llama al constructor de un factor 
 
-        if (LookAhead(false, Token.TokenType.Times, Token.TokenType.Divide)) // % o x
+        if (LookAhead(false, Token.TokenType.Times, Token.TokenType.Divide, Token.TokenType.Pow)) // % o x o ^
         {
-            term.Opeartor = MatchReturn(Token.TokenType.Times, Token.TokenType.Divide);
+            term.Opeartor = MatchReturn(Token.TokenType.Times, Token.TokenType.Divide, Token.TokenType.Pow);
             term.Term = TermsBuilder(); // Llama al constructor de un término
         }
         return term;
@@ -569,7 +578,7 @@ public class Parser : IParsing                   // Analizador sintáctico
         }
 
         return boolean;
-    }
+    }          // Construye un declaración
     private SubStatement SubStatementBuilder()
     {
         SubStatement subBoolean = new SubStatement();       // Almacena el "SubStatement" a retornar
@@ -590,7 +599,7 @@ public class Parser : IParsing                   // Analizador sintáctico
         }
 
         return subBoolean;
-    }
+    }    // Construye un sub_declaración
     private Molecule MoleculeBuilder()
     {
         Molecule molecule = new Molecule(); // Almacena la "Molécula" a retornar 
@@ -604,7 +613,7 @@ public class Parser : IParsing                   // Analizador sintáctico
         }
 
         return molecule;
-    }
+    }            // Construye una comparación
     private Atom? AtomBuilder()
     {
         if (LookAhead(false, Token.TokenType.False, Token.TokenType.True))
@@ -648,6 +657,9 @@ public class Parser : IParsing                   // Analizador sintáctico
             if (LookBeyond(Token.TokenType.UnKnown))
                 atom2.Nested = Atom2Builder();          // Recursivo...
 
+            else if(LookBeyond(Token.TokenType.OpenParan, Token.TokenType.UnKnown, Token.TokenType.ClosedParan))
+                atom2.Predicate = PredicateBuilder();
+
             Match(Token.TokenType.ClosedParan);
         }
 
@@ -676,4 +688,4 @@ public class Parser : IParsing                   // Analizador sintáctico
         return atom3;
     }                  // Construye un "Átomo3" (String)
     #endregion
-}
+}   

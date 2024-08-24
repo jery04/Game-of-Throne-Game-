@@ -45,7 +45,7 @@ public class DropCard : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoin
             case Card.kind_card.bait:
                 return "Bait";
             case Card.kind_card.increase:
-                return "IncreaseVariables";
+                return "Increase";
             case Card.kind_card.leader:
                 return "Leader";
         }

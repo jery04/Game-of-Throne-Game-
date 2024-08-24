@@ -43,3 +43,13 @@ public interface IVisitor
     public void AddInstance();                                              // Agrega las variables del Scope
     public Assig? Assig { get; set; }                                       // Objeto auxiliar (usado para asignar)
 }                                                // Alcance de las variables (Proceso para Evaluar)
+public interface ArtificialIntelligent
+{
+    // Property
+    public Player Player { get; set; }                     // Jugador con la IA activada
+
+    // Methods
+    public void Play();                                    // Jugar por cada turno
+    public GameObject CardSelect(GameObject hand);         // Selecciona la mejor jugada (carta)
+    public void MoveCtrl(Player player1, Player player2);  // Ajustar la IA al jugador seleccionado
+}

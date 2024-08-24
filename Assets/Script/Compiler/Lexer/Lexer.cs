@@ -22,7 +22,7 @@ public class Lexer
             {"card", Token.TokenType.Card},
             {"effect", Token.TokenType.Effect},
             {"Effect", Token.TokenType.EffectActivation},
-            {"in", Token.TokenType.In},
+            {" in ", Token.TokenType.In},
             {"OnActivation", Token.TokenType.OnActivation},
             {"Params", Token.TokenType.Params},
             {"Predicate", Token.TokenType.Predicate},
@@ -101,7 +101,7 @@ public class Lexer
     {
         this.code = code;
         tokensList = new List<Token>();
-    }
+    }                             // Instancia un objeto con el código especificado (parámetro)
 
     // Methods
     public Token[] GetLexer()

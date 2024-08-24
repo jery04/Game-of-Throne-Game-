@@ -10,9 +10,9 @@ using UnityEngine;
 public class Expressions
 {
     // Property
-    public Terms? Term { get; set; }
-    public Expressions? Expression { get; set; }
-    public Token? Opeartor { get; set; }
+    public Terms? Term { get; set; }                // Almacena un término
+    public Expressions? Expression { get; set; }    // Almacena una expresión
+    public Token? Opeartor { get; set; }            // Almacena la operación correspondiente
 
     // Methods
     public object? Evaluate(IScope? scope, IVisitor? visitor = null)
@@ -55,13 +55,13 @@ public class Expressions
     {
         return Term?.Location();
     }
-}
+}       // Estructura de una expresión numérica
 public class Terms
 {
     // Property
-    public Factor? Factor { get; set; }
-    public Terms? Term { get; set; }
-    public Token? Opeartor { get; set; }
+    public Factor? Factor { get; set; }     // Almacena un factor
+    public Terms? Term { get; set; }        // Almacena un término
+    public Token? Opeartor { get; set; }    // Almacena la operación correspondiente
 
     // Methods
     public object? Evaluate(IScope? scope, IVisitor? visitor = null)
@@ -105,13 +105,13 @@ public class Terms
     {
         return Factor?.Location();
     }
-}
+}             // Estructura de un término
 public class Factor
 {
     // Property
-    public Token? Leaf { get; set; }
-    public Expressions? Expression { get; set; }
-    public bool Increase {  get; set; }
+    public Token? Leaf { get; set; }             // Almacena el dígito o la variable
+    public Expressions? Expression { get; set; } // Almacena una expresión   
+    public bool Increase {  get; set; }          // Representa un incremento
 
     // Methods
     public object? Evaluate(IScope? scope, IVisitor? visitor = null)
@@ -193,5 +193,5 @@ public class Factor
         else
             return Expression?.Location();
     }
-}
+}            // Estructura de un factor
 #endregion

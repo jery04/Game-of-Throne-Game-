@@ -34,7 +34,6 @@ public class Player : MonoBehaviour
     public Text counterCementery;                          // Cantidad de cartas en el cementerio
     public List<GameObject> deck = new List<GameObject>(); // Deck
 
-
     // Paneles
     //public List<GameObject> cementery;
     public List<GameObject> cementeryCards;                // Cartas enviadas al cementerio

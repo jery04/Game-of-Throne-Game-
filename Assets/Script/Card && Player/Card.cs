@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "New Card", menuName = "Card")]
-public class Card : ScriptableObject
+public class Card: ScriptableObject
 {
     // Propiedades (Campo) 
     public new string name;                                                             // Nombre de la carta
@@ -78,12 +78,12 @@ public class Card : ScriptableObject
             audioEffect.Play();
         }
     }
-}
-public class CardCompiler : Card                                                        // Cartas creadas por el Compilador
+}           // Cartas
+public class CardCompiler: Card                                                        // Cartas creadas por el Compilador
 {
     // Property
-    public new OnActivation effect { get; private set; }                                // Effectos otorgados a la carta
-    private IScope scope { get; set; }                                                  // Alcance de variables
+    public new OnActivation effect { get; private set; }                               // Effectos otorgados a la carta
+    private IScope scope { get; set; }                                                 // Alcance de variables
 
     // Builder 
     public CardCompiler(string name, string faction, int power, kind_card type, card_position position, OnActivation effects, IScope scope)
@@ -120,7 +120,7 @@ public class CardCompiler : Card                                                
         select[rand_num] = true;
 
         return Resources.Load<Sprite>(path[rand_num]);
-    }
+    }                                                         // Selecciona una Imagen para la carta
     private string Description_Maker(IScope scope)
     {
         string description = $"{this.name} it's a card made in a compiler. ";
@@ -193,4 +193,4 @@ public class CardCompiler : Card                                                
 
         return false;
     }                                 // Identifica si es Unidad
-}
+}   // Cartas de Compilador

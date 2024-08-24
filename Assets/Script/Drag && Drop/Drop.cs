@@ -59,8 +59,9 @@ public class Drop : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
         Drag item = eventData.pointerDrag.GetComponent<Drag>();                             // Almacena el Componente Darg de la carta
         CardDisplay cardDrag = eventData.pointerDrag.GetComponent<CardDisplay>();
         // Si el objeto tiene un componente Drag, coinciden las posiciones y cabe en la fila establece el padre del objeto arrastrado al objeto actual
-        if (item != null && this.GetComponent<Panels>().itemsCounter < this.GetComponent<Panels>().maxItems && CardPosition(this, eventData.pointerDrag))
-        {   
+        if (item != null && this.GetComponent<Panels>().PutCard() && CardPosition(this, eventData.pointerDrag))
+        {
+            //this.GetComponent<Panels>().itemsCounter < this.GetComponent<Panels>().maxItems
             item.parent = this.transform;                                                   // Cambia el padre de la carta en la jerarquía
             GameManager.currentPlayer.hand.GetComponent<Panels>().cards.Remove(eventData.pointerDrag);  // Elimina la carta de la mano del jugador
             this.GetComponent<Panels>().cards.Add(eventData.pointerDrag);                   // Adiciona la carta al panel donde es colocada (List)

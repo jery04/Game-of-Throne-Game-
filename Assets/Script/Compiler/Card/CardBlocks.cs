@@ -284,11 +284,12 @@ public class Selector
         {
             bool predicate_bool = Convert.ToBoolean(Predicate?.Evaluate(card));
             if (single && predicate_bool)
-                { selector.Add(card); break; }
+            { selector.Add(card); break; }
 
             else if (predicate_bool)
                 selector.Add(card);
         }
+
         return selector;
     }   // Retorna un listado de las cartas a aplicar el efecto
     public bool CheckSemantic(IScope scope)

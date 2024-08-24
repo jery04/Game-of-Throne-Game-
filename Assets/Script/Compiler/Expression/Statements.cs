@@ -386,11 +386,13 @@ public class Atom2: Atom
     //Property
     public List<Token?>? Call { get; set; }
     public Atom2? Nested { get; set; }
+    public Predicate? Predicate { get; set; }
 
     // Builder
     public Atom2()
     {
         this.Call = new List<Token?>();
+        this.Predicate = null;
     }
 
     //Methods
@@ -428,6 +430,7 @@ public class Atom2: Atom
             }
             else if (scope?.GetType(Call[0]?.Value, scope) == Utils.ReturnType.List)
             {
+                Debug.Log("List");
                 List<GameObject>? list = (List<GameObject>?)visitor?.GetValue(Call[0]?.Value);
                 if (Call[1] is not null)
                     return Methods(Call[1]?.Value, list, visitor); 
@@ -517,7 +520,20 @@ public class Atom2: Atom
                     }
                     else if (Call[1] is not null)
                     {
-                        if (Call[1]?.Value == "Remove" || Call[1]?.Value == "Push" || Call[1]?.Value == "SendBottom" || Call[1]?.Value == "Add")
+                        if(Call[1]?.Value == "Find")
+                        {
+                            if(Predicate is not null)
+                            {
+                                if (!Predicate.CheckSemantic(scope))
+                                    return false;
+                            }
+                            else
+                            {
+                                Utils.errors.Add(@$"El método ""{Call[1]?.Value}"" recibe un predicado como parámetro Line: {Call[1]?.Line} Column: {Call[1]?.Column} ");
+                                return false;
+                            }
+                        }
+                        else if (Call[1]?.Value == "Remove" || Call[1]?.Value == "Push" || Call[1]?.Value == "SendBottom" || Call[1]?.Value == "Add")
                         {
                             if (Nested is not null)
                             {
@@ -566,6 +582,19 @@ public class Atom2: Atom
                                     }
                                     else
                                     {
+                                        if (Call[2]?.Value == "Find")
+                                        {
+                                            if (Predicate is not null)
+                                            {
+                                                if (!Predicate.CheckSemantic(scope))
+                                                    return false;
+                                            }
+                                            else
+                                            { 
+                                                Utils.errors.Add(@$"El método ""{Call[2]?.Value}"" recibe un predicado como parámetro Line: {Call[2]?.Line} Column: {Call[2]?.Column} ");
+                                                return false;
+                                            }
+                                        }
                                         if (Call[2]?.Value == "Remove" || Call[2]?.Value == "Push" || Call[2]?.Value == "SendBottom" || Call[2]?.Value == "Add")
                                         {
                                             if (Nested is not null)
@@ -650,39 +679,33 @@ public class Atom2: Atom
             case "Pop":
                 if(list?.Count > 0)
                 {
-                    foreach (var item in list)
-                        Debug.Log(item.GetComponent<CardDisplay>().name);
-
                     GameObject? clone = GameObject.Instantiate(list?[list.Count - 1]);
-                    Debug.Log("Pop " + clone.GetComponent<CardDisplay>().name);
-
                     list?.RemoveAt(list.Count - 1);
                     return clone;
                 }
-                return null;
+            return null;
 
             case "SendBottom":
                 GameObject? card1 = (GameObject?)Nested?.Evaluate(null, visitor);
+
                 if(card1 is not null)
                     list?.Insert(0, card1);
-                break;
+            break;
 
             case "Add":
             case "Push":
-                Debug.Log("Add");
-
                 GameObject? card2 = (GameObject?)Nested?.Evaluate(visitor?.Scope, visitor);
-                Debug.Log("Add Card "+ card2?.GetComponent<CardDisplay>().name);
-                
+               
                 if (card2 is not null)
                     list?.Add(card2);
-                break;
+            break;
 
             case "Remove":
                 GameObject? card3 = (GameObject?)Nested?.Evaluate(null, visitor);
+
                 if(card3 is not null)
                     list?.Remove(card3);
-                break;
+            break;
 
             case "Shuffle":
                 if (list is not null)
@@ -696,10 +719,21 @@ public class Atom2: Atom
                         list[i] = list[random]; list[random] = swap;
                     }
                 }
-                break;
+            break;
 
             case "Find":
-                throw new NotImplementedException();
+                Debug.Log("Findddd");
+
+                List<GameObject> predicate = new List<GameObject>();
+
+                foreach (GameObject item in list)
+                    Debug.Log(item.GetComponent<CardDisplay>().name);
+
+                if(!(list is null) && !(Predicate is null))
+                    foreach (GameObject card in list)
+                        if ((bool)Predicate.Evaluate(card))
+                            predicate.Add(card);
+            return predicate;
         }
         return null;
     }
@@ -774,9 +808,9 @@ public class Atom2: Atom
 
                 case "Type":
                     if (assig is null)
-                        return card.GetComponent<CardDisplay>().type_Card;
+                        return Transform_Enum_String(card.GetComponent<CardDisplay>().type_Card);
                     else
-                        card.GetComponent<CardDisplay>().type_Card = (kind_card)assig.Value;
+                        card.GetComponent<CardDisplay>().type_Card = Transform_String_Enum((string?)assig.Value);
                     break;
 
                 case "Range":
@@ -792,7 +826,37 @@ public class Atom2: Atom
         }
         return "";
     }
-    private string GetTypeCard(Card.kind_card type)
+    private Card.kind_card Transform_String_Enum(string? type)
+    {
+        switch (type)
+        {
+            case "oro":
+            case "golden":
+                return kind_card.golden;
+
+            case "plata":
+            case "silver":
+                return kind_card.silver;
+
+            case "clima":
+            case "climate":
+                return kind_card.climate;
+
+            case "despeje":
+            case "clear":
+                return kind_card.clear;
+
+            case "señuelo":
+            case "bait":
+                return kind_card.bait;
+
+            case "aumento":
+            case "increase":
+                return kind_card.increase;
+        }
+        return kind_card.leader;
+    }
+    private string Transform_Enum_String(Card.kind_card type)
     {
         switch (type)
         {
@@ -808,11 +872,14 @@ public class Atom2: Atom
             case Card.kind_card.increase:
                 return "aumento";
 
+            case Card.kind_card.clear:
+                return "despeje";
+
             case Card.kind_card.bait:
                 return "señuelo";
         }
         return "líder";
-    }
+    } 
     public override Token? Location()
     {
         return Call?[0];

@@ -17,16 +17,16 @@ using System.Linq;
 public class EffectBlock: ISemantic
 {
     // Property
-    public Variable? Name { get; set; }
-    public Params? Params { get; set; }
-    public Action? Action { get; set; }
+    public Variable? Name { get; set; }         // Almacena el nombre del efecto
+    public Params? Params { get; set; }         // Almacena los parámetros del bloque "Effect"
+    public Action? Action { get; set; }         // Estructura del bloque "Action"
 
     // Methods
     public void Evaluate(List<GameObject> target, Dictionary<string, object>? parameters)
     {
         Debug.Log("Effect");
         Action?.Evaluate(target, parameters);
-    }
+    }   // Evalúa el efecto
     public bool CheckSemantic(IScope scope)
     {
         bool check = true;
@@ -43,16 +43,16 @@ public class EffectBlock: ISemantic
             check = false;
 
         return check;
-    }
+    }                                                 // Analiza el semántico del bloque "Effect"
     public string GetName()
     {
         return Convert.ToString(Name?.Evaluate(new Scope()));
-    }
-}
+    }                                                                 // Retorna el nombre del efecto
+}            // Estructura de un bloque "Effect"
 public class Params
 {
     // Property
-    public Dictionary<Token, Utils.ReturnType?> Parameters { get; set; }
+    public Dictionary<Token, Utils.ReturnType?> Parameters { get; set; }    // Listado de los parámetros y sus retornos
 
     // Builder
     public Params()
@@ -73,14 +73,14 @@ public class Params
                 scope.Define(new Variable(item, new Parameters(Parameters[item])));
             }
         }
-    }
-}
+    }   // Agrega los parámetros al Scope correpsondiente
+}                 // Almacena los parámetros del efecto
 public class Action
 {
     // Property
-    public List<Token?>? Parameters { get; set; }
-    public List<Instructions?>? Instruction { get; set; }
-    private IScope? Scope { get; set; }
+    public List<Token?>? Parameters { get; set; }           // Almacena el nombre de los dos parámetros recibidos
+    public List<Instructions?>? Instruction { get; set; }   // Almacena las instrucciones a realizar dentro del bloque
+    private IScope? Scope { get; set; }                     // Almacena el alcance correspondiente al bloque (Scope)
 
     // Builder
     public Action()
@@ -109,7 +109,7 @@ public class Action
         if (Instruction is not null)
             foreach (Instructions? item in Instruction)
                 item?.Evaluate(visitor);
-    }
+    }  // Evalúa el bloque "PosAction"
     public bool CheckSemantic(IScope scope)
     {
         bool check = true;
@@ -124,20 +124,20 @@ public class Action
                     check = false;
 
         return check;
-    }
-}
+    }                                                // Analiza la semántica del bloque "PosAction"
+}                 // Estructura de un bloque "Action"
 public abstract class Instructions
 {
     // Abstract Class
     public abstract bool CheckSemantic(IScope scope);
     public abstract void Evaluate(IVisitor visitor);
-}
+}  // Representa un grupo de instrucciones
 public class BucleWhile: Instructions
 {
     // Property
-    public Statement? Condition { get; set; }
-    public List<Instructions?>? Instruction { get; set; }
-    private IScope? Scope { get; set; }
+    public Statement? Condition { get; set; }               // Almacena el condicional del While
+    public List<Instructions?>? Instruction { get; set; }   // Listado de instrucciones a realizar dentro del While
+    private IScope? Scope { get; set; }                     // Almacena el alcance correspondiente al bloque (Scope)
 
     //Methods
     public override void Evaluate(IVisitor visitor)
@@ -156,7 +156,7 @@ public class BucleWhile: Instructions
 
             visitor.AddIncrease();
         }
-    }
+    }     // Evalúa las instrucciones del bloque While
     public override bool CheckSemantic(IScope scope)
     {
         bool check = true;
@@ -184,15 +184,15 @@ public class BucleWhile: Instructions
                 return false;
         }
         return check;
-    }
-}
+    }    // Analiza la semántica del bloque y sus instrucciones
+}             // Estructura de un bloque "While"
 public class BucleFor: Instructions
 {
     // Property
-    public Token? Iterator { get; set; }
-    public Token? List { get; set; }
-    public List<Instructions?>? Instruction { get; set; }
-    private IScope? Scope { get; set; }
+    public Token? Iterator { get; set; }                  // Almacena el iterador del For
+    public Token? List { get; set; }                      // Almacena la lista a iterar
+    public List<Instructions?>? Instruction { get; set; } // Listado de instrucciones a realizar dentro del While
+    private IScope? Scope { get; set; }                   // Almacena el alcance correspondiente al bloque (Scope)
 
     // Methods
     public override void Evaluate(IVisitor visitor)
@@ -218,7 +218,7 @@ public class BucleFor: Instructions
 
             visitor.AddIncrease();
         }
-    }
+    }   // Evalúa las instrucciones del bloque For
     public override bool CheckSemantic(IScope scope)
     {
         bool check = true;
@@ -247,13 +247,13 @@ public class BucleFor: Instructions
                     check = false;
         }
         return check;
-    }
-}
+    }  // Analiza la semántica del bloque y sus instrucciones
+}               // Estructura de un bloque "For"
 public class Variable: Instructions, ISemantic
 {
     // Properties
-    public Token? Name { get; set; }
-    public GeneralStatement? Value { get; set; }
+    public Token? Name { get; set; }                    // Almacena el nombre de la variable
+    public GeneralStatement? Value { get; set; }        // Almacena el valor de la variable
 
     // Builder
     public Variable() { }
@@ -268,15 +268,15 @@ public class Variable: Instructions, ISemantic
     {
         Debug.Log("Variable");
         visitor.Define(Name?.Value, Value?.Evaluate(visitor.Scope, visitor));
-    }
+    }   // Agrega la variable con su valor al patrón "Visitor"
     public virtual object? Evaluate(IScope scope)
     {
         return Value?.Evaluate(scope);
-    }
+    }     // Llama al evaluador del "GeneralStatement"
     public Utils.ReturnType? GetType(IScope scope)
     {
         return Value?.GetType(scope);
-    }
+    }    // Retorna el tipo de la variable (Bool, String, Number)
     public override bool CheckSemantic(IScope scope)
     {
         bool check = true;
@@ -338,27 +338,27 @@ public class Variable: Instructions, ISemantic
             }
         }
         return check;
-    }
+    }  // Analiza la semántica de la variable
     public Token? Location()
     {
         return Name;
-    }
+    }                          // Retorna el Token "Name"
     private bool CardFieldIdentify()
     {
         if (Name != null)
             return (Utils.cardField.Contains(Name.Type));
         else
             return false;
-    }
+    }                  // Identifica si el campo pertence al bloque "Card" (palabra reservada)
     public string? ReturnName()
     {
         return Name?.Value;
-    }
-}
+    }                       // Retorna el nombre de la variable
+}               // Almacena una variable
 public class Array: Variable
 {
     // Property
-    public new List<Atom?>? Value { get; set; }
+    public new List<Atom?>? Value { get; set; }           // Listado de valores almacenados en el array
 
     //Builder
     public Array()
@@ -383,6 +383,12 @@ public class Array: Variable
 
                 else if (pos == "Siege")
                     position[2] = true;
+
+                else if (pos == "Climate")
+                    return Card.card_position.C;
+
+                else if (pos == "Líder")
+                    return Card.card_position.L;
 
                 else Utils.errors.Add(@$"La posición ""{pos}"" no existe. Line: {Name?.Line} Column: {Name?.Column} ");
             }
@@ -410,11 +416,11 @@ public class Array: Variable
             return Card.card_position.S;
 
         return null;
-    }
+    }     // Retorna el "Type" del campo "Range" (valores string)
     public new Utils.ReturnType? GetType()
     {
         return Utils.ReturnType.String;
-    }
+    }             // Retorna el tipo que conforma el Array
     public override bool CheckSemantic(IScope scope)
     {
         bool check = true;
@@ -437,6 +443,6 @@ public class Array: Variable
             }
         }
         return check;
-    }
-}
+    }   // Analiza la semnántica del Array  
+}                  // Almacena los elementos de un array
 #endregion

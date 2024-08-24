@@ -80,6 +80,10 @@ public class Panels : MonoBehaviour
             foreach (GameObject item in cards)
                 item.GetComponent<Drag>().enabled = false;
     }
+    public bool PutCard()
+    {
+        return (itemsCounter < maxItems);
+    }
     private void Start()
     {
 
