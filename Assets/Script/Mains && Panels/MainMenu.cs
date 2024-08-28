@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 public class MainMenu : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class MainMenu : MonoBehaviour
     public Sprite playMusicIcon;                  // Imagen de boton Play         
     public Sprite stopMusicIcon;                  // Imagen de boton Stop  
     bool sound = true;                            // Estado(Active) del sonido de fondo
+
     public void ActiveSound()                     // Modifica el estado(Active) del sonido de fondo
     {
         if (sound)                                // Si está sonando lo pausa                                

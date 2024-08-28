@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Video;
 using UnityEngine.XR;
 using static UnityEditor.Progress;
 
@@ -28,7 +29,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;                              // Instancia del objeto actual
     public GameObject panelIA;
 
-    // Métodos
+    // Métodos 
     private void CallPanelRound()                                    // Muestra el panel (5)
     {
         StartCoroutine(PanelRound());
@@ -67,7 +68,7 @@ public class GameManager : MonoBehaviour
         else
             ButtonSkipRound();
     }
-    public void ButtonSkipRound()                                    // Tranformaciones cuando cambia de ronda
+    public void ButtonSkipRound()                                    // Transformaciones cuando cambia de ronda
     {
         if (playerEnd == currentPlayer)
         {

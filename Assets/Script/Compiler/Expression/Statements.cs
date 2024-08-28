@@ -253,6 +253,7 @@ public class Molecule: Instructions
 
             else
             {
+                Debug.Log("Heyyyyyyyyyyyyyyyyyyy");
                 Debug.Log(NodeLeft.Evaluate(scope, visitor) 
                     +" "+NodeRight.Evaluate(scope, visitor));
                 if(visitor is not null)
@@ -399,8 +400,6 @@ public class Atom2: Atom
     public override object? Evaluate(IScope? scope, IVisitor? visitor = null)
     {
         Debug.Log("Atom2");
-        if (scope is null)
-            Debug.Log("Siu");
         if (Call is not null)
         {
             if (scope?.GetType(Call[0]?.Value, scope) == Utils.ReturnType.Card)
@@ -702,10 +701,13 @@ public class Atom2: Atom
 
             case "Remove":
                 GameObject? card3 = (GameObject?)Nested?.Evaluate(null, visitor);
+                string? card_remove = card3?.GetComponent<CardDisplay>().name;
 
-                if(card3 is not null)
-                    list?.Remove(card3);
-            break;
+                if(card3 is not null && list is not null)
+                    for(int i = 0; i < list.Count; i++)
+                        if (list[i].GetComponent<CardDisplay>().name == card_remove)
+                        { list[i] = null; GameObject.Destroy(card3); }
+                break;
 
             case "Shuffle":
                 if (list is not null)
@@ -725,9 +727,6 @@ public class Atom2: Atom
                 Debug.Log("Findddd");
 
                 List<GameObject> predicate = new List<GameObject>();
-
-                foreach (GameObject item in list)
-                    Debug.Log(item.GetComponent<CardDisplay>().name);
 
                 if(!(list is null) && !(Predicate is null))
                     foreach (GameObject card in list)
@@ -804,14 +803,14 @@ public class Atom2: Atom
                         else
                             card.GetComponent<CardDisplay>().PowerDelta(-1*Convert.ToInt32(assig.Value));
                     }
-                    break;
+                break;
 
                 case "Type":
                     if (assig is null)
                         return Transform_Enum_String(card.GetComponent<CardDisplay>().type_Card);
                     else
                         card.GetComponent<CardDisplay>().type_Card = Transform_String_Enum((string?)assig.Value);
-                    break;
+                break;
 
                 case "Range":
                     throw new NotImplementedException();

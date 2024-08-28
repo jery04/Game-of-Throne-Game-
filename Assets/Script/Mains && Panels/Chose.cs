@@ -105,8 +105,8 @@ public class Chose : MonoBehaviour
             if (key && input1.text != "Name" && input1.text != "")
             {
                 name1 = input1.text;
-                //faction1 = "Dead";
-                deck1 = DataBase.deckCompiler;
+                deck1 = DataBase.deckCompiler; FindLeader(deck1);
+                faction1 = deck1[1].faction;
                 button[0].GetComponent<Button>().interactable = false;
                 button[1].GetComponent<Button>().interactable = false;
                 button[2].GetComponent<Button>().interactable = false;
@@ -115,8 +115,8 @@ public class Chose : MonoBehaviour
             else if (input2.text != "Name" && input2.text != "")
             {
                 name2 = input2.text;
-                //faction2 = "Dead";
-                deck2 = DataBase.deckCompiler;
+                deck2 = DataBase.deckCompiler; FindLeader(deck2);
+                faction2 = deck2[1].faction;
                 button[3].GetComponent<Button>().interactable = false;
                 button[4].GetComponent<Button>().interactable = false;
                 button[5].GetComponent<Button>().interactable = false;
@@ -135,6 +135,18 @@ public class Chose : MonoBehaviour
             }
         }
     }
+    private void FindLeader(List<Card> deck)
+    {
+        for (int i = 0; i < deck.Count; i++)
+            if (deck[i].type == Card.kind_card.leader)
+                Swap(0, i, deck);
+    }                                  // Ajuste final (Encuentran la carta líder)
+    private void Swap(int i, int j, List<Card> deck)
+    {
+        Card temp = deck[i];
+        deck[i] = deck[j];
+        deck[j] = temp;
+    }                          // Ubica el líder en la posición 0
 
     void Start()                                                                 // Instancia la base de datos de las Cartas
     {

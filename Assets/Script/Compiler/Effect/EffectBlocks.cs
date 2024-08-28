@@ -387,7 +387,10 @@ public class Array: Variable
                 else if (pos == "Climate")
                     return Card.card_position.C;
 
-                else if (pos == "Líder")
+                else if (pos == "Increase")
+                    return Card.card_position.I;
+
+                else if (pos == "Leader")
                     return Card.card_position.L;
 
                 else Utils.errors.Add(@$"La posición ""{pos}"" no existe. Line: {Name?.Line} Column: {Name?.Column} ");

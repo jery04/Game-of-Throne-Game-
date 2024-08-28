@@ -42,15 +42,15 @@ public class Panels : MonoBehaviour
         { 
             for (int i = 0; i < cards.Count; i++) 
             {
-                if (cards[i] == null)
-                    cards.RemoveAt(i);
-
                 if (cards[i] != null && cards[i].name.Contains("Clone")) 
                 {
                     GameObject new_card = GameObject.Instantiate(cards[i], this.gameObject.transform);
                     new_card.name = cards[i].GetComponent<CardDisplay>().name;
                     cards[i] = new_card;
-                }  
+                }
+
+                if (cards[i] == null)
+                    cards.RemoveAt(i);
 
                 else if (cards[i].GetComponent<CardDisplay>().card.isUnity && cards[i].GetComponent<CardDisplay>().Power() <= 0)
                 {
