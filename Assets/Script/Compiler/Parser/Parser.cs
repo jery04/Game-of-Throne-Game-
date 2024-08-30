@@ -255,6 +255,9 @@ public class Parser : IParsing                   // Analizador sintáctico
             if (LookBeyond(Token.TokenType.UnKnown, Token.TokenType.Assignment))    
                 body.Add(VariableBuilder());                                    // Instrucciones de variables
 
+            else if(LookBeyond(Token.TokenType.If))
+                body.Add(IfElseBuilder());
+
             else if (LookBeyond(Token.TokenType.UnKnown, Token.TokenType.Dot, Token.TokenType.UnKnown))
             { body.Add(MoleculeBuilder()); Match(Token.TokenType.SemiColon); }  // Instrucciones de Moléculas
 
@@ -281,7 +284,27 @@ public class Parser : IParsing                   // Analizador sintáctico
         Match(Token.TokenType.SemiColon);
 
         return variable;
-    }        // Construir variables
+    }        // Construye variables
+    private IfElse IfElseBuilder()
+    {
+        IfElse if_else = new IfElse();          // Almacena el bloque "If_Else" a retornar
+
+        Match(Token.TokenType.If, Token.TokenType.OpenParan);
+        if_else.Condition = StatementBuilder(); // Construye el Condicional del bloque
+        Match(Token.TokenType.ClosedParan, Token.TokenType.OpenKey);
+
+        if_else.Instruction_If = InstructionBuilder();
+        Match(Token.TokenType.ClosedKey);
+
+        if(LookAhead(true, Token.TokenType.Else))
+        {
+            Match(Token.TokenType.OpenKey);
+            if_else.Instruction_Else = InstructionBuilder();
+            Match(Token.TokenType.ClosedKey);
+        }
+
+        return if_else;
+    }            // Construye bloques "If_Else"
     #endregion
 
     // Card Block

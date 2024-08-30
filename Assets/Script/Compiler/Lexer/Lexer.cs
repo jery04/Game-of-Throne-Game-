@@ -23,6 +23,8 @@ public class Lexer
             {"effect", Token.TokenType.Effect},
             {"Effect", Token.TokenType.EffectActivation},
             {" in ", Token.TokenType.In},
+            {" if", Token.TokenType.If},
+            {" else", Token.TokenType.Else},
             {"OnActivation", Token.TokenType.OnActivation},
             {"Params", Token.TokenType.Params},
             {"Predicate", Token.TokenType.Predicate},

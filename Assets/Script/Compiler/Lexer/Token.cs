@@ -61,6 +61,8 @@ public class Token
         False,
 
         // KeyWords
+        If,
+        Else,
         Call,
         Number,
         String,
