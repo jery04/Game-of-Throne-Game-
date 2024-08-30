@@ -54,7 +54,7 @@ public class IA : MonoBehaviour
         if (displayCard.card is CardCompiler compiler_card) // Si es de tipo CardCompiler
             compiler_card.Active_Effect();
 
-        else if (displayCard.card.effect != null)            // Si es de tipo Card
+        else if (displayCard.card.effect != null)           // Si es de tipo Card
             Drop.ActiveEffect(displayCard);
     }           // Activar el efecto correspondiente
     private void ActiveClip()

@@ -19,7 +19,7 @@ public class EventClick : MonoBehaviour
 
             // En caso de ser líder
             if (thisCard.GetComponent<CardDisplay>().cardPosition == Card.card_position.L)
-                Drop.ActiveEffect(thisCard.GetComponent<CardDisplay>());
+                EffectActive(thisCard);
 
             else
             {
@@ -34,6 +34,15 @@ public class EventClick : MonoBehaviour
         {
             // Continuará...
         }
-
     }
+    private void EffectActive(GameObject card)
+    {
+        CardDisplay displayCard = card.GetComponent<CardDisplay>();
+
+        if (displayCard.card is CardCompiler compiler_card) // Si es de tipo CardCompiler
+            compiler_card.Active_Effect();
+
+        else if (displayCard.card.effect != null)           // Si es de tipo Card
+            Drop.ActiveEffect(displayCard);
+    }                       // Activa el efecto de la carta líder
 }

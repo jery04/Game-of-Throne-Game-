@@ -51,7 +51,7 @@ public class Button_Run : MonoBehaviour
     }                             // Chequear y Evaluar  
     private void RunAndSave()
     {
-        Error_Warns.GetComponent<Text>().text = "Run   And  Save";
+        Error_Warns.GetComponent<Text>().text = "Ran   And  Saved";
         StartCoroutine(WaitAndPrintMessage());
 
         IEnumerator WaitAndPrintMessage()

@@ -102,45 +102,45 @@ public class DataBase : MonoBehaviour
 
         // Mazo2 (Casa Targaryen)
         // Lider
-        deckTargaryen.Add(new Card("Daenerys", "Targareyn", 0, false, false, Resources.Load<Sprite>("2l1"), Resources.Load<Sprite>("golden"), Card.kind_card.leader, Card.card_position.L, txt[21] +txt[11], Effects.Daenerys, null));                                             
+        deckTargaryen.Add(new Card("Daenerys", "Targaryen", 0, false, false, Resources.Load<Sprite>("2l1"), Resources.Load<Sprite>("golden"), Card.kind_card.leader, Card.card_position.L, txt[21] +txt[11], Effects.Daenerys, null));                                             
 
         // Señuelo
-        deckTargaryen.Add(new Card("The Hand", "Targareyn", 0, false, false, Resources.Load<Sprite>("2s1"), Resources.Load<Sprite>("silver"), Card.kind_card.bait, Card.card_position.MRS, txt[8], Effects.ReturnToHand, null));                                               
-        deckTargaryen.Add(new Card("Missandei", "Targareyn", 0, false, false,  Resources.Load<Sprite>("2s2"), Resources.Load<Sprite>("silver"), Card.kind_card.bait, Card.card_position.MRS, txt[8], Effects.ReturnToHand, null));
+        deckTargaryen.Add(new Card("The Hand", "Targaryen", 0, false, false, Resources.Load<Sprite>("2s1"), Resources.Load<Sprite>("silver"), Card.kind_card.bait, Card.card_position.MRS, txt[8], Effects.ReturnToHand, null));                                               
+        deckTargaryen.Add(new Card("Missandei", "Targaryen", 0, false, false,  Resources.Load<Sprite>("2s2"), Resources.Load<Sprite>("silver"), Card.kind_card.bait, Card.card_position.MRS, txt[8], Effects.ReturnToHand, null));
         deckTargaryen.Add(new Card("Varys", "Targareyn",0, false, false, Resources.Load<Sprite>("2s3"), Resources.Load<Sprite>("silver"), Card.kind_card.bait, Card.card_position.MRS, txt[30]+txt[8], Effects.ReturnToHand, null));
 
         // Plata
-        deckTargaryen.Add(new Card("Guerrero1", "Targareyn", 3, true, false, Resources.Load<Sprite>("2p1"), Resources.Load<Sprite>("silver"), Card.kind_card.silver, Card.card_position.R, txt[4], Effects.DrawCard, Resources.Load<AudioClip>("Audios/Espadas")));    //Espadas                   
-        deckTargaryen.Add(new Card("Guerrero2", "Targareyn", 5, true, false, Resources.Load<Sprite>("2p2"), Resources.Load<Sprite>("silver"), Card.kind_card.silver, Card.card_position.S, txt[31], null, Resources.Load<AudioClip>("Audios/Espadas")));
-        deckTargaryen.Add(new Card("Guerrero3", "Targareyn", 2, true, false, Resources.Load<Sprite>("2p3"), Resources.Load<Sprite>("silver"), Card.kind_card.silver, Card.card_position.R, txt[5], Effects.MultiplyPower, Resources.Load<AudioClip>("Audios/Espadas")));
-        deckTargaryen.Add(new Card("Guerrero4", "Targareyn", 3, true, false, Resources.Load<Sprite>("2p4"), Resources.Load<Sprite>("silver"), Card.kind_card.silver, Card.card_position.MR, txt[15]+ txt[4], Effects.DrawCard, Resources.Load<AudioClip>("Audios/Espadas")));
-        deckTargaryen.Add(new Card("Guerrero3", "Targareyn", 2, true, false, Resources.Load<Sprite>("2p3"), Resources.Load<Sprite>("silver"), Card.kind_card.silver, Card.card_position.R, txt[5], Effects.MultiplyPower, Resources.Load<AudioClip>("Audios/Espadas")));
-        deckTargaryen.Add(new Card("Guerrero3", "Targareyn", 2, true, false, Resources.Load<Sprite>("2p3"), Resources.Load<Sprite>("silver"), Card.kind_card.silver, Card.card_position.R, txt[5], Effects.MultiplyPower, Resources.Load<AudioClip>("Audios/Espadas")));
-        deckTargaryen.Add(new Card("Guerrero4", "Targareyn", 3, true, false, Resources.Load<Sprite>("2p4"), Resources.Load<Sprite>("silver"), Card.kind_card.silver, Card.card_position.MR, txt[15]+ txt[4], Effects.DrawCard, Resources.Load<AudioClip>("Audios/Espadas")));
-        deckTargaryen.Add(new Card("Guerrero5", "Targareyn", 4, true, false, Resources.Load<Sprite>("2p5"), Resources.Load<Sprite>("silver"), Card.kind_card.silver, Card.card_position.S, txt[31], null, Resources.Load<AudioClip>("Audios/Espadas")));
-        deckTargaryen.Add(new Card("Sr. Bronn", "Targareyn", 2, true, false, Resources.Load<Sprite>("2p6"), Resources.Load<Sprite>("silver"), Card.kind_card.silver, Card.card_position.M, txt[3], Effects.RemoveMin, null));
-        deckTargaryen.Add(new Card("Sr. Bronn", "Targareyn", 2, true, false, Resources.Load<Sprite>("2p6"), Resources.Load<Sprite>("silver"), Card.kind_card.silver, Card.card_position.M, txt[3], Effects.RemoveMin, null));
-        deckTargaryen.Add(new Card("Mormont", "Targareyn", 2, true, false, Resources.Load<Sprite>("2p7"), Resources.Load<Sprite>("silver"), Card.kind_card.silver, Card.card_position.M, txt[6], Effects.ClearRow, null));
+        deckTargaryen.Add(new Card("Guerrero1", "Targaryen", 3, true, false, Resources.Load<Sprite>("2p1"), Resources.Load<Sprite>("silver"), Card.kind_card.silver, Card.card_position.R, txt[4], Effects.DrawCard, Resources.Load<AudioClip>("Audios/Espadas")));    //Espadas                   
+        deckTargaryen.Add(new Card("Guerrero2", "Targaryen", 5, true, false, Resources.Load<Sprite>("2p2"), Resources.Load<Sprite>("silver"), Card.kind_card.silver, Card.card_position.S, txt[31], null, Resources.Load<AudioClip>("Audios/Espadas")));
+        deckTargaryen.Add(new Card("Guerrero3", "Targaryen", 2, true, false, Resources.Load<Sprite>("2p3"), Resources.Load<Sprite>("silver"), Card.kind_card.silver, Card.card_position.R, txt[5], Effects.MultiplyPower, Resources.Load<AudioClip>("Audios/Espadas")));
+        deckTargaryen.Add(new Card("Guerrero4", "Targaryen", 3, true, false, Resources.Load<Sprite>("2p4"), Resources.Load<Sprite>("silver"), Card.kind_card.silver, Card.card_position.MR, txt[15]+ txt[4], Effects.DrawCard, Resources.Load<AudioClip>("Audios/Espadas")));
+        deckTargaryen.Add(new Card("Guerrero3", "Targaryen", 2, true, false, Resources.Load<Sprite>("2p3"), Resources.Load<Sprite>("silver"), Card.kind_card.silver, Card.card_position.R, txt[5], Effects.MultiplyPower, Resources.Load<AudioClip>("Audios/Espadas")));
+        deckTargaryen.Add(new Card("Guerrero3", "Targaryen", 2, true, false, Resources.Load<Sprite>("2p3"), Resources.Load<Sprite>("silver"), Card.kind_card.silver, Card.card_position.R, txt[5], Effects.MultiplyPower, Resources.Load<AudioClip>("Audios/Espadas")));
+        deckTargaryen.Add(new Card("Guerrero4", "Targaryen", 3, true, false, Resources.Load<Sprite>("2p4"), Resources.Load<Sprite>("silver"), Card.kind_card.silver, Card.card_position.MR, txt[15]+ txt[4], Effects.DrawCard, Resources.Load<AudioClip>("Audios/Espadas")));
+        deckTargaryen.Add(new Card("Guerrero5", "Targaryen", 4, true, false, Resources.Load<Sprite>("2p5"), Resources.Load<Sprite>("silver"), Card.kind_card.silver, Card.card_position.S, txt[31], null, Resources.Load<AudioClip>("Audios/Espadas")));
+        deckTargaryen.Add(new Card("Sr. Bronn", "Targaryen", 2, true, false, Resources.Load<Sprite>("2p6"), Resources.Load<Sprite>("silver"), Card.kind_card.silver, Card.card_position.M, txt[3], Effects.RemoveMin, null));
+        deckTargaryen.Add(new Card("Sr. Bronn", "Targaryen", 2, true, false, Resources.Load<Sprite>("2p6"), Resources.Load<Sprite>("silver"), Card.kind_card.silver, Card.card_position.M, txt[3], Effects.RemoveMin, null));
+        deckTargaryen.Add(new Card("Mormont", "Targaryen", 2, true, false, Resources.Load<Sprite>("2p7"), Resources.Load<Sprite>("silver"), Card.kind_card.silver, Card.card_position.M, txt[6], Effects.ClearRow, null));
 
         // Oro
-        deckTargaryen.Add(new Card("Valyrio Steel", "Targareyn", 8, true, true, Resources.Load<Sprite>("2o1"), Resources.Load<Sprite>("golden"), Card.kind_card.golden, Card.card_position.MRS, txt[3], Effects.RemoveMin, null));                     
-        deckTargaryen.Add(new Card("Ballesta", "Targareyn", 5, true, true, Resources.Load<Sprite>("2o2"), Resources.Load<Sprite>("golden"), Card.kind_card.golden, Card.card_position.MS, txt[26], null, Resources.Load<AudioClip>("Audios/Caballos")));
-        deckTargaryen.Add(new Card("Rhaegal", "Targareyn", 9, true, true, Resources.Load<Sprite>("2o3"), Resources.Load<Sprite>("golden"), Card.kind_card.golden, Card.card_position.RS, txt[2], Effects.RemoveMax, Resources.Load<AudioClip>("Audios/Dragon1")));
-        deckTargaryen.Add(new Card("Viserion", "Targareyn", 7, true, true, Resources.Load<Sprite>("2o4"), Resources.Load<Sprite>("golden"), Card.kind_card.golden, Card.card_position.R, txt[16] + txt[4], Effects.DrawCard, Resources.Load<AudioClip>("Audios/Dragon2")));
-        deckTargaryen.Add(new Card("Drogon", "Targareyn", 5, true, true, Resources.Load<Sprite>("2o5"), Resources.Load<Sprite>("golden"), Card.kind_card.golden, Card.card_position.S, txt[7], Effects.Average, Resources.Load<AudioClip>("Audios/Dragon2")));
-        deckTargaryen.Add(new Card("Mad king", "Targareyn", 5, true, true, Resources.Load<Sprite>("2o6"), Resources.Load<Sprite>("golden"), Card.kind_card.golden, Card.card_position.S, txt[22]+txt[7], Effects.Average, null));
+        deckTargaryen.Add(new Card("Valyrio Steel", "Targaryen", 8, true, true, Resources.Load<Sprite>("2o1"), Resources.Load<Sprite>("golden"), Card.kind_card.golden, Card.card_position.MRS, txt[3], Effects.RemoveMin, null));                     
+        deckTargaryen.Add(new Card("Ballesta", "Targaryen", 5, true, true, Resources.Load<Sprite>("2o2"), Resources.Load<Sprite>("golden"), Card.kind_card.golden, Card.card_position.MS, txt[26], null, Resources.Load<AudioClip>("Audios/Caballos")));
+        deckTargaryen.Add(new Card("Rhaegal", "Targaryen", 9, true, true, Resources.Load<Sprite>("2o3"), Resources.Load<Sprite>("golden"), Card.kind_card.golden, Card.card_position.RS, txt[2], Effects.RemoveMax, Resources.Load<AudioClip>("Audios/Dragon1")));
+        deckTargaryen.Add(new Card("Viserion", "Targaryen", 7, true, true, Resources.Load<Sprite>("2o4"), Resources.Load<Sprite>("golden"), Card.kind_card.golden, Card.card_position.R, txt[16] + txt[4], Effects.DrawCard, Resources.Load<AudioClip>("Audios/Dragon2")));
+        deckTargaryen.Add(new Card("Drogon", "Targaryen", 5, true, true, Resources.Load<Sprite>("2o5"), Resources.Load<Sprite>("golden"), Card.kind_card.golden, Card.card_position.S, txt[7], Effects.Average, Resources.Load<AudioClip>("Audios/Dragon2")));
+        deckTargaryen.Add(new Card("Mad king", "Targaryen", 5, true, true, Resources.Load<Sprite>("2o6"), Resources.Load<Sprite>("golden"), Card.kind_card.golden, Card.card_position.S, txt[22]+txt[7], Effects.Average, null));
 
         // Despeje
-        deckTargaryen.Add(new Card("Gusano Gris", "Targareyn", 0, false, false, Resources.Load<Sprite>("2d1"), Resources.Load<Sprite>("silver"), Card.kind_card.clear, Card.card_position.MRS, txt[23]+txt[9], Effects.ClimateOut, null));
+        deckTargaryen.Add(new Card("Gusano Gris", "Targaryen", 0, false, false, Resources.Load<Sprite>("2d1"), Resources.Load<Sprite>("silver"), Card.kind_card.clear, Card.card_position.MRS, txt[23]+txt[9], Effects.ClimateOut, null));
 
         // Clima
-        deckTargaryen.Add(new Card("Catapult", "Targareyn", -1, 1, false, false, Resources.Load<Sprite>("2c1"), Resources.Load<Sprite>("emerald"), Card.kind_card.climate, Card.card_position.C, txt[1], Effects.Climate, Resources.Load<AudioClip>("Audios/Catapultas")));                   
-        deckTargaryen.Add(new Card("Navy", "Targareyn", -2, 0, false, false, Resources.Load<Sprite>("2c2"), Resources.Load<Sprite>("emerald"), Card.kind_card.climate, Card.card_position.C, txt[1], Effects.Climate, Resources.Load<AudioClip>("Audios/Flota")));
-
+        deckTargaryen.Add(new Card("Catapult", "Targaryen", -1, 1, false, false, Resources.Load<Sprite>("2c1"), Resources.Load<Sprite>("emerald"), Card.kind_card.climate, Card.card_position.C, txt[1], Effects.Climate, Resources.Load<AudioClip>("Audios/Catapultas")));                   
+        deckTargaryen.Add(new Card("Navy", "Targaryen", -2, 0, false, false, Resources.Load<Sprite>("2c2"), Resources.Load<Sprite>("emerald"), Card.kind_card.climate, Card.card_position.C, txt[1], Effects.Climate, Resources.Load<AudioClip>("Audios/Flota")));
+         
         // Aumento
-        deckTargaryen.Add(new Card("Immaculate", "Targareyn", 2, false, false,  Resources.Load<Sprite>("2a1"), Resources.Load<Sprite>("emerald"), Card.kind_card.increase, Card.card_position.I, txt[0], Effects.Increase, Resources.Load<AudioClip>("Audios/Marchando")));                 
-        deckTargaryen.Add(new Card("Dothraki", "Targareyn", 1, false, false,  Resources.Load<Sprite>("2a2"), Resources.Load<Sprite>("emerald"), Card.kind_card.increase, Card.card_position.I, txt[0], Effects.Increase, Resources.Load<AudioClip>("Audios/Caballos")));
-        deckTargaryen.Add(new Card("Tyron", "Targareyn", 2, false, false, Resources.Load<Sprite>("2a3"), Resources.Load<Sprite>("emerald"), Card.kind_card.increase, Card.card_position.I, txt[24]+txt[0],Effects.Increase, null));
+        deckTargaryen.Add(new Card("Immaculate", "Targaryen", 2, false, false,  Resources.Load<Sprite>("2a1"), Resources.Load<Sprite>("emerald"), Card.kind_card.increase, Card.card_position.I, txt[0], Effects.Increase, Resources.Load<AudioClip>("Audios/Marchando")));                 
+        deckTargaryen.Add(new Card("Dothraki", "Targaryen", 1, false, false,  Resources.Load<Sprite>("2a2"), Resources.Load<Sprite>("emerald"), Card.kind_card.increase, Card.card_position.I, txt[0], Effects.Increase, Resources.Load<AudioClip>("Audios/Caballos")));
+        deckTargaryen.Add(new Card("Tyron", "Targaryen", 2, false, false, Resources.Load<Sprite>("2a3"), Resources.Load<Sprite>("emerald"), Card.kind_card.increase, Card.card_position.I, txt[24]+txt[0],Effects.Increase, null));
 
 
 

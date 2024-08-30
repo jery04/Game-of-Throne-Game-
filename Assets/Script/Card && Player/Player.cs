@@ -73,7 +73,7 @@ public class Player : MonoBehaviour
     }
     private void BackImageAndDrag()                        // Modifica el estado(Active) del Script Drag e imágenes
     {
-        if (!myTurn && !GameManager.iA)                                     // Si no está en juego...
+        if (!myTurn && !GameManager.iA)                                    // Si no está en juego...
         {
             foreach (GameObject item in hand.GetComponent<Panels>().cards)
             {
