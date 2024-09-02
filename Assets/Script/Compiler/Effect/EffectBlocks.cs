@@ -446,15 +446,16 @@ public class Array: Variable
             }
         }
         return check;
-    }   // Analiza la semnántica del Array  
+    }   // Analiza la semántica del Array  
 }                  // Almacena los elementos de un array
 public class IfElse: Instructions
 {
     // Properties
-    public Statement Condition { get; set; }                    // Condicional
-    public List<Instructions?>? Instruction_If { get; set; }      // Instrucciones del bloque "If"
-    public List<Instructions?>? Instruction_Else { get; set; }    // Instrucciones del bloque "Else"  
-    public IScope Scope { get; set; }                           // Alcance asociado al bloque (Scope)
+    public Statement? Condition { get; set; }                    // Condicional
+    public List<Instructions?>? Instruction_If { get; set; }    // Instrucciones del bloque "If"
+    public List<Instructions?>? Instruction_Else { get; set; }  // Instrucciones del bloque "Else"  
+    public IfElse? ElseIf { get; set; }                          // Estructura recursiva (else if)
+    private IScope? Scope { get; set; }                          // Alcance asociado al bloque (Scope)
 
     // Builder
     public IfElse()
@@ -471,17 +472,19 @@ public class IfElse: Instructions
 
         if(Instruction_If is not null)
         {
-            if (Convert.ToBoolean(Condition.Evaluate(Scope, child)))
+            if (Convert.ToBoolean(Condition?.Evaluate(Scope, child)))
             {
                 foreach (Instructions? item in Instruction_If)
                     if (item is not null)
                         item.Evaluate(child);
             }
+            else if (ElseIf is not null)
+                ElseIf.Evaluate(visitor); 
 
             else if (Instruction_Else is not null && Instruction_Else.Count > 0)
                 foreach (Instructions? item in Instruction_Else)
                     if (item is not null)
-                        item.Evaluate(child);
+                        item.Evaluate(child); 
         }
     }
     public override bool CheckSemantic(IScope scope)
@@ -497,6 +500,9 @@ public class IfElse: Instructions
             foreach (Instructions? item in Instruction_If)
                 if (item is not null && !item.CheckSemantic(child))
                     check = false;
+
+        if (ElseIf is not null && !ElseIf.CheckSemantic(child))
+            check = false;
 
         if (Instruction_Else is not null && Instruction_Else.Count > 0)
             foreach (Instructions? item in Instruction_Else)

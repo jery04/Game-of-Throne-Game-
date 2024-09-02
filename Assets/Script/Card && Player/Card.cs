@@ -80,20 +80,20 @@ public class Card: ScriptableObject
             audioEffect.Play();
         }
     }
-}           // Cartas
-public class CardClimate : Card
+}          // Cartas
+public class CardClimate: Card
 {
     public int harm;
     public int rowAfected;
     public CardClimate() { }
 }   // Cartas Climas
-public class CardIncrease : Card
+public class CardIncrease: Card
 {
     public int bonus;
     public CardIncrease() { }
 
 }  // Cartas Aumento
-public class CardCompiler : Card                                                        // Cartas creadas por el Compilador
+public class CardCompiler: Card                                                        // Cartas creadas por el Compilador
 {
     // Property
     public new OnActivation effect { get; private set; }                               // Effectos otorgados a la carta
@@ -120,16 +120,16 @@ public class CardCompiler : Card                                                
     }                                                     // Activar los efectos correspondientes 
     public Sprite ArtWork()
     {
-        bool[] select = new bool[24];
-        string[] path = new string[24] 
-        { "cc1", "cc2", "cc3", "cc4", "cc5", "cc6","cc7", "cc8", "cc9","cc10", "cc11", "cc12", "cc13", "cc14", "cc15","cc16", "cc17", "cc18","cc19", "cc20", "cc21", "cc22", "cc23", "cc24" };
+        bool[] select = new bool[32];
+        string[] path = new string[32] 
+        { "cc1", "cc2", "cc3", "cc4", "cc5", "cc6","cc7", "cc8", "cc9","cc10", "cc11", "cc12", "cc13", "cc14", "cc15","cc16", "cc17", "cc18","cc19", "cc20", "cc21", "cc22", "cc23", "cc24", "cc25", "cc26", "cc27","cc28", "cc29", "cc30","cc31", "cc32" };
 
         System.Random random = new System.Random();
         int rand_num;
 
         do
         {
-            rand_num = random.Next(0, 24);
+            rand_num = random.Next(0, 32);
         } while (select[rand_num]);
         select[rand_num] = true;
 

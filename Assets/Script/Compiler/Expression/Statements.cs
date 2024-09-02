@@ -16,14 +16,15 @@ using static Unity.VisualScripting.Member;
 #nullable enable
 public abstract class GeneralStatement
 {
-    public abstract Utils.ReturnType? GetType(IScope scope);
-    public abstract bool CheckSemantic(IScope scope);
-    public abstract object? Evaluate(IScope? scope, IVisitor? visitor = null);
-}
+    // Methods
+    public abstract Utils.ReturnType? GetType(IScope scope);                    // Retorna el tipo
+    public abstract bool CheckSemantic(IScope scope);                           // Analiza la semántica de la estructura
+    public abstract object? Evaluate(IScope? scope, IVisitor? visitor = null);  // Evalúa la estructura
+}   // Declaraciones (árbol de declaraciones)
 public class Target: GeneralStatement
 {
     // Property
-    public List<GameObject>? target {  get; set; }
+    public List<GameObject>? target {  get; set; }  // Objeto almacenado
 
     // Builder
     public Target(List<GameObject>? target = null)
@@ -35,13 +36,13 @@ public class Target: GeneralStatement
     public override object? Evaluate(IScope? scope = null, IVisitor? visitor = null)
     {
         return target;
-    }
+    }   // Retorna el objeto almacenado
     public override Utils.ReturnType? GetType(IScope scope)
     {
         return Utils.ReturnType.List;
-    }
-    public override bool CheckSemantic(IScope scope) { return true; }
-}
+    }                            // Retorna el tipo del objeto almacenado
+    public override bool CheckSemantic(IScope scope) { return true; }                     // Retorna true (hoja)
+}                      // Almacena la referencia de una listas
 public class Context: GeneralStatement
 {
     // Methods-List
@@ -57,12 +58,12 @@ public class Context: GeneralStatement
             board.AddRange(player2_field[i].GetComponent<Panels>().cards);
         }
         return board;
-    }
+    }   // Retorna una lista con las cartas del tablero
     public static List<GameObject> HandOfPlayer(string? playerName)
     {
         GameManager game = GameManager.instance;
         return game.GetPlayer(playerName).hand.GetComponent<Panels>().cards;
-    }
+    }    // Retorna una lista con las cartas de la mano
     public static List<GameObject> FieldOfPlayer(string? playerName)
     {
         List<GameObject> field = new List<GameObject>();    
@@ -72,27 +73,27 @@ public class Context: GeneralStatement
             field.AddRange(player_field[i].GetComponent<Panels>().cards);
 
         return field;
-    }
+    }   // Retorna una lista con las cartas del campo
     public static List<GameObject> DeckOfPlayer(string? playerName)
     {
         return GameManager.instance.GetPlayer(playerName).deck;
-    }
+    }    // Retorna una lista con las cartas del mazo
 
     // Methods-Ctrls
     public override object? Evaluate(IScope? scope, IVisitor? visitor = null)
     {
         return null;
-    }
+    }   // Evalúa
     public override Utils.ReturnType? GetType(IScope scope)
     {
         return Utils.ReturnType.Context;
-    }
-    public override bool CheckSemantic(IScope scope) { return true; }
-}
+    }                     // Retorna el tipo 
+    public override bool CheckSemantic(IScope scope) { return true; }              // Retorna true (hoja)
+}                     // Puente entre el contexto del juego y el compilador
 public class Parameters: GeneralStatement
 {
-    //Property
-    public Utils.ReturnType? Type { get; set; }
+    // Property
+    public Utils.ReturnType? Type { get; set; } // Almacena el parámetro
 
     // Builder
     public Parameters(Utils.ReturnType? type)
@@ -104,32 +105,32 @@ public class Parameters: GeneralStatement
     public override object? Evaluate(IScope? scope, IVisitor? visitor = null)
     {
         return null;
-    }
+    }   // Evalúa
     public override Utils.ReturnType? GetType(IScope scope)
     {
         return Type;
-    }
-    public override bool CheckSemantic(IScope scope) { return true; }
-}
+    }                     // Retorna el tipo de parámetro
+    public override bool CheckSemantic(IScope scope) { return true; }              // Retorna true (hoja)
+}                  // Tipo de los parámetros
 public class CardKey: GeneralStatement
 {
     // Methods
     public override object? Evaluate(IScope? scope, IVisitor? visitor = null)
     {
         return null;
-    }
+    }   // Retorna null
     public override Utils.ReturnType? GetType(IScope scope)
     {
         return Utils.ReturnType.Card;
-    }
-    public override bool CheckSemantic(IScope scope) { return true; }
-}
+    }                     // Retorna el tipo "carta"
+    public override bool CheckSemantic(IScope scope) { return true; }              // Retorna true (hoja)
+}                     // Almacena la referencia de una carta
 public class Statement: GeneralStatement
 {
     // Property 
-    public Token? LogOperator { get; set; }
-    public SubStatement? NodeLeft { get; set; }
-    public Statement? NodeRight { get; set; }
+    public Token? LogOperator { get; set; }     // Almacena el operador (&&_||)
+    public SubStatement? NodeLeft { get; set; } // Estructura "Sub_Statement" a la izquierda (Izq) &&_|| (...)
+    public Statement? NodeRight { get; set; }   // Estructura recursiva a la derecha (...) &&_|| (Derecha)
 
     // Methods
     public override object? Evaluate(IScope? scope, IVisitor? visitor = null)
@@ -146,7 +147,7 @@ public class Statement: GeneralStatement
         }
         else
             return NodeLeft?.Evaluate(scope, visitor);
-    }
+    }   // Evalúa la declaración
     public override Utils.ReturnType? GetType(IScope scope)
     {
         if (LogOperator != null)
@@ -156,7 +157,7 @@ public class Statement: GeneralStatement
             return NodeLeft.GetType(scope);
 
         return null;
-    }
+    }                     // Retorna el tipo
     public override bool CheckSemantic(IScope scope)
     {
         if (NodeLeft != null && NodeRight != null)
@@ -170,18 +171,18 @@ public class Statement: GeneralStatement
                 return false;
         }
         return true;
-    }
+    }                            // Analiza la semántica
     public Token? Location()
     {
         return NodeLeft?.Location();
-    }
-}
+    }                                                    // Retorna la primera aparición de un Token
+}                   // La esencia de una declaración (raíz del árbol)
 public class SubStatement
 {
     // Property
-    public Token? LogOperator { get; set; }
-    public Molecule? NodeLeft { get; set; }
-    public Statement? NodeRight { get; set; }
+    public Token? LogOperator { get; set; }    // Almacena el operador (&&_||)
+    public Molecule? NodeLeft { get; set; }    // Estructura "Molecule" a la izquierda (Izq) &&_|| (...)
+    public Statement? NodeRight { get; set; }  // Estructura recursiva a la derecha (...) &&_|| (Derecha)
 
     // Methods
     public object? Evaluate(IScope? scope, IVisitor? visitor = null)
@@ -198,7 +199,7 @@ public class SubStatement
         }
         else
             return NodeLeft?.Evaluate(scope, visitor);
-    }
+    }  // Evalúa los sub_árboles
     public Utils.ReturnType? GetType(IScope scope)
     {
         if (LogOperator != null)
@@ -210,7 +211,7 @@ public class SubStatement
             return NodeLeft.GetType(scope);
         }
         return null;
-    }
+    }                    // Retorna el tipo
     public bool CheckSemantic(IScope scope)
     {
         if (NodeLeft != null && NodeRight != null)
@@ -224,18 +225,18 @@ public class SubStatement
                 return false;
         }
         return true;
-    }
+    }                           // Analiza la semántica de la estructura
     public Token? Location()
     {
         return NodeLeft?.Location();
-    }
-}
+    }                                          // Retorna la primera aparición de un Token
+}                // Sub_estructura adyacente a la raíz del árbol
 public class Molecule: Instructions
 {
     // Property
-    public Token? ArtOpeartor { get; set; }
-    public Atom? NodeLeft { get; set; }
-    public Atom? NodeRight { get; set; }
+    public Token? ArtOpeartor { get; set; } // Almacena el operador (&&_||)
+    public Atom? NodeLeft { get; set; }     // Estructura a "Atom" a la izquierda (Izq) <_<=_==_>_>= (...)
+    public Atom? NodeRight { get; set; }    // Estructura recursiva a la derecha (...) <_<=_==_>_>= (Derecha)
 
     // Methods
     public override void Evaluate(IVisitor visitor)
@@ -243,7 +244,7 @@ public class Molecule: Instructions
         Debug.Log("Molecule");
 
         Evaluate(visitor.Scope, visitor);
-    }
+    }                    // Evalúa la estructura (instrucciones)
     public object? Evaluate(IScope? scope, IVisitor? visitor = null)
     {
         if (!(NodeLeft is null) && !(NodeRight is null) && !(ArtOpeartor is null))
@@ -253,9 +254,9 @@ public class Molecule: Instructions
 
             else
             {
-                Debug.Log("Heyyyyyyyyyyyyyyyyyyy");
-                Debug.Log(NodeLeft.Evaluate(scope, visitor) 
-                    +" "+NodeRight.Evaluate(scope, visitor));
+                //Debug.Log("Heyyyyyyyyyyyyyyyyyyy");
+                //Debug.Log(NodeLeft.Evaluate(scope, visitor) 
+                //    +" "+NodeRight.Evaluate(scope, visitor));
                 if(visitor is not null)
                 {
                     visitor.Assig = new Assig(NodeRight.Evaluate(scope, visitor), ArtOpeartor);
@@ -267,7 +268,7 @@ public class Molecule: Instructions
         }
         else
             return NodeLeft?.Evaluate(scope, visitor);
-    }
+    }   // Evalúa la estructura 
     public Utils.ReturnType? GetType(IScope scope)
     {
         if (ArtOpeartor != null)
@@ -281,7 +282,7 @@ public class Molecule: Instructions
             return NodeLeft.GetType(scope);
 
         return null;
-    }
+    }                     // Retorna el tipo
     public override bool CheckSemantic(IScope scope)
     {
         bool check = true;
@@ -312,24 +313,24 @@ public class Molecule: Instructions
                 check = false;
 
         return check;
-    }
+    }                   // Analiza la semántica de ambos bloques
     public Token? Location()
     {
         return NodeLeft?.Location();
-    }
-}
+    }                                           // Retorna la primera aparición de un Token
+}                    // Producción o derivado ((...) &&_|| (...))
 public abstract class Atom
 {
     // Abstract class
-    public abstract Utils.ReturnType? GetType(IScope? scope);
-    public abstract bool CheckSemantic(IScope scope);
-    public abstract object? Evaluate(IScope? scope, IVisitor? visitor = null);
-    public abstract Token? Location();
-}
+    public abstract Utils.ReturnType? GetType(IScope? scope);                   // Retorna el tipo de hoja (polimorfismo)
+    public abstract bool CheckSemantic(IScope scope);                           // Analiza la semántica de la hoja (polimorfismo)
+    public abstract object? Evaluate(IScope? scope, IVisitor? visitor = null);  // Evalúa la hoja (polimorfismo)
+    public abstract Token? Location();                                          // Retorna la primera aparición de un Token
+}               // Hoja de producción del árbol (Clase abstracta Polimorfismo)
 public class Atom0: Atom
 {
     // Property
-    public Token? Boolean { get; set; }
+    public Token? Boolean { get; set; }     // Almacena un booleano
 
     //Methods
     public override object? Evaluate(IScope? scope, IVisitor? visitor = null)
@@ -342,46 +343,46 @@ public class Atom0: Atom
                 return false;
         }
         return null;
-    }
+    }   // Evalúa
     public override Utils.ReturnType? GetType(IScope? scope)
     {
         return Utils.ReturnType.Bool;
-    }
+    }                    // Retorna el tipo "Bool"
     public override bool CheckSemantic(IScope scope)
     {
         return true;
-    }
+    }                            // Retorna true (hoja)
     public override Token? Location()
     {
         return Boolean;
-    }
-}
+    }                                           // Retorna la primera aparición de un Token
+}                       // Almacena una booleano (Polimorfismo de la hoja "Atom")
 public class Atom1: Atom
 {
     // Property
-    public Expressions? Expression { get; set; }
+    public Expressions? Expression { get; set; }    // Almacena la estructura de la expresión
 
     //Methods
     public override object? Evaluate(IScope? scope, IVisitor? visitor = null)
     {
         return Expression?.Evaluate(scope , visitor);
-    }
+    }  // Evalúa la expresión
     public override Utils.ReturnType? GetType(IScope? scope)
     {
         return Expression?.GetType(scope);
-    }
+    }                   // Retorna el tipo de expresión
     public override bool CheckSemantic(IScope scope)
     {
         if (!(Expression is null) && !Expression.CheckSemantic(scope))
             return false;
 
         return true;
-    }
+    }                           // Retorna la primera aparición de un Token
     public override Token? Location()
     {
         return Expression?.Location();
     }
-}
+}                       // Almacena una expresión aritmética (Polimorfismo de la hoja "Atom")
 public class Atom2: Atom
 {
     //Property
@@ -890,11 +891,11 @@ public class Atom2: Atom
                 Call.Add(null);
     }
 
-}
+}                       // Llamados de método_propiedad (key1).(key2).(key3) (Polimorfismo de la hoja "Atom")
 public class Atom3: Atom
 {
     //Property
-    public List<Token?>? String { get; set; }
+    public List<Token?>? String { get; set; }   // almacena un "String"
 
     //Builder
     public Atom3()
@@ -925,18 +926,18 @@ public class Atom3: Atom
             return result;
         }
         return null;
-    }
+    }   // Evalúa la estructura
     public override Utils.ReturnType? GetType(IScope? scope)
     {
         return Utils.ReturnType.String;
-    }
+    }                    // Retorna el tipo "String"
     public override bool CheckSemantic(IScope scope)
     {
         return true;
-    }
+    }                            // Analiza la semántica del "Atom3"
     public override Token? Location()
     {
         return String?[0];
     }
-}
+}                       // Almacena un valor de tipo "String" (Polimorfismo de la hoja "Atom")
 #endregion

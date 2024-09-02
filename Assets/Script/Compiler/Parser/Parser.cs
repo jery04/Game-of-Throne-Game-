@@ -287,20 +287,25 @@ public class Parser : IParsing                   // Analizador sintáctico
     }        // Construye variables
     private IfElse IfElseBuilder()
     {
-        IfElse if_else = new IfElse();          // Almacena el bloque "If_Else" a retornar
+        IfElse if_else = new IfElse();           // Almacena el bloque "If_Else" a retornar
 
         Match(Token.TokenType.If, Token.TokenType.OpenParan);
-        if_else.Condition = StatementBuilder(); // Construye el Condicional del bloque
+        if_else.Condition = StatementBuilder();  // Construye el Condicional del bloque
         Match(Token.TokenType.ClosedParan, Token.TokenType.OpenKey);
 
-        if_else.Instruction_If = InstructionBuilder();
+        if_else.Instruction_If = InstructionBuilder();  // Instrucciones
         Match(Token.TokenType.ClosedKey);
-
-        if(LookAhead(true, Token.TokenType.Else))
+        
+        if(LookAhead(true, Token.TokenType.Else))       // Estructura "Else"
         {
-            Match(Token.TokenType.OpenKey);
-            if_else.Instruction_Else = InstructionBuilder();
-            Match(Token.TokenType.ClosedKey);
+            if(LookAhead(false, Token.TokenType.If))
+                if_else.ElseIf = IfElseBuilder();
+            else
+            {
+                Match(Token.TokenType.OpenKey);
+                if_else.Instruction_Else = InstructionBuilder();
+                Match(Token.TokenType.ClosedKey);
+            }
         }
 
         return if_else;
