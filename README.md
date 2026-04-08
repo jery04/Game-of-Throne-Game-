@@ -6,26 +6,27 @@ If you want to understand this project from the root folder down to every gamepl
 
 ## 🗺️ Table of Contents
 
-1. [📝 Project Summary](#1-project-summary)  
-2. [🎯 What This Project Is About](#2-what-this-project-is-about)  
-3. [🧭 Repository Walkthrough from Root (Step by Step)](#3-repository-walkthrough-from-root-step-by-step)  
-4. [📁 Source vs Generated Folders](#4-source-vs-generated-folders)  
-5. [🗂️ Assets Folder Deep Dive](#5-assets-folder-deep-dive)  
-6. [🌊 Scene Flow and Player Journey](#6-scene-flow-and-player-journey)  
-7. [🏗️ Gameplay Systems Architecture](#7-gameplay-systems-architecture)  
-8. [🃏 Card Model and Rules](#8-card-model-and-rules)  
-9. [✨ Effects Engine](#9-effects-engine)  
-10. [🤖 AI Behavior](#10-ai-behavior)  
-11. [🛠️ Custom Card Compiler (DSL) Pipeline](#11-custom-card-compiler-dsl-pipeline)  
-12. [📜 Full Script Map (File-by-File)](#12-full-script-map-file-by-file)  
-13. [🔧 Technologies and Dependencies](#13-technologies-and-dependencies)  
-14. [🚀 How to Open and Run the Project](#14-how-to-open-and-run-the-project)  
-15. [📦 How to Build the Game](#15-how-to-build-the-game)  
-16. [⚠️ Troubleshooting and Maintenance Notes](#16-troubleshooting-and-maintenance-notes)  
-17. [🌟 Suggested Next Improvements](#17-suggested-next-improvements)
+1. 📝 [Project Summary](#1-project-summary)  
+2. 🎯 [What This Project Is About](#2-what-this-project-is-about)  
+3. 🧭 [Repository Walkthrough from Root (Step by Step)](#3-repository-walkthrough-from-root-step-by-step)  
+4. 📁 [Source vs Generated Folders](#4-source-vs-generated-folders)  
+5. 🗂️ [Assets Folder Deep Dive](#5-assets-folder-deep-dive)  
+6. 🌊 [Scene Flow and Player Journey](#6-scene-flow-and-player-journey)  
+7. 🏗️ [Gameplay Systems Architecture](#7-gameplay-systems-architecture)  
+8. 🃏 [Card Model and Rules](#8-card-model-and-rules)  
+9. ✨ [Effects Engine](#9-effects-engine)  
+10. 🤖 [AI Behavior](#10-ai-behavior)  
+11. 🛠️ [Custom Card Compiler (DSL) Pipeline](#11-custom-card-compiler-dsl-pipeline)  
+12. 📜 [Full Script Map (File-by-File)](#12-full-script-map-file-by-file)  
+13. 🔧 [Technologies and Dependencies](#13-technologies-and-dependencies)  
+14. 🚀 [How to Open and Run the Project](#14-how-to-open-and-run-the-project)  
+15. 📦 [How to Build the Game](#15-how-to-build-the-game)  
+16. ⚠️ [Troubleshooting and Maintenance Notes](#16-troubleshooting-and-maintenance-notes)  
+17. 🌟 [Suggested Next Improvements](#17-suggested-next-improvements)
 
 ---
 
+<a id="1-project-summary"></a>
 ## 1) 📝 Project Summary
 
 **Project Type:**
@@ -46,6 +47,7 @@ If you want to understand this project from the root folder down to every gamepl
 
 ---
 
+<a id="2-what-this-project-is-about"></a>
 ## 2) 🎯 What This Project Is About
 
 At gameplay level, this is a tactical card battle game where each player manages:
@@ -65,6 +67,7 @@ At engineering level, the project combines:
 
 ---
 
+<a id="3-repository-walkthrough-from-root-step-by-step"></a>
 ## 3) 🧭 Repository Walkthrough from Root (Step by Step)
 
 The following section explains the repository from the root level, one item at a time.
@@ -110,6 +113,7 @@ The following section explains the repository from the root level, one item at a
 
 ---
 
+<a id="4-source-vs-generated-folders"></a>
 ## 4) 📁 Source vs Generated Folders
 
 **Primary source-of-truth folders:**
@@ -129,6 +133,7 @@ The following section explains the repository from the root level, one item at a
 
 ---
 
+<a id="5-assets-folder-deep-dive"></a>
 ## 5) 🗂️ Assets Folder Deep Dive
 
 ### 🎬 `Assets/Scenes/`
@@ -154,6 +159,7 @@ Main C# codebase grouped by domains (core flow, cards, drag & drop, effects, men
 
 ---
 
+<a id="6-scene-flow-and-player-journey"></a>
 ## 6) 🌊 Scene Flow and Player Journey
 
 **Main journey:**
@@ -169,6 +175,7 @@ Main C# codebase grouped by domains (core flow, cards, drag & drop, effects, men
 
 ---
 
+<a id="7-gameplay-systems-architecture"></a>
 ## 7) 🏗️ Gameplay Systems Architecture
 
 - 👑 `GameManager` → Global match coordinator
@@ -177,6 +184,7 @@ Main C# codebase grouped by domains (core flow, cards, drag & drop, effects, men
 
 ---
 
+<a id="8-card-model-and-rules"></a>
 ## 8) 🃏 Card Model and Rules
 
 **Main card fields:**
@@ -190,6 +198,7 @@ Main C# codebase grouped by domains (core flow, cards, drag & drop, effects, men
 
 ---
 
+<a id="9-effects-engine"></a>
 ## 9) ✨ Effects Engine
 
 Effects implemented in the static `Effects` class:
@@ -197,6 +206,7 @@ Effects implemented in the static `Effects` class:
 
 ---
 
+<a id="10-ai-behavior"></a>
 ## 10) 🤖 AI Behavior
 
 AI class `IA` controls automated turns using heuristics:
@@ -206,6 +216,7 @@ AI class `IA` controls automated turns using heuristics:
 
 ---
 
+<a id="11-custom-card-compiler-dsl-pipeline"></a>
 ## 11) 🛠️ Custom Card Compiler (DSL) Pipeline
 
 The most advanced subsystem:
@@ -215,6 +226,7 @@ The most advanced subsystem:
 
 ---
 
+<a id="12-full-script-map-file-by-file"></a>
 ## 12) 📜 Full Script Map (File-by-File)
 
 **Core gameplay:**
@@ -249,6 +261,7 @@ The most advanced subsystem:
 
 ---
 
+<a id="13-technologies-and-dependencies"></a>
 ## 13) 🔧 Technologies and Dependencies
 
 - 🟦 Unity 2022.3.15f1
@@ -257,6 +270,7 @@ The most advanced subsystem:
 
 ---
 
+<a id="14-how-to-open-and-run-the-project"></a>
 ## 14) 🚀 How to Open and Run the Project
 
 **Prerequisites:**
@@ -273,6 +287,7 @@ The most advanced subsystem:
 
 ---
 
+<a id="15-how-to-build-the-game"></a>
 ## 15) 📦 How to Build the Game
 
 1. Open **Build Settings**
@@ -282,6 +297,7 @@ The most advanced subsystem:
 
 ---
 
+<a id="16-troubleshooting-and-maintenance-notes"></a>
 ## 16) ⚠️ Troubleshooting and Maintenance Notes
 
 - Scene references broken → Reimport assets
@@ -291,6 +307,7 @@ The most advanced subsystem:
 
 ---
 
+<a id="17-suggested-next-improvements"></a>
 ## 17) 🌟 Suggested Next Improvements
 
 **Short-term:**
