@@ -1,764 +1,270 @@
-# 🎮⚙️ Gwent Project - Game of Thrones Inspired Card Game (Unity)
+﻿# 🎮⚙️ Gwent Project - Game of Thrones Inspired Card Game (Unity) 🐺🐉
 
-This repository contains a complete Unity card game inspired by Gwent, with a Game of Thrones theme and one major custom feature: a built-in DSL compiler that lets players create playable cards with scripted effects.
+This repository contains a complete Unity card game inspired by Gwent, with a Game of Thrones theme and one major custom feature: a built-in DSL compiler that lets players create their own playable cards with scripted effects. ✨
 
-If you want to understand this project from the root folder down to each gameplay and compiler module, this document is the full step-by-step guide.
+If you want to understand this project from the root folder down to every gameplay and compiler module, this document is the full step-by-step guide. 📜
 
-## 🌠🧠 Table of Contents
+## 🗺️ Table of Contents
 
-1. ✅📌 Project Summary
-2. ✅📝 What This Project Is About
-3. 📍✨ Repository Walkthrough from Root (Step by Step)
-4. 🛤️🎯 Source vs Generated Folders
-5. 🔹🧭 Assets Folder Deep Dive
-6. 🧭📍 Scene Flow and Player Journey
-7. 🎬✅ Gameplay Systems Architecture
-8. 📌💫 Card Model and Rules
-9. 🧩✅ Effects Engine
-10. 🗂️📌 AI Behavior
-11. 🔎📍 Custom Card Compiler (DSL) Pipeline
-12. 🪄✅ Full Script Map (File-by-File)
-13. 🎯📌 Technologies and Dependencies
-14. 🛣️✅ How to Open and Run the Project
-15. 📍📝 How to Build the Game
-16. ✅📝 Troubleshooting and Maintenance Notes
-17. 📍✨ Suggested Next Improvements
-
----
-
-## 🌟📘 1) Project Summary
-
-Project type:
-- 🎯🧠 Unity 2D card strategy game
-
-Core idea:
-- 🎮🃏 Two players (human vs human or human vs AI) battle with faction decks in rounds.
-- ⚔️🛡️ Cards have types, positions, power values, and effects.
-- 🔥❄️ The game includes weather, boosts, bait mechanics, leader effects, and cemetery interactions.
-
-Unique feature:
-- 🧠📚 A custom compiler lets players define new cards through a mini language (DSL).
-- 🎨🖌️ Compiled cards are added to a special custom deck that can be selected in deck selection.
-
-Engine and language:
-- 🛠️✨ Unity 2022.3.15f1
-- 🚀🌟 C# scripts
+1. 📝 Project Summary
+2. 🎯 What This Project Is About
+3. 🧭 Repository Walkthrough from Root (Step by Step)
+4. 📁 Source vs Generated Folders
+5. 🗂️ Assets Folder Deep Dive
+6. 🌊 Scene Flow and Player Journey
+7. 🏗️ Gameplay Systems Architecture
+8. 🃏 Card Model and Rules
+9. ✨ Effects Engine
+10. 🤖 AI Behavior
+11. 🛠️ Custom Card Compiler (DSL) Pipeline
+12. 📜 Full Script Map (File-by-File)
+13. 🔧 Technologies and Dependencies
+14. 🚀 How to Open and Run the Project
+15. 📦 How to Build the Game
+16. ⚠️ Troubleshooting and Maintenance Notes
+17. 🌟 Suggested Next Improvements
 
 ---
 
-## 🎯🧠 2) What This Project Is About
+## 📝 1) Project Summary
+
+**Project Type:**
+- 🎮 Unity 2D Card Strategy Game
+
+**Core Idea:**
+- ⚔️ Two players (human vs human or human vs AI) battle with faction decks in rounds.
+- 🃏 Cards have types, positions, power values, and effects.
+- 🌨️ Includes weather, boosts, bait mechanics, leader effects, and cemetery interactions.
+
+**Unique Feature:**
+- ✨ A custom compiler lets players define new cards through a mini language (DSL).
+- 🃏 Compiled cards are added to a special custom deck that can be selected in deck selection.
+
+**Engine and Language:**
+- 🟦 Unity 2022.3.15f1
+- 💻 C# scripts
+
+---
+
+## 🎯 2) What This Project Is About
 
 At gameplay level, this is a tactical card battle game where each player manages:
-- 📦🧩 A deck
-- 🎯🕹️ A hand
-- 🧪🔬 Three combat rows (Melee, Range, Siege)
-- 🧵🧠 Boost slots
-- 🌌🏰 Weather slot
-- 🗺️🧭 Cemetery
+- 🃏 A deck
+- ✋ A hand
+- 🛡️ Three combat rows (Melee, Range, Siege)
+- ⭐ Boost slots
+- 🌩️ Weather slot
+- ⚰️ Cemetery
 
-Players take turns placing cards and activating effects. At the end of each round, row power is aggregated and saved. The match concludes when a player wins enough rounds.
+Players take turns placing cards and activating effects. At the end of each round, row power is calculated and the match ends when a player wins enough rounds. 🏆
 
 At engineering level, the project combines:
-- 🎵🎧 Traditional Unity game systems (scene flow, UI, drag and drop, audio, turn manager)
-- 🧱🧠 Data-driven card creation with ScriptableObject-like structure
-- 🔮🃏 A custom lexer-parser-semantic-runtime pipeline for user-generated card logic
+- 🎮 Traditional Unity systems (scene flow, UI, drag & drop, audio, turn manager)
+- 📊 Data-driven card creation
+- 🧠 A complete lexer-parser-semantic-runtime pipeline for user-generated card logic
 
 ---
 
-## 🗺️✨ 3) Repository Walkthrough from Root (Step by Step)
+## 🧭 3) Repository Walkthrough from Root (Step by Step)
 
-The following section explains the repository from the root level, one item at a time.
+### Step 1 - Version Control and Repository Metadata
+- 📦 `.git/`
+- 📋 `.gitattributes`
+- 🚫 `.gitignore`
 
-### 🧰⚙️ Step 1 - Version control and repository metadata
+### Step 2 - IDE and Local Tool State
+- 💻 `.vs/`
+- ⚙️ `.vsconfig`
 
-- 💡⚙️ `.git/`
-	- 🛡️🐺 Git repository internals.
-	- 🐉🔥 Tracks history, branches, and commits.
+### Step 3 - Unity/C# Solution Files
+- 📄 `Assembly-CSharp.csproj`
+- 📂 `Gwent Pro 2D.sln`
+- 📂 `Gwent-Project.sln`
 
-- 🗡️👑 `.gitattributes`
-	- ❄️🧊 Git text/binary and normalization rules.
+### Step 4 - Main Source Folder
+- 🎯 `Assets/` → The most important folder (scenes, scripts, images, resources, fonts)
 
-- 🏹🛡️ `.gitignore`
-	- ⚡🧩 Ignore rules for generated files and local-only folders.
+### Step 5 - Build Output
+- 📦 `Builds/`
 
-### 🛠️🧩 Step 2 - IDE and local tool state
+### Step 6 - Supporting Documents
+- 📄 `Decks.pdf`
+- 📄 `READ_ME.pdf`
 
-- 🎲📘 `.vs/`
-	- 🧭🎴 Visual Studio local workspace cache/state.
-	- 🪄🎮 Local machine artifact, not gameplay source.
-
-- 🧪📚 `.vsconfig`
-	- 📚🧠 Visual Studio workload/tooling configuration.
-
-### 🎛️⚙️ Step 3 - Unity/C# solution and project files
-
-- 🛠️📦 `Assembly-CSharp.csproj`
-	- 🛡️⚔️ Auto-generated C# project definition by Unity.
-	- 🎮🃏 Includes references and all script compile items.
-	- ⚔️🛡️ Target framework includes .NET Framework 4.7.1.
-
-- 🔥❄️ `Gwent Pro 2D.sln`
-	- 🧠📚 Solution entry used by IDE tooling for Unity scripts.
-
-- 🎨🖌️ `Gwent-Project.sln`
-	- 🛠️✨ Another solution file for IDE integration.
-
-### 🧰🔩 Step 4 - Main source folder
-
-- 🚀🌟 `Assets/`
-	- 📦🧩 The most important source folder in Unity.
-	- 🎯🕹️ Contains scenes, scripts, images, resources, fonts, and TMP assets.
-	- 🧪🔬 Detailed breakdown in section 5.
-
-### 🧱⚙️ Step 5 - Build output artifacts
-
-- 🧵🧠 `Builds/`
-	- 🌌🏰 Already generated executable build output.
-	- 🗺️🧭 Includes runtime data folder and Mono runtime payload.
-
-### 🧭🛠️ Step 6 - Supporting documents
-
-- 🎵🎧 `Decks.pdf`
-	- 🧱🧠 External document likely used for design/reference of decks.
-
-- 🔮🃏 `READ_ME.pdf`
-	- 💡⚙️ External project documentation in PDF form.
-
-### 🔧🧩 Step 7 - Unclear or temporary root files
-
-- 🛡️🐺 `git commit -mVersion2.1`
-	- 🐉🔥 Non-standard file name that looks like a command string or manual note.
-	- 🗡️👑 Likely temporary or accidental artifact.
-
-- ❄️🧊 `s`
-	- 🏹🛡️ Non-descriptive file/folder name.
-	- ⚡🧩 Likely a temporary artifact; verify before keeping.
-
-### 🛰️⚙️ Step 8 - Unity generated project cache
-
-- 🎲📘 `Library/`
-	- 🧭🎴 Unity import cache, compiled metadata, artifact database.
-	- 🪄🎮 Very large and machine-specific.
-	- 🧪📚 Regenerated by Unity.
-
-- 📚🧠 `Logs/`
-	- 🛠️📦 Editor/runtime logs.
-
-- 🔥🐉 `obj/`
-	- 🎮🃏 C# build intermediate output.
-
-### 🗜️🧩 Step 9 - Unity package and project configuration
-
-- ⚔️🛡️ `Packages/`
-	- 🔥❄️ Package dependency declarations and lock file.
-
-- 🧠📚 `ProjectSettings/`
-	- 🎨🖌️ Unity project configuration (input, quality, build scenes, physics, etc).
-
-- 🛠️✨ `UserSettings/`
-	- 🚀🌟 Per-user Unity editor preferences and layout settings.
-
-### 🔧🧩 Step 10 - Repository documentation entry
-
-- 📦🧩 `README.md`
-	- 🎯🕹️ This documentation file.
+### Other Folders
+- 🗄️ `Library/`, `Logs/`, `obj/`, `Packages/`, `ProjectSettings/`, `UserSettings/`
 
 ---
 
-## 🚀📚 4) Source vs Generated Folders
+## 📁 4) Source vs Generated Folders
 
-Use this to quickly understand what should be considered source and what is generated runtime/editor state.
+**Primary Source Folders:**
+- ✅ `Assets/`
+- ✅ `Packages/`
+- ✅ `ProjectSettings/`
 
-Primary source-of-truth folders:
-- 🧪🔬 `Assets/`
-- 🧵🧠 `Packages/`
-- 🌌🏰 `ProjectSettings/`
-
-Usually generated or local-only:
-- 🗺️🧭 `Library/`
-- 🎵🎧 `Logs/`
-- 🧱🧠 `obj/`
-- 🔮🃏 `.vs/`
-- 💡⚙️ `UserSettings/`
-- 🛡️🐺 `Builds/` (generated executable payload)
-
-Practical rule:
-- 🐉🔥 If you are modifying gameplay/content/code, focus on `Assets/`, `Packages/`, and `ProjectSettings/`.
+**Generated / Local Folders:**
+- ❌ `Library/`
+- ❌ `Logs/`
+- ❌ `obj/`
+- ❌ `.vs/`
+- ❌ `UserSettings/`
+- ❌ `Builds/`
 
 ---
 
-## 🏰🧩 5) Assets Folder Deep Dive
+## 🗂️ 5) Assets Folder Deep Dive
 
-### 🛠️🧩 `Assets/Scenes/`
+### 🎬 Scenes
+- 🏠 `Main.unity` - Main menu
+- 🛡️ `ChosingDeck.unity` - Deck selection
+- ⚔️ `Game.unity` - Main battle scene
+- 🧪 `CreateCard.unity` - Card compiler scene
 
-Contains the main playable scenes:
-- 🗡️👑 `Main.unity` - Main menu scene.
-- ❄️🧊 `ChosingDeck.unity` - Deck and player setup scene.
-- 🏹🛡️ `Game.unity` - Main battle scene.
-- ⚡🧩 `CreateCard.unity` - Custom card compiler/editor scene.
+### 💻 Scripts
+Organized by domain: core gameplay, cards & players, drag & drop, effects, menus, and compiler.
 
-Configured build order in Unity build settings:
-1. 🛤️🎯 `Main.unity`
-2. 🔹🧭 `ChosingDeck.unity`
-3. 🧭📍 `Game.unity`
-4. 🎬✅ `CreateCard.unity`
-
-### 🎛️⚙️ `Assets/Script/`
-
-Main C# codebase, grouped by game domains:
-- 🎲📘 Core game flow
-- 🧭🎴 Card/player systems
-- 🪄🎮 Drag and drop
-- 🧪📚 Effects logic
-- 📚🧠 Menu and panel controllers
-- 🛠️📦 Compiler subsystem
-
-Detailed script map is in section 12.
-
-### 🧰🔩 `Assets/Image/`
-
-Visual assets:
-- ❄️🧊 Card art
-- 🎮🃏 UI icons/buttons
-- ⚔️🛡️ Themed imagery
-
-### 🧱⚙️ `Assets/Resources/`
-
-Runtime-loaded assets via `Resources.Load`:
-- 🔥❄️ Audio clips
-- 🧠📚 Sprites and prefabs used dynamically at runtime
-
-### 🧭🛠️ `Assets/game-of-thrones/`
-
-Typeface assets (Game of Thrones style font).
-
-### 🔧🧩 `Assets/TextMesh Pro/`
-
-TMP package assets:
-- 🎨🖌️ Shaders
-- 🛠️✨ sprite assets
-- 🚀🌟 font resources
+### 🖼️ Other Assets
+- `Image/` → Card art and UI
+- `Resources/` → Runtime loaded assets
+- `game-of-thrones/` → GoT style font
+- `TextMesh Pro/` → TMP assets
 
 ---
 
-## 🎮📖 6) Scene Flow and Player Journey
+## 🌊 6) Scene Flow and Player Journey
 
-### 🛰️⚙️ Scene navigation overview
+**Main Journey:**
+1. 🏠 Main menu
+2. 🛡️ Deck selection
+3. ⚔️ Battle scene
 
-Main journey:
-1. 📌💫 Main menu opens.
-2. 🧩✅ Player selects mode/decks in deck selection scene.
-3. 🗂️📌 Game scene runs the full match.
-
-Optional side journey:
-1. 🔎📍 From main menu, player can open the card compiler scene.
-2. 🪄✅ Player writes custom DSL code.
-3. 🎯📌 On successful compile, cards are saved into the compiler deck.
-4. 🛣️✅ Back in deck selection, compiler deck can be selected if it has enough cards.
-
-### 🗜️🧩 Runtime sequence step-by-step
-
-1. 🧪✨ `Main.unity`
-	 - 📦🧩 Initializes `DataBase` (predefined decks and cards).
-	 - 🎯🕹️ Music can be toggled.
-	 - 🧪🔬 User can navigate to play or card creation.
-
-2. ✅📝 `ChosingDeck.unity`
-	 - 🧵🧠 User enters player names.
-	 - 🌌🏰 Selects faction decks (Stark, Targaryen, Dead).
-	 - 🗺️🧭 Optionally uses compiler deck when valid.
-	 - 🎵🎧 Starts game scene.
-
-3. 📍✨ `Game.unity`
-	 - 🧱🧠 Decks are instantiated into runtime objects.
-	 - 🔮🃏 Each player receives leader + initial hand.
-	 - 💡⚙️ Turn loop begins.
-	 - 🛡️🐺 Cards are dragged onto valid rows.
-	 - 🐉🔥 Effects trigger and power updates dynamically.
-	 - 🗡️👑 Round transitions happen when players pass.
-	 - ❄️🧊 Winner panel appears when match end condition is met.
-
-4. 🛤️🎯 `CreateCard.unity`
-	 - 🏹🛡️ User writes DSL definitions.
-	 - ⚡🧩 Run button executes compiler pipeline.
-	 - 🎲📘 Semantic errors are displayed in panel.
-	 - 🧭🎴 Successful execution stores generated cards in compiler deck.
+**Compiler Journey:**
+1. Open CreateCard scene from menu
+2. Write DSL code
+3. Compile and create new cards
+4. Use the custom compiler deck in game
 
 ---
 
-## 🧪🧠 7) Gameplay Systems Architecture
+## 🏗️ 7) Gameplay Systems Architecture
 
-### 🛠️🎛️ Central orchestrator
-
-`GameManager` is the global match coordinator:
-- 🪄🎮 Tracks current round and turn owner.
-- 🧪📚 Handles skip turn and skip round transitions.
-- 📚🧠 Triggers AI when required.
-- 🛠️📦 Computes overall winner state.
-- 🎮✨ Controls round/game-over panels.
-
-### 🛠️🧩 Player runtime state
-
-Each `Player` owns:
-- 🎮🃏 Name/faction
-- ⚔️🛡️ Deck list
-- 🔥❄️ Hand panel
-- 🧠📚 Field rows
-- 🎨🖌️ Increase slots
-- 🛠️✨ Climate slot
-- 🚀🌟 Cemetery list
-- 📦🧩 Round power array
-
-The `Player` class also handles:
-- 🎯🕹️ Card draw logic
-- 🧪🔬 Leader placement
-- 🧵🧠 Turn interaction gating (drag enabled/disabled)
-- 🌌🏰 Initial pre-battle card-change flow
-
-### 🎛️⚙️ Row/panel management
-
-`Panels` class handles panel-level state:
-- 🗺️🧭 Current cards in panel
-- 🎵🎧 Allowed positions
-- 🧱🧠 Max capacity
-- 🔮🃏 Unity/silver counters
-- 💡⚙️ Row power aggregation
-- 🛡️🐺 Removal and cleanup
+- 👑 `GameManager` → Global match coordinator
+- 🧍 `Player` → Player state and logic
+- 📊 `Panels` → Row and panel management
 
 ---
 
-## 🛠️📘 8) Card Model and Rules
+## 🃏 8) Card Model and Rules
 
-Card model is represented by `Card` and related derived runtime types.
+**Card Fields:** Name, Faction, Power, Description, Type, Position, Effect
 
-Main card fields:
-- 🐉🔥 Name
-- 🗡️👑 Faction
-- ❄️🧊 Power
-- 🏹🛡️ Description
-- ⚡🧩 Artwork and portrait
-- 🎲📘 Card type
-- 🧭🎴 Board position constraints
-- 🪄🎮 Effect delegate
-- 🧪📚 Optional audio clip
+**Positions:** M, R, S and combinations  
+**Types:** Golden, Silver, Climate, Clear, Bait, Increase, Leader
 
-### 🧰🔩 Card position enum
-
-Supported placement targets include:
-- 📚🧠 `M`, `R`, `S`
-- 🛠️📦 Combined rows: `MR`, `MS`, `RS`, `MRS`
-- 📚🧪 Special zones: `I` (increase), `C` (climate), `L` (leader)
-
-### 🧱⚙️ Card kind enum
-
-Supported types:
-- 🎮🃏 `golden`
-- ⚔️🛡️ `silver`
-- 🔥❄️ `climate`
-- 🧠📚 `clear`
-- 🎨🖌️ `bait`
-- 🛠️✨ `increase`
-- 🚀🌟 `leader`
-
-### 🧭🛠️ Predefined deck content
-
-`DataBase` initializes and stores core factions:
-- 📦🧩 Stark deck
-- 🎯🕹️ Targaryen deck
-- 🧪🔬 Dead (White Walkers) deck
-
-And a static custom deck:
-- 🧵🧠 `deckCompiler` for DSL-generated cards
+**Decks:** Stark 🐺, Targaryen 🐉, Dead ❄️ + Compiler deck
 
 ---
 
-## 🔥📚 9) Effects Engine
+## ✨ 9) Effects Engine
 
-Effects are implemented in static class `Effects` and dispatched by card usage logic.
-
-Representative effect categories:
-- 🌌🏰 Row buffs (`Increase`)
-- 🗺️🧭 Weather damage (`Climate`)
-- 🎵🎧 Remove max/min enemy card (`RemoveMax`, `RemoveMin`)
-- 🧱🧠 Draw cards (`DrawCard`)
-- 🔮🃏 Unit scaling (`MultiplyPower`)
-- 💡⚙️ Row clear (`ClearRow`)
-- 🛡️🐺 Field average normalization (`Average`)
-- 🐉🔥 Bait return mechanic (`ReturnToHand`)
-- 🗡️👑 Weather clear (`ClimateOut`)
-- ❄️🧊 Leader-specific global effects (`JonSnow`, `Daenerys`, `NightKing`)
-
-Effect invocation routing:
-- 🏹🛡️ `Drop.ActiveEffect(...)` decides which argument signature to use.
-- ⚡🧩 The dispatcher mixes type-based and card-name-based routing.
+Includes row buffs, weather effects, bait mechanics, card draw, power multipliers, and powerful leader abilities.
 
 ---
 
-## 🏰📘 10) AI Behavior
+## 🤖 10) AI Behavior
 
-AI class `IA` controls automated turns.
-
-Primary process:
-1. 🔹🧭 Choose a card from current hand by heuristic.
-2. 🧭📍 Choose valid target panel/row.
-3. 🎬✅ Place card.
-4. 📌💫 Trigger effect.
-5. 🧩✅ End turn or pass round.
-
-Heuristic priorities observed:
-- 🎲📘 Strong hero cards first.
-- 🧭🎴 Increase cards with useful value.
-- 🪄🎮 Climate cards when opponent row has enough units.
-- 🧪📚 Strong standard unit fallback.
-
-AI integration:
-- 📚🧠 AI can be attached to either player.
-- 🛠️📦 `GameManager` delegates turn execution to AI when active.
+AI chooses cards strategically using heuristics:
+- Prioritizes strong cards
+- Uses boosts and weather at the right moment
+- Falls back to standard units
 
 ---
 
-## 🌟📘 11) Custom Card Compiler (DSL) Pipeline
+## 🛠️ 11) Custom Card Compiler (DSL) Pipeline
 
-This is the most advanced subsystem in the repository.
-
-### 🔧🧩 High-level pipeline
-
-1. 🗂️📌 User writes code in compiler scene input field.
-2. 🔎📍 `Lexer` tokenizes the input.
-3. 🪄✅ `Parser` constructs AST-like object graph (`ProgramCompiler`, blocks, expressions).
-4. 🎯📌 Semantic analysis validates:
-	 - 🧭🌟 Type correctness
-	 - 🎮🃏 Field validity
-	 - ⚔️🛡️ Effect references and parameter compatibility
-5. 🛣️✅ Evaluation creates `CardCompiler` card objects.
-6. 🛤️📌 Generated cards are appended to `DataBase.deckCompiler`.
-
-### 🛰️⚙️ Compiler architecture layers
-
-- 🔥❄️ Lexical layer:
-	- 🧠📚 `Compiler/Lexer/Token.cs`
-	- 🎨🖌️ `Compiler/Lexer/Lexer.cs`
-
-- 🛠️✨ Parsing layer:
-	- 🚀🌟 `Compiler/Parser/Parser.cs`
-	- 📦🧩 Builds effect blocks, card blocks, statements, selectors, and activation trees.
-
-- 🎯🕹️ Semantic layer:
-	- 🧪🔬 `ISemantic` interface
-	- 🧵🧠 `CheckSemantic` across blocks
-	- 🌌🏰 Error accumulation in `Utils.errors`
-
-- 🗺️🧭 Execution layer:
-	- 🎵🎧 `ProgramCompiler.Evaluate(...)`
-	- 🧱🧠 `CardBlock.Evaluate(...)` -> `CardCompiler`
-	- 🔮🃏 Runtime visitor/scope resolution through `Scope` and `Visitor`
-
-### 🗜️🧩 DSL concepts represented in code
-
-Effect-related concepts:
-- 💡⚙️ `Effect`
-- 🛡️🐺 `Params`
-- 🐉🔥 `Action`
-- 🗡️👑 `Selector`
-- ❄️🧊 `Predicate`
-- 🏹🛡️ `PostAction`
-
-Card-related concepts:
-- ⚡🧩 `Name`
-- 🎲📘 `Type`
-- 🧭🎴 `Faction`
-- 🪄🎮 `Power`
-- 🧪📚 `Range`
-- 📚🧠 `OnActivation`
-
-Expression support:
-- 🛠️📦 Numeric operations
-- 🧩🎴 Logical operators
-- 🎮🃏 Conditionals
-- ⚔️🛡️ Loop blocks (`while`, `for`)
-- 🔥❄️ Context access to board/hand/deck/field
-
-### 🧱🔩 Compiler UI flow
-
-- 🧠📚 `LineNumberDisplay` tracks editor lines and source content.
-- 🎨🖌️ `Button_Run` resets state, compiles, validates, and reports errors.
-- 🛠️✨ Successful run updates compiler deck and displays success message.
+The most advanced part of the project:
+- Lexer → Parser → Semantic Analysis → Execution
+- Supports loops, conditionals, selectors, and board context
+- Full UI in the CreateCard scene
 
 ---
 
-## 🎯🧠 12) Full Script Map (File-by-File)
+## 📜 12) Full Script Map (File-by-File)
 
-This section explains all major scripts included in `Assets/Script`.
+**Core:**
+- `GameManager.cs` 👑
+- `IA.cs` 🤖
 
-### 🛠️🧩 Core gameplay
+**Cards & Players:**
+- `Card.cs` 🃏
+- `Player.cs` 🧍
+- `CardDisplay.cs`
 
-- 🚀🌟 `Assets/Script/GameManager.cs`
-	- 📦🧩 Global match lifecycle manager.
-	- 🎯🕹️ Turn/round control, winner logic, game-over panel, AI activation.
+**Drag & Drop:**
+- `Drag.cs` 🖱️
+- `Drop.cs`
 
-- 🧪🔬 `Assets/Script/IA.cs`
-	- 🧵🧠 AI decision and turn execution logic.
+**Effects:**
+- `Effects.cs` ✨
 
-### 🎛️⚙️ Card and player domain
-
-- 🌌🏰 `Assets/Script/Card && Player/Card.cs`
-	- 🗺️🧭 Card data model and enums.
-	- 🎵🎧 Runtime effect delegate wiring.
-	- 🧱🧠 Includes `CardCompiler` generated-card class.
-
-- 🔮🃏 `Assets/Script/Card && Player/Player.cs`
-	- 💡⚙️ Runtime player state and operations.
-	- 🛡️🐺 Draw, deck instancing, panel interactions, power tracking.
-
-- 🐉🔥 `Assets/Script/Card && Player/CardDisplay.cs`
-	- 🗡️👑 Unity UI bridge between card data and visual card object.
-
-- ❄️🧊 `Assets/Script/Card && Player/DeckManager.cs`
-	- 🏹🛡️ Basic deck prefab instancing helper.
-
-### 🧰🔩 Drag and drop interaction
-
-- ⚡🧩 `Assets/Script/Drag && Drop/Drag.cs`
-	- 🎲📘 Drag lifecycle behavior.
-
-- 🧭🎴 `Assets/Script/Drag && Drop/Drop.cs`
-	- 🪄🎮 Drop validation, placement rules, effect trigger entrypoint.
-
-- 🧪📚 `Assets/Script/Drag && Drop/DropCard.cs`
-	- 📚🧠 Hover card-info panel updates and bait-specific drop behavior.
-
-### 🧱⚙️ Effects layer
-
-- 🛠️📦 `Assets/Script/Effects/Effects.cs`
-	- 🚀🛠️ All concrete card effects.
-
-- 🎮🃏 `Assets/Script/Effects/EventClick.cs`
-	- ⚔️🛡️ Click event handling, including leader effect trigger path.
-
-### 🧭🛠️ Menus and panel control
-
-- 🔥❄️ `Assets/Script/Mains && Panels/MainMenu.cs`
-	- 🧠📚 Main menu actions, music toggle, scene navigation, DB init.
-
-- 🎨🖌️ `Assets/Script/Mains && Panels/Chose.cs`
-	- 🛠️✨ Deck and name selection; compiler deck gate logic.
-
-- 🚀🌟 `Assets/Script/Mains && Panels/Panels.cs`
-	- 📦🧩 Generic panel card list management and row power utilities.
-
-- 🎯🕹️ `Assets/Script/Mains && Panels/KeepMusic.cs`
-	- 🧪🔬 Background music singleton persistence across scenes.
-
-### 🔧🧩 Data initialization
-
-- 🧵🧠 `Assets/Script/DataBase/DataBase.cs`
-	- 🌌🏰 Creates all predefined cards and faction decks.
-	- 🗺️🧭 Hosts compiler deck and compilation card insertion.
-
-### 🛰️⚙️ Compiler entry and orchestration
-
-- 🎵🎧 `Assets/Script/Compiler/ProgramCompiler.cs`
-	- 🧱🧠 Program root containing effect and card block lists.
-
-- 🔮🃏 `Assets/Script/Compiler/Button_Run.cs`
-	- 💡⚙️ Compile button behavior.
-
-- 🛡️🐺 `Assets/Script/Compiler/Display_Compiler.cs`
-	- 🐉🔥 `LineNumberDisplay` UI behavior in compiler editor scene.
-
-### 🗜️🧩 Compiler lexical analysis
-
-- 🗡️👑 `Assets/Script/Compiler/Lexer/Token.cs`
-	- ❄️🧊 Token definitions and position metadata helpers.
-
-- 🏹🛡️ `Assets/Script/Compiler/Lexer/Lexer.cs`
-	- ⚡🧩 Regex-based tokenization over source lines.
-
-### 🧭⚙️ Compiler parsing and AST blocks
-
-- 🎲📘 `Assets/Script/Compiler/Parser/Parser.cs`
-	- 🧭🎴 Main parser with builders for effects/cards/instructions/selectors.
-
-- 🪄🎮 `Assets/Script/Compiler/Card/CardBlocks.cs`
-	- 🧪📚 Card block structures: card fields, OnActivation, selectors, post actions.
-
-- 📚🧠 `Assets/Script/Compiler/Effect/EffectBlocks.cs`
-	- 🛠️📦 Effect block structures: params, action, instructions, loops, variables.
-
-### 🛠️🧩 Compiler expressions and semantic model
-
-- 🎵🏰 `Assets/Script/Compiler/Expression/Binary_Expression.cs`
-	- 🎮🃏 Numeric expression tree components.
-
-- ⚔️🛡️ `Assets/Script/Compiler/Expression/Statements.cs`
-	- 🔥❄️ Statements, context bridge, atom/molecule structures.
-
-### 🎛️⚙️ Compiler scope and utilities
-
-- 🧠📚 `Assets/Script/Compiler/Scope/Scope.cs`
-	- 🎨🖌️ Scope and runtime visitor implementation.
-
-- 🛠️✨ `Assets/Script/Compiler/Utils/Interfaces.cs`
-	- 🚀🌟 Core interfaces (`IScope`, `IVisitor`, `ISemantic`, `IParsing`).
-
-- 📦🧩 `Assets/Script/Compiler/Utils/Utils.cs`
-	- 🎯🕹️ Shared lists, return types, operator helpers, semantic error registry.
+**Compiler:**
+- `ProgramCompiler.cs`
+- `Lexer/`, `Parser/`, `Card/`, `Effect/` folders
 
 ---
 
-## 🗺️✨ 13) Technologies and Dependencies
+## 🔧 13) Technologies and Dependencies
 
-### 🧰🔩 Engine and language
-
-- 🧪🔬 Unity Editor version:
-	- 🧵🧠 `2022.3.15f1`
-
-- 🌌🏰 C# / runtime context:
-	- 🗺️🧭 Unity C# scripting, generated `Assembly-CSharp` project
-
-### 🧱⚙️ Major package dependencies (from `Packages/manifest.json`)
-
-Core and editor integration:
-- 🎵🎧 `com.unity.collab-proxy`
-- 🧱🧠 `com.unity.ide.rider`
-- 🔮🃏 `com.unity.ide.visualstudio`
-- 💡⚙️ `com.unity.test-framework`
-
-Gameplay/UI features:
-- 🛡️🐺 `com.unity.feature.2d`
-- 🐉🔥 `com.unity.textmeshpro`
-- 🗡️👑 `com.unity.timeline`
-- ❄️🧊 `com.unity.ugui`
-- 🏹🛡️ `com.unity.visualscripting`
-
-Unity built-in modules enabled:
-- ⚡🧩 Audio, UI, UIElements, Physics, Physics2D, Animation, AI, Tilemap, Video, XR, and others via `com.unity.modules.*`.
-
-### 🧭🛠️ Asset and UI technology choices
-
-- 🎲📘 Text rendering:
-	- 🧭🎴 TextMesh Pro and legacy UI Text coexist.
-
-- 🪄🎮 Runtime content loading:
-	- 🧪📚 `Resources.Load` based loading for sprites/audio/prefabs.
-
-- 📚🧠 Input interaction model:
-	- 🛠️📦 Event system interfaces (`IBeginDragHandler`, `IDragHandler`, `IEndDragHandler`, `IDropHandler`, pointer handlers).
+- 🟦 Unity 2022.3.15f1
+- 💻 C#
+- TextMesh Pro, UGUI, and other Unity packages
 
 ---
 
-## 🚀📚 14) How to Open and Run the Project
+## 🚀 14) How to Open and Run the Project
 
-### 🔧🧩 Prerequisites
-
-1. ✅📝 Install Unity Hub.
-2. 📍✨ Install Unity Editor `2022.3.15f1`.
-3. 🛤️🎯 Use Windows-compatible environment (project currently configured for StandaloneWindows64).
-
-### 🛰️⚙️ Open in Unity
-
-1. 🔹🧭 Open Unity Hub.
-2. 🧭📍 Add existing project and select repository root folder.
-3. 🎬✅ Let Unity finish first import (can take time because of asset cache regeneration).
-
-### 🗜️🧩 Run the game in editor
-
-1. 📌💫 Open `Assets/Scenes/Main.unity`.
-2. 🧩✅ Press Play.
-3. 🗂️📌 Use menu buttons to:
-	 - 🗺️🛡️ Start game flow
-	 - 🎮🃏 Enter card compiler scene
-	 - ⚔️🛡️ Toggle music
-
-### 🧰⚙️ Recommended first functional test
-
-1. 🔎📍 Main menu -> Play.
-2. 🪄✅ Enter two names in deck scene.
-3. 🎯📌 Pick two faction decks.
-4. 🛣️✅ Start battle scene.
-5. 🧭✅ Place cards by drag and drop.
-6. ✅📝 Skip turns and confirm round transitions.
+1. Install Unity 2022.3.15f1 via Unity Hub
+2. Open the project
+3. Load `Assets/Scenes/Main.unity`
+4. Press Play 🎮
 
 ---
 
-## 🏰🧩 15) How to Build the Game
+## 📦 15) How to Build the Game
 
-1. 📍✨ Open Unity Build Settings.
-2. 🛤️🎯 Verify scenes are listed and enabled:
-	 - 🔥❄️ `Assets/Scenes/Main.unity`
-	 - 🧠📚 `Assets/Scenes/ChosingDeck.unity`
-	 - 🎨🖌️ `Assets/Scenes/Game.unity`
-	 - 🛠️✨ `Assets/Scenes/CreateCard.unity`
-3. 🔹🧭 Select target platform:
-	 - 🚀🌟 Standalone Windows 64-bit.
-4. 🧭📍 Build into chosen output directory.
-
-Existing generated build output is present in `Builds/`.
+1. Open Build Settings
+2. Ensure all 4 scenes are added
+3. Build for Windows 64-bit
 
 ---
 
-## 🎮📖 16) Troubleshooting and Maintenance Notes
+## ⚠️ 16) Troubleshooting and Maintenance Notes
 
-### 🛠️🧩 If scene references or assets look broken
-
-- 📦🧩 Reimport project assets from Unity.
-- 🎯🕹️ Confirm `Resources` paths match expected names used in scripts.
-
-### 🎛️⚙️ If text does not render correctly
-
-- 🧪🔬 Ensure TextMesh Pro essentials are imported.
-- 🧵🧠 Check TMP resources in `Assets/TextMesh Pro/`.
-
-### 🧰🔩 If compiler scene reports many semantic errors
-
-- 🌌🏰 Validate field names and types in card/effect definitions.
-- 🗺️🧭 Check that referenced effect names are declared.
-- 🎵🎧 Verify parameter names and count match effect definitions.
-
-### 🧱⚙️ If gameplay logic seems inconsistent
-
-Potential technical debt areas to review:
-- 🧱🧠 Winner/tie handling edge cases in round methods.
-- 🔮🃏 Name-based effect dispatch table maintenance.
-- 💡⚙️ Runtime use of `Resources.Load` and string keys.
-
-### 🧭🛠️ Repository hygiene suggestions
-
-Investigate and clean root artifacts if unnecessary:
-- 🛡️🐺 `git commit -mVersion2.1`
-- 🐉🔥 `s`
+- Assets broken → Reimport all
+- Text issues → Check TextMesh Pro
+- Compiler errors → Verify names and parameters
 
 ---
 
-## 🧪🧠 17) Suggested Next Improvements
+## 🌟 17) Suggested Next Improvements
 
-Short-term improvements:
-1. 🎬✅ Replace card-name condition lists with metadata-driven effect signatures.
-2. 📌💫 Add unit tests for compiler semantic checks and parser rules.
-3. 🧩✅ Move runtime card definitions to external JSON/ScriptableObject assets for easier balancing.
-4. 🗂️📌 Add deterministic AI behavior modes for easier debugging.
-5. 🔎📍 Improve separation between UI script logic and gameplay domain logic.
+**Short term:**
+- Add unit tests for the compiler
+- Improve separation between UI and logic
+- Move card data to JSON
 
-Mid-term improvements:
-1. 🪄✅ Introduce save/load deck profiles.
-2. 🎯📌 Add localization support.
-3. 🛣️✅ Add card inspector and replay/debug tools for effect chains.
-4. 🎬📍 Replace `Resources.Load` with addressables for scalability.
+**Mid term:**
+- Deck save/load
+- Localization
+- Use Addressables instead of Resources.Load
 
 ---
 
-## 🛠️📘 Closing Notes
+## ✨ Closing Notes
 
-This codebase is an ambitious educational game project because it combines:
-- 🗡️👑 Real-time Unity gameplay systems
-- ❄️🧊 Tactical card mechanics
-- 🏹🛡️ A complete mini-compiler embedded into the game
+This codebase is an ambitious educational project that combines real-time Unity gameplay, tactical card mechanics, and a complete mini-compiler embedded in the game.
 
-That combination makes it especially useful for studying game architecture, scripting language implementation, and integration of custom runtime logic into a playable Unity experience.
+Perfect for learning game architecture, language implementation, and custom runtime logic integration. 🔥
 
-
-
-
-
-
-
+Enjoy exploring and creating your own cards!
