@@ -6,27 +6,27 @@ If you want to understand this project from the root folder down to every gamepl
 
 ## 🗺️ Table of Contents
 
-1. 📝 Project Summary
-2. 🎯 What This Project Is About
-3. 🧭 Repository Walkthrough from Root (Step by Step)
-4. 📁 Source vs Generated Folders
-5. 🗂️ Assets Folder Deep Dive
-6. 🌊 Scene Flow and Player Journey
-7. 🏗️ Gameplay Systems Architecture
-8. 🃏 Card Model and Rules
-9. ✨ Effects Engine
-10. 🤖 AI Behavior
-11. 🛠️ Custom Card Compiler (DSL) Pipeline
-12. 📜 Full Script Map (File-by-File)
-13. 🔧 Technologies and Dependencies
-14. 🚀 How to Open and Run the Project
-15. 📦 How to Build the Game
-16. ⚠️ Troubleshooting and Maintenance Notes
-17. 🌟 Suggested Next Improvements
+1. [📝 Project Summary](#1-project-summary)  
+2. [🎯 What This Project Is About](#2-what-this-project-is-about)  
+3. [🧭 Repository Walkthrough from Root (Step by Step)](#3-repository-walkthrough-from-root-step-by-step)  
+4. [📁 Source vs Generated Folders](#4-source-vs-generated-folders)  
+5. [🗂️ Assets Folder Deep Dive](#5-assets-folder-deep-dive)  
+6. [🌊 Scene Flow and Player Journey](#6-scene-flow-and-player-journey)  
+7. [🏗️ Gameplay Systems Architecture](#7-gameplay-systems-architecture)  
+8. [🃏 Card Model and Rules](#8-card-model-and-rules)  
+9. [✨ Effects Engine](#9-effects-engine)  
+10. [🤖 AI Behavior](#10-ai-behavior)  
+11. [🛠️ Custom Card Compiler (DSL) Pipeline](#11-custom-card-compiler-dsl-pipeline)  
+12. [📜 Full Script Map (File-by-File)](#12-full-script-map-file-by-file)  
+13. [🔧 Technologies and Dependencies](#13-technologies-and-dependencies)  
+14. [🚀 How to Open and Run the Project](#14-how-to-open-and-run-the-project)  
+15. [📦 How to Build the Game](#15-how-to-build-the-game)  
+16. [⚠️ Troubleshooting and Maintenance Notes](#16-troubleshooting-and-maintenance-notes)  
+17. [🌟 Suggested Next Improvements](#17-suggested-next-improvements)
 
 ---
 
-## 📝 1) Project Summary
+## 1) 📝 Project Summary
 
 **Project Type:**
 - 🎮 Unity 2D Card Strategy Game
@@ -46,7 +46,7 @@ If you want to understand this project from the root folder down to every gamepl
 
 ---
 
-## 🎯 2) What This Project Is About
+## 2) 🎯 What This Project Is About
 
 At gameplay level, this is a tactical card battle game where each player manages:
 - 🃏 A deck
@@ -56,54 +56,68 @@ At gameplay level, this is a tactical card battle game where each player manages
 - 🌩️ Weather slot
 - ⚰️ Cemetery
 
-Players take turns placing cards and activating effects. At the end of each round, row power is calculated and the match ends when a player wins enough rounds. 🏆
+Players take turns placing cards and activating effects. At the end of each round, row power is calculated and the match concludes when a player wins enough rounds. 🏆
 
 At engineering level, the project combines:
-- 🎮 Traditional Unity systems (scene flow, UI, drag & drop, audio, turn manager)
-- 📊 Data-driven card creation
-- 🧠 A complete lexer-parser-semantic-runtime pipeline for user-generated card logic
+- 🎮 Traditional Unity game systems (scene flow, UI, drag and drop, audio, turn manager)
+- 📊 Data-driven card creation with ScriptableObject-like structure
+- 🧠 A custom lexer-parser-semantic-runtime pipeline for user-generated card logic
 
 ---
 
-## 🧭 3) Repository Walkthrough from Root (Step by Step)
+## 3) 🧭 Repository Walkthrough from Root (Step by Step)
 
-### Step 1 - Version Control and Repository Metadata
+The following section explains the repository from the root level, one item at a time.
+
+### Step 1 - Version control and repository metadata
 - 📦 `.git/`
 - 📋 `.gitattributes`
 - 🚫 `.gitignore`
 
-### Step 2 - IDE and Local Tool State
+### Step 2 - IDE and local tool state
 - 💻 `.vs/`
 - ⚙️ `.vsconfig`
 
-### Step 3 - Unity/C# Solution Files
+### Step 3 - Unity/C# solution and project files
 - 📄 `Assembly-CSharp.csproj`
 - 📂 `Gwent Pro 2D.sln`
 - 📂 `Gwent-Project.sln`
 
-### Step 4 - Main Source Folder
-- 🎯 `Assets/` → The most important folder (scenes, scripts, images, resources, fonts)
+### Step 4 - Main source folder
+- 🎯 `Assets/` → The most important source folder in Unity. Contains scenes, scripts, images, resources, fonts, and TMP assets.
 
-### Step 5 - Build Output
-- 📦 `Builds/`
+### Step 5 - Build output artifacts
+- 📦 `Builds/` → Already generated executable build output.
 
-### Step 6 - Supporting Documents
+### Step 6 - Supporting documents
 - 📄 `Decks.pdf`
 - 📄 `READ_ME.pdf`
 
-### Other Folders
-- 🗄️ `Library/`, `Logs/`, `obj/`, `Packages/`, `ProjectSettings/`, `UserSettings/`
+### Step 7 - Unclear or temporary root files
+- `git commit -mVersion2.1`
+- `s`
+
+### Step 8 - Unity generated project cache
+- 🗄️ `Library/`, `Logs/`, `obj/`
+
+### Step 9 - Unity package and project configuration
+- 📦 `Packages/`
+- ⚙️ `ProjectSettings/`
+- 👤 `UserSettings/`
+
+### Step 10 - Repository documentation
+- 📝 `README.md` → This file.
 
 ---
 
-## 📁 4) Source vs Generated Folders
+## 4) 📁 Source vs Generated Folders
 
-**Primary Source Folders:**
+**Primary source-of-truth folders:**
 - ✅ `Assets/`
 - ✅ `Packages/`
 - ✅ `ProjectSettings/`
 
-**Generated / Local Folders:**
+**Usually generated or local-only:**
 - ❌ `Library/`
 - ❌ `Logs/`
 - ❌ `obj/`
@@ -111,110 +125,131 @@ At engineering level, the project combines:
 - ❌ `UserSettings/`
 - ❌ `Builds/`
 
+**Practical rule:** Focus on `Assets/`, `Packages/`, and `ProjectSettings/` when modifying gameplay or content.
+
 ---
 
-## 🗂️ 5) Assets Folder Deep Dive
+## 5) 🗂️ Assets Folder Deep Dive
 
-### 🎬 Scenes
-- 🏠 `Main.unity` - Main menu
-- 🛡️ `ChosingDeck.unity` - Deck selection
+### 🎬 `Assets/Scenes/`
+- 🏠 `Main.unity` - Main menu scene
+- 🛡️ `ChosingDeck.unity` - Deck and player setup scene
 - ⚔️ `Game.unity` - Main battle scene
-- 🧪 `CreateCard.unity` - Card compiler scene
+- 🧪 `CreateCard.unity` - Custom card compiler scene
 
-### 💻 Scripts
-Organized by domain: core gameplay, cards & players, drag & drop, effects, menus, and compiler.
+**Build order:**
+1. `Main.unity`
+2. `ChosingDeck.unity`
+3. `Game.unity`
+4. `CreateCard.unity`
 
-### 🖼️ Other Assets
-- `Image/` → Card art and UI
-- `Resources/` → Runtime loaded assets
-- `game-of-thrones/` → GoT style font
-- `TextMesh Pro/` → TMP assets
+### 💻 `Assets/Script/`
+Main C# codebase grouped by domains (core flow, cards, drag & drop, effects, menus, compiler).
+
+### 🖼️ Other folders
+- `Image/` → Card art and UI icons
+- `Resources/` → Audio and runtime assets
+- `game-of-thrones/` → Game of Thrones style font
+- `TextMesh Pro/` → TMP shaders and fonts
 
 ---
 
-## 🌊 6) Scene Flow and Player Journey
+## 6) 🌊 Scene Flow and Player Journey
 
-**Main Journey:**
+**Main journey:**
 1. 🏠 Main menu
-2. 🛡️ Deck selection
-3. ⚔️ Battle scene
+2. 🛡️ Deck selection scene
+3. ⚔️ Game scene (full match)
 
-**Compiler Journey:**
-1. Open CreateCard scene from menu
+**Optional compiler journey:**
+1. Open card compiler from main menu
 2. Write DSL code
-3. Compile and create new cards
-4. Use the custom compiler deck in game
+3. Compile successfully
+4. Use the compiler deck in game
 
 ---
 
-## 🏗️ 7) Gameplay Systems Architecture
+## 7) 🏗️ Gameplay Systems Architecture
 
 - 👑 `GameManager` → Global match coordinator
-- 🧍 `Player` → Player state and logic
+- 🧍 `Player` → Runtime player state and operations
 - 📊 `Panels` → Row and panel management
 
 ---
 
-## 🃏 8) Card Model and Rules
+## 8) 🃏 Card Model and Rules
 
-**Card Fields:** Name, Faction, Power, Description, Type, Position, Effect
+**Main card fields:**
+- Name, Faction, Power, Description, Artwork, Card type, Position constraints, Effect
 
-**Positions:** M, R, S and combinations  
-**Types:** Golden, Silver, Climate, Clear, Bait, Increase, Leader
+**Card positions:** `M`, `R`, `S`, combinations (`MR`, `MS`, `RS`, `MRS`), and special zones (`I`, `C`, `L`)
 
-**Decks:** Stark 🐺, Targaryen 🐉, Dead ❄️ + Compiler deck
+**Card kinds:** Golden, Silver, Climate, Clear, Bait, Increase, Leader
 
----
-
-## ✨ 9) Effects Engine
-
-Includes row buffs, weather effects, bait mechanics, card draw, power multipliers, and powerful leader abilities.
+**Predefined decks:** Stark 🐺, Targaryen 🐉, Dead ❄️, and `deckCompiler`
 
 ---
 
-## 🤖 10) AI Behavior
+## 9) ✨ Effects Engine
 
-AI chooses cards strategically using heuristics:
-- Prioritizes strong cards
-- Uses boosts and weather at the right moment
+Effects implemented in the static `Effects` class:
+- Row buffs, weather damage, remove max/min cards, draw cards, power multipliers, row clear, bait return, and leader-specific effects (Jon Snow, Daenerys, Night King).
+
+---
+
+## 10) 🤖 AI Behavior
+
+AI class `IA` controls automated turns using heuristics:
+- Prioritizes strong hero cards
+- Uses increase and climate cards strategically
 - Falls back to standard units
 
 ---
 
-## 🛠️ 11) Custom Card Compiler (DSL) Pipeline
+## 11) 🛠️ Custom Card Compiler (DSL) Pipeline
 
-The most advanced part of the project:
+The most advanced subsystem:
 - Lexer → Parser → Semantic Analysis → Execution
-- Supports loops, conditionals, selectors, and board context
-- Full UI in the CreateCard scene
+- Supports effects, cards, loops, conditionals, selectors, and board context
+- Full UI in `CreateCard.unity` scene
 
 ---
 
-## 📜 12) Full Script Map (File-by-File)
+## 12) 📜 Full Script Map (File-by-File)
 
-**Core:**
-- `GameManager.cs` 👑
-- `IA.cs` 🤖
+**Core gameplay:**
+- `GameManager.cs`
+- `IA.cs`
 
-**Cards & Players:**
-- `Card.cs` 🃏
-- `Player.cs` 🧍
+**Card & Player:**
+- `Card.cs`
+- `Player.cs`
 - `CardDisplay.cs`
+- `DeckManager.cs`
 
 **Drag & Drop:**
-- `Drag.cs` 🖱️
+- `Drag.cs`
 - `Drop.cs`
+- `DropCard.cs`
 
 **Effects:**
-- `Effects.cs` ✨
+- `Effects.cs`
+- `EventClick.cs`
+
+**Menus & Panels:**
+- `MainMenu.cs`
+- `Chose.cs`
+- `Panels.cs`
+- `KeepMusic.cs`
 
 **Compiler:**
 - `ProgramCompiler.cs`
-- `Lexer/`, `Parser/`, `Card/`, `Effect/` folders
+- `Button_Run.cs`
+- `Lexer/`, `Parser/`, `Card/`, `Effect/`, `Expression/`, `Scope/`, `Utils/`
 
 ---
 
-## 🔧 13) Technologies and Dependencies
+## 13) 🔧 Technologies and Dependencies
 
 - 🟦 Unity 2022.3.15f1
 - 💻 C#
@@ -222,49 +257,58 @@ The most advanced part of the project:
 
 ---
 
-## 🚀 14) How to Open and Run the Project
+## 14) 🚀 How to Open and Run the Project
 
-1. Install Unity 2022.3.15f1 via Unity Hub
-2. Open the project
-3. Load `Assets/Scenes/Main.unity`
-4. Press Play 🎮
+**Prerequisites:**
+- Unity Hub
+- Unity Editor 2022.3.15f1
 
----
+**Steps:**
+1. Open the project in Unity Hub
+2. Open `Assets/Scenes/Main.unity`
+3. Press Play 🎮
 
-## 📦 15) How to Build the Game
-
-1. Open Build Settings
-2. Ensure all 4 scenes are added
-3. Build for Windows 64-bit
-
----
-
-## ⚠️ 16) Troubleshooting and Maintenance Notes
-
-- Assets broken → Reimport all
-- Text issues → Check TextMesh Pro
-- Compiler errors → Verify names and parameters
+**Recommended test:**
+- Start game → Choose decks → Play with drag & drop
 
 ---
 
-## 🌟 17) Suggested Next Improvements
+## 15) 📦 How to Build the Game
 
-**Short term:**
-- Add unit tests for the compiler
-- Improve separation between UI and logic
-- Move card data to JSON
+1. Open **Build Settings**
+2. Verify the 4 scenes are added and enabled
+3. Select **Standalone Windows 64-bit**
+4. Build
 
-**Mid term:**
-- Deck save/load
-- Localization
-- Use Addressables instead of Resources.Load
+---
+
+## 16) ⚠️ Troubleshooting and Maintenance Notes
+
+- Scene references broken → Reimport assets
+- Text not rendering → Import TextMesh Pro essentials
+- Compiler errors → Check field names and effect parameters
+- Clean temporary files: `git commit -mVersion2.1` and `s`
+
+---
+
+## 17) 🌟 Suggested Next Improvements
+
+**Short-term:**
+- Replace hardcoded effect lists with metadata
+- Add unit tests for compiler
+- Move card definitions to JSON/ScriptableObjects
+
+**Mid-term:**
+- Deck save/load system
+- Localization support
+- Replace `Resources.Load` with Addressables
 
 ---
 
 ## ✨ Closing Notes
 
-This codebase is an ambitious educational project that combines real-time Unity gameplay, tactical card mechanics, and a complete mini-compiler embedded in the game.
+This codebase is an ambitious educational project that combines real-time Unity gameplay, tactical card mechanics, and a complete mini-compiler embedded into the game.
 
-Perfect for learning game architecture, language implementation, and custom runtime logic integration. 🔥
+It is especially useful for studying game architecture, scripting language implementation, and integrating custom runtime logic into a playable experience. 🔥
 
-Enjoy exploring and creating your own cards!
+Enjoy building and creating your own legendary cards! 🃏
