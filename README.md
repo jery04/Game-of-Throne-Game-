@@ -1,332 +1,764 @@
-> *DOCUMENTACIÓN*
->
-> ***“Los*** ***sueños*** ***no*** ***tienen*** ***fecha*** ***de***
-> ***caducidad,***
->
-> ***rendirse*** ***ni*** ***siquiera*** ***es*** ***la*** ***última***
-> ***opción”***
->
-> <img src="./q0xlbxys.png"
-> style="width:0.54085in;height:0.6325in" />PRELIMINARES
->
-> Este documento sirve como una guía exhaustiva y un registro detallado
-> del desarrollo del juego de cartas, inspirado en el rico y complejo
-> universo de **“Game** **Of** **Throne”**. A lo largo de estas páginas,
-> se desglosará el proceso de creación del código (noches de desvelos),
-> las decisiones de diseño y las principales implementaciones de
-> mecánicas que capturan la esencia de intriga, estrategia y poder que
-> caracteriza a la famosa serie. Con el objetivo de trasladar esa misma
-> intensidad (P/V) y profundidad que caracteriza la obra de George R.R
-> Martin al formato interactivo de un juego de cartas, se ha
-> desarrollado un sistema de juego que permite a los jugadores
-> sumergirse en los conflictos dinásticos, las alianzas políticas y las
-> batallas épicas que son sinónimos de **“Game** **Of** **Throne”**.
->
-> <img src="./aqhg1krx.png"
-> style="width:0.54085in;height:0.6325in" /><img src="./wggupqkf.png"
-> style="width:0.54085in;height:0.6325in" /><img src="./aa3ndulk.png"
-> style="width:0.54085in;height:0.6325in" /><img src="./42jnyuro.png"
-> style="width:0.54085in;height:0.6325in" /><img src="./q4ukl3rl.png"
-> style="width:0.54085in;height:0.6325in" />La documentación está
-> estructurada para facilitar la comprensión de cada etapa del
-> desarrollo, desde la concepción inicial hasta la implementación final.
-> Se exhorta al lector a explorar los entresijos del código, las
-> estructuras de datos, las interfaces medievales y los algoritmos,
-> algunos de ellos inefables, que hacen de este juego sea una
-> experiencia única y envolvente… Sin más que hablar, abróchese los
-> cinturones y agárrese de su asiento porque en las siguientes páginas
-> estaremos hablando de la razón fundamental de las noches de desvelos
-> del autor.
->
-> <img src="./bk2wpiby.png"
-> style="width:2.03917in;height:0.6325in" />DESARROLLO
->
-> <img src="./0zey0w5d.png"
-> style="width:0.90917in;height:0.6325in" /><img src="./ctut4og0.png"
-> style="width:1.1275in;height:0.6325in" />class Card
->
-> <img src="./mdxbume0.png"
-> style="width:0.54085in;height:0.6325in" /><img src="./yxr5ulze.png" style="width:5.90139in;height:2in" />Me
-> parece primordial comenzar por traducir los cimientos en donde nace
-> todo, la clase base, diría yo, la clase madre. Sin más preámbulos les
-> presento a continuación la clase Card:
->
-> La clase Card es una representación de una carta, definida como un
-> ScriptableObject en Unity. Un ScriptableObject es un tipo especial de
-> objeto en Unity que permite almacenar datos y comportamientos
-> independientes de la escena o de los objetos de juego. La clase Card
-> contiene varias propiedades que describen características y
-> comportamientos específicos de una carta, como su nombre(name),
-> facción(faction), poder(power), descripción(description),
-> imagen(artWork), si es unidad(isUnity) o un héroe(isHeroe), un
-> delegado para almacenar el effecto en forma de método (effect), y un
-> audio clip(clip) para cuando que se activa cuando la carta es
-> colocada. Además, define dos enumeraciones,
-> card_position(cardPosition) y kind_card(typeCard), para especificar
-> las posiciones en las que se puede ubicar la carta y los tipos de
-> carta que puede ser, respectivamente. Estas propiedades permiten una
-> gran flexibilidad en la definición de las cartas, permitiendo que cada
-> una tenga características y comportamientos únicos según el diseño del
-> juego.
->
-> Luego están los constructores que le dan vida a estas cosas llamadas
-> “cartas”, de una forma u otra materializan en un objeto estás
-> propiedades:
+# 🎮⚙️ Gwent Project - Game of Thrones Inspired Card Game (Unity)
 
-<img src="./tibnehoo.png"
-style="width:5.90764in;height:0.79514in" />Estos constructores permiten
-crear instancias con diferentes configuraciones. Todos acepta parámetros
-básicos como nombre, facción, poder, si es una unidad
+This repository contains a complete Unity card game inspired by Gwent, with a Game of Thrones theme and one major custom feature: a built-in DSL compiler that lets players create playable cards with scripted effects.
 
-<img src="./mwehagkm.png"
-style="width:5.90069in;height:0.77431in" />
+If you want to understand this project from the root folder down to each gameplay and compiler module, this document is the full step-by-step guide.
 
-> o héroe, imagen, tipo de carta, descripción, efecto y opcionalmente un
-> clip de audio. El segundo constructor añade una posición específica
-> para la carta(cardPosition). El tercer constructor incluye un
-> parámetro adicional affectedRow, el cual indica la fila afectada por
-> las cartas climas.
->
-> … y un método que es el encargado de reproducir el audio:
->
-> public void ActiveClip();
->
-> <img src="./ilxo3xlk.png"
-> style="width:0.90917in;height:0.6325in" /><img src="./g5zgp5ja.png"
-> style="width:1.66417in;height:0.6325in" />class DataBase
->
-> Las 166 líneas de códigos perteneciente a esta destacable clase se
-> caracterizan por contener en sí tres listas de objetos Card que
-> representan mazos los tres mazos de cartas Stark, Targaryen y Dead
-> (Caminantes Blancos). Al instanciar la clase DataBase, se llama al
-> método public void CreateCard(), que inicializa las cartas con sus
-> determinadas propiedades.
->
-> …y pues, en estas listas se almacenan los caminantes blancos, lo
-> dragones de Daenerys y demás:
->
-> public List\<Card\> deckStark = new List\<Card\>(); public
-> List\<Card\> deckTargaryen = new List\<Card\>(); public List\<Card\>
-> deckDead = new List\<Card\>();
->
-> <img src="./pu1yr3yb.png"
-> style="width:0.90917in;height:0.6325in" /><img src="./fxqq1qbz.png"
-> style="width:1.3375in;height:0.6325in" />class Panels
->
-> <img src="./lpcb5cea.png"
-> style="width:5.89722in;height:2.13472in" />A continuación… el Script
-> encargado de acoger las cartas un vez ubicadas en el campo ya sea en
-> un panel de cartas climas, líder, cuerpo a cuerpo asedio, distancia o
-> de aumento:
+## 🌠🧠 Table of Contents
 
-<img src="./4chw5pm1.png"
-style="width:5.94167in;height:2.96458in" />
+1. ✅📌 Project Summary
+2. ✅📝 What This Project Is About
+3. 📍✨ Repository Walkthrough from Root (Step by Step)
+4. 🛤️🎯 Source vs Generated Folders
+5. 🔹🧭 Assets Folder Deep Dive
+6. 🧭📍 Scene Flow and Player Journey
+7. 🎬✅ Gameplay Systems Architecture
+8. 📌💫 Card Model and Rules
+9. 🧩✅ Effects Engine
+10. 🗂️📌 AI Behavior
+11. 🔎📍 Custom Card Compiler (DSL) Pipeline
+12. 🪄✅ Full Script Map (File-by-File)
+13. 🎯📌 Technologies and Dependencies
+14. 🛣️✅ How to Open and Run the Project
+15. 📍📝 How to Build the Game
+16. ✅📝 Troubleshooting and Maintenance Notes
+17. 📍✨ Suggested Next Improvements
 
-> La clase Panels en Unity se encarga de gestionar un conjunto de
-> objetos GameObject (cartas ya instanciadas) que representan cartas
-> dentro de un panel. Esta clase mantiene una lista de cartas (cards) y
-> una lista de posiciones (position) que acepta el panel, así como
-> contadores para el máximo número de cartas (maxItems) y la cantidad
-> actual de cartas (itemsCounter). La clase proporciona métodos para
-> contar el número de cartas de tipo Unidad (CounterUnity()), eliminar
-> todas las cartas del panel y añadirlas a una lista de cementerio
-> (RemoveAll()), eliminar cartas innecesarias del panel (Remove()),
-> calcular el poder acumulado de las cartas en el panel (PowerRow()), y
-> desactivar el script (Drag) el cual desactiva el arrastre de las
-> cartas una vez que se colocan en el panel (UnDragging()). Estas
-> operaciones son fundamentales para la lógica de juego, permitiendo la
-> interacción dinámica entre las cartas y el panel, y asegurando que las
-> reglas del juego se apliquen correctamente. Y bueno, no estaría demás
-> agradecer a este Scrpit, pues gracias a él las cartas no se salen de
-> control ni comienzan a flotar ni dar vueltas locas en el campo ni
-> semejantes atrocidades del multiverso.
->
-> <img src="./e3013z1d.png"
-> style="width:0.90917in;height:0.6325in" /><img src="./eb02nrqi.png"
-> style="width:1.30417in;height:0.6325in" />class Player
->
-> Próximamente estaremos paseándonos por el laberinto de esta emotiva
-> clase la cual abarca toda aquella característica que posee un jugador
-> destacando algunas propiedades como son: el nombre del jugador, su
-> facción, su mazo de cartas, y el poder acumulado por rondas.
->
-> Aparte de las propiedades básicas como lo son: playerName, faction,
-> deck. Existen otras primordiales como el conjunto de GameObject el
-> cual hace referencia a los distintos paneles del campo:
->
-> GameObject leader;
->
-> GameObject hand;
->
-> GameObject\[\] field;
->
-> GameObject\[\] increase;
->
-> GameObject climate;
->
-> <img src="./g31cfww5.png"
-> style="width:0.54085in;height:0.6325in" />// Carta líder
+---
 
-<img src="./knk2wblt.png"
-style="width:0.54085in;height:0.6325in" />// Cartas de la mano
+## 🌟📘 1) Project Summary
 
-<img src="./ds1onjqg.png"
-style="width:0.54085in;height:0.6325in" /><img src="./uzi1aud0.png"
-style="width:0.54085in;height:0.6325in" /><img src="./o54turjn.png"
-style="width:0.54085in;height:0.6325in" />// Array de los paneles del
-campo(Mel-Sig-Dst)
+Project type:
+- 🎯🧠 Unity 2D card strategy game
 
-// Array de los paneles del aumento
+Core idea:
+- 🎮🃏 Two players (human vs human or human vs AI) battle with faction decks in rounds.
+- ⚔️🛡️ Cards have types, positions, power values, and effects.
+- 🔥❄️ The game includes weather, boosts, bait mechanics, leader effects, and cemetery interactions.
 
-// Panel de las cartas climas
+Unique feature:
+- 🧠📚 A custom compiler lets players define new cards through a mini language (DSL).
+- 🎨🖌️ Compiled cards are added to a special custom deck that can be selected in deck selection.
 
-> Véase los métodos más importantes de esta clase:
->
-> public void Cementery()
->
-> private void GeneralPower(int round)
->
-> public void TakeCard(int num = 0)
->
-> private void BackImageAndDrag()
->
-> <img src="./2c2kftnb.png"
-> style="width:0.54085in;height:0.6325in" />public void Cementery()
->
-> Envía todas las cartas, del campo al cementerio
->
-> private void GeneralPower(int round)
->
-> Retorna el poder acumulado por cada fila y lo almacena en el array
-> powerRound en la posición equivalente al número de ronda
->
-> public void TakeCard(int num = 0)
->
-> Instancia las cartas en la mano (sean las 10 iniciales, 2 o 1)
->
-> private void BackImageAndDrag()
->
-> Actualiza el estado de las cartas. Si el jugador no está en su turno
-> se voltean las cartas y se desactiva el Script Drag.
+Engine and language:
+- 🛠️✨ Unity 2022.3.15f1
+- 🚀🌟 C# scripts
 
-<img src="./mlrdsrma.png"
-style="width:5.89722in;height:1.20486in" />
+---
 
-> <img src="./h1wg0qfl.png"
-> style="width:0.90917in;height:0.6325in" /><img src="./euyjh3br.png"
-> style="width:2.2875in;height:0.6325in" />class GameManager
->
-> Bueno, ha llegado el momento tan esperado, el famoso lugar donde
-> ocurre la magia, la clase GameManager, la encargada de gestionar toda
-> la lógica, interacción y demás reglas del juego. Ánimo que sin ella
-> los jugadores ganarían con puntuación 0.
->
-> En este fragmento de código, se definen varias variables y objetos que
-> son esenciales para la gestión del flujo de un juego de turnos o
-> rondas. La variable round es un entero estático que almacena el número
-> de ronda actual, lo que indica en qué etapa del juego se encuentra. El
-> booleano skipRound indica si algún jugador ha optado por pasar la
-> ronda, lo que podría modificar la lógica del juego. Tenemos
-> numberRound, un arreglo de objetos GameObject que se utiliza para
-> mostrar el número de ronda actual en la interfaz de usuario,
-> panelGameOver y panelRound son objetos GameObject que representan
-> paneles en la interfaz de usuario, uno para mostrar los resultados
-> finales del juego y otro para mostrar los resultados al final de cada
-> ronda. Luego tenemos player1 y player2 son instancias de la clase
-> Player que representan a los dos jugadores. start y playerEnd son
-> variables privadas de tipo Player que almacenan al jugador que
-> comienza y al jugador que termina cada ronda, respectivamente.
-> Finalmente, currentPlayer es una variable estática pública de tipo
-> Player también que indica al jugador actualmente en turno, lo que es
-> crucial para determinar cuándo es el turno de cada jugador y aplicar
-> las reglas del juego de manera adecuada.
->
-> Si bien algunos de los métodos más importantes de la clase:
->
-> private void ButtonSkipTurn()
->
-> private void ButtonSkipRound()
->
-> private Player Winner()
->
-> private void PanelGameOver()
->
-> ButtonSkipTurn()
->
-> En estás pocas líneas ocurre algo muy lindo pues, se gestiona la
-> lógica del juego cuando un jugador decide saltar su turno. Primero,
-> establece la propiedad oneMove del jugador actual (currentPlayer) en
-> false, indicando que el jugador no ha realizado ninguna acción en su
-> turno. Luego, verifica si la opción de saltar la ronda (skipRound) no
-> está activada. Si no está activada, el método cambia el turno entre
-> los jugadores: si es el turno del player1, se cambia a player2, y
-> viceversa. Esto se logra invirtiendo el valor de myTurn de cada
-> jugador y actualizando currentPlayer. Si la opción de saltar la ronda
-> está activada, en lugar de cambiar el turno, se llama al método
-> ButtonSkipRound(). No te desesperes, ahora viene la explicación de ese
-> método:)
->
-> ButtonSkipRound()
->
-> Alto responsable de manejar la lógica cuando un jugador decide saltar
-> toda la ronda. Vamos paso a paso, primero, verifica si el jugador que
-> terminó la ronda (playerEnd) es el jugador actual (currentPlayer). Si
-> es así, el método procede a verificar si hay un ganador del juego
-> mediante la llamada al método Winner(), calma que te lo explico en el
-> próximo párrafo. Si hay un ganador, se muestra el panel de fin de
-> juego (PanelGameOver) para indicar el resultado final del juego. Si no
-> hay un ganador, el método prepara el juego para la siguiente ronda.
-> Esto incluye restablecer la variable skipRound a false, y asegurarse
-> de que el jugador actual no haya realizado ninguna acción en su turno
-> (oneMove a false). Luego, el método determina quién comienza la
-> siguiente ronda basándose en el poder acumulado de cada jugador en la
-> ronda actual (powerRound\[round\]). Se actualizan las variables start,
-> playerEnd, currentPlayer, y se incrementa el contador de rondas
-> (round). Finalmente, se llama a los métodos Cementery(), y TakeCard(),
-> para ambos jugadores. Si el jugador que terminó la ronda no es el
-> jugador actual, el método simplemente llama a ButtonSkipTurn() y
-> establece skipRound a true, indicando que el jugador actual ha
-> decidido saltar su turno.
->
-> Winner()
->
-> Lo prometido es dedua, acá te explico. Determina el ganador del juego
-> hasta la ronda actual, comparando el poder acumulado de cada jugador
-> en cada ronda. Inicialmente, se establecen dos contadores (winner1 y
-> winner2) en cero para llevar un registro del número de rondas ganadas
-> por cada jugador. Luego, se itera a través de todas las rondas hasta
-> la actual (round + 1), comparando el poder acumulado de los jugadores
-> en cada ronda. Si hay un empate, ambos contadores
->
-> se incrementan. Después de comparar todas las rondas, si uno de los
-> contadores alcanza el valor de 2, lo que indica que un jugador ha
-> ganado dos rondas consecutivas, se devuelve ese jugador como el
-> ganador. Si no hay un ganador claro después de comparar todas las
-> rondas, el método devuelve null, de lo contrario retorna el jugador.
->
-> PanelGameOver()
->
-> Lamento informarte que aquí no hay mucho de que hablar, esto no
-> significa que no le demos importancia, pues este método permite
-> mostrar gráficamente los resultados alcanzados por cada jugador a lo
-> largo del juego.
->
-> **<u>Nota:</u>** Véase que la inicialización de las propiedades de
-> esta clase ocurre en el método void Start().
->
-> <img src="./amkv4ixj.png"
-> style="width:2.02083in;height:0.6325in" />Conclusiones
->
-> Felicidades si has llagado hasta acá, ha recorrido mucho. Cierto es
-> que el proceso de creación del juego ha sido meticuloso y desafiante,
-> involucrando largas noches de trabajo para desarrollar un código que
-> refleje la complejidad del universo de “Game Of Thrones”. Se anima a
-> los lectores a profundizar en el código y las estructuras subyacentes.
-> Venga, ¿A qué esperas?, ¡A jugar!
->
-> // Gracias a todos los que me apoyaron a lograr algo que parecía
-> imposible
->
-> // Continuará…
->
-> **Jery** **Rodríguez** **Fernández**
+## 🎯🧠 2) What This Project Is About
+
+At gameplay level, this is a tactical card battle game where each player manages:
+- 📦🧩 A deck
+- 🎯🕹️ A hand
+- 🧪🔬 Three combat rows (Melee, Range, Siege)
+- 🧵🧠 Boost slots
+- 🌌🏰 Weather slot
+- 🗺️🧭 Cemetery
+
+Players take turns placing cards and activating effects. At the end of each round, row power is aggregated and saved. The match concludes when a player wins enough rounds.
+
+At engineering level, the project combines:
+- 🎵🎧 Traditional Unity game systems (scene flow, UI, drag and drop, audio, turn manager)
+- 🧱🧠 Data-driven card creation with ScriptableObject-like structure
+- 🔮🃏 A custom lexer-parser-semantic-runtime pipeline for user-generated card logic
+
+---
+
+## 🗺️✨ 3) Repository Walkthrough from Root (Step by Step)
+
+The following section explains the repository from the root level, one item at a time.
+
+### 🧰⚙️ Step 1 - Version control and repository metadata
+
+- 💡⚙️ `.git/`
+	- 🛡️🐺 Git repository internals.
+	- 🐉🔥 Tracks history, branches, and commits.
+
+- 🗡️👑 `.gitattributes`
+	- ❄️🧊 Git text/binary and normalization rules.
+
+- 🏹🛡️ `.gitignore`
+	- ⚡🧩 Ignore rules for generated files and local-only folders.
+
+### 🛠️🧩 Step 2 - IDE and local tool state
+
+- 🎲📘 `.vs/`
+	- 🧭🎴 Visual Studio local workspace cache/state.
+	- 🪄🎮 Local machine artifact, not gameplay source.
+
+- 🧪📚 `.vsconfig`
+	- 📚🧠 Visual Studio workload/tooling configuration.
+
+### 🎛️⚙️ Step 3 - Unity/C# solution and project files
+
+- 🛠️📦 `Assembly-CSharp.csproj`
+	- 🛡️⚔️ Auto-generated C# project definition by Unity.
+	- 🎮🃏 Includes references and all script compile items.
+	- ⚔️🛡️ Target framework includes .NET Framework 4.7.1.
+
+- 🔥❄️ `Gwent Pro 2D.sln`
+	- 🧠📚 Solution entry used by IDE tooling for Unity scripts.
+
+- 🎨🖌️ `Gwent-Project.sln`
+	- 🛠️✨ Another solution file for IDE integration.
+
+### 🧰🔩 Step 4 - Main source folder
+
+- 🚀🌟 `Assets/`
+	- 📦🧩 The most important source folder in Unity.
+	- 🎯🕹️ Contains scenes, scripts, images, resources, fonts, and TMP assets.
+	- 🧪🔬 Detailed breakdown in section 5.
+
+### 🧱⚙️ Step 5 - Build output artifacts
+
+- 🧵🧠 `Builds/`
+	- 🌌🏰 Already generated executable build output.
+	- 🗺️🧭 Includes runtime data folder and Mono runtime payload.
+
+### 🧭🛠️ Step 6 - Supporting documents
+
+- 🎵🎧 `Decks.pdf`
+	- 🧱🧠 External document likely used for design/reference of decks.
+
+- 🔮🃏 `READ_ME.pdf`
+	- 💡⚙️ External project documentation in PDF form.
+
+### 🔧🧩 Step 7 - Unclear or temporary root files
+
+- 🛡️🐺 `git commit -mVersion2.1`
+	- 🐉🔥 Non-standard file name that looks like a command string or manual note.
+	- 🗡️👑 Likely temporary or accidental artifact.
+
+- ❄️🧊 `s`
+	- 🏹🛡️ Non-descriptive file/folder name.
+	- ⚡🧩 Likely a temporary artifact; verify before keeping.
+
+### 🛰️⚙️ Step 8 - Unity generated project cache
+
+- 🎲📘 `Library/`
+	- 🧭🎴 Unity import cache, compiled metadata, artifact database.
+	- 🪄🎮 Very large and machine-specific.
+	- 🧪📚 Regenerated by Unity.
+
+- 📚🧠 `Logs/`
+	- 🛠️📦 Editor/runtime logs.
+
+- 🔥🐉 `obj/`
+	- 🎮🃏 C# build intermediate output.
+
+### 🗜️🧩 Step 9 - Unity package and project configuration
+
+- ⚔️🛡️ `Packages/`
+	- 🔥❄️ Package dependency declarations and lock file.
+
+- 🧠📚 `ProjectSettings/`
+	- 🎨🖌️ Unity project configuration (input, quality, build scenes, physics, etc).
+
+- 🛠️✨ `UserSettings/`
+	- 🚀🌟 Per-user Unity editor preferences and layout settings.
+
+### 🔧🧩 Step 10 - Repository documentation entry
+
+- 📦🧩 `README.md`
+	- 🎯🕹️ This documentation file.
+
+---
+
+## 🚀📚 4) Source vs Generated Folders
+
+Use this to quickly understand what should be considered source and what is generated runtime/editor state.
+
+Primary source-of-truth folders:
+- 🧪🔬 `Assets/`
+- 🧵🧠 `Packages/`
+- 🌌🏰 `ProjectSettings/`
+
+Usually generated or local-only:
+- 🗺️🧭 `Library/`
+- 🎵🎧 `Logs/`
+- 🧱🧠 `obj/`
+- 🔮🃏 `.vs/`
+- 💡⚙️ `UserSettings/`
+- 🛡️🐺 `Builds/` (generated executable payload)
+
+Practical rule:
+- 🐉🔥 If you are modifying gameplay/content/code, focus on `Assets/`, `Packages/`, and `ProjectSettings/`.
+
+---
+
+## 🏰🧩 5) Assets Folder Deep Dive
+
+### 🛠️🧩 `Assets/Scenes/`
+
+Contains the main playable scenes:
+- 🗡️👑 `Main.unity` - Main menu scene.
+- ❄️🧊 `ChosingDeck.unity` - Deck and player setup scene.
+- 🏹🛡️ `Game.unity` - Main battle scene.
+- ⚡🧩 `CreateCard.unity` - Custom card compiler/editor scene.
+
+Configured build order in Unity build settings:
+1. 🛤️🎯 `Main.unity`
+2. 🔹🧭 `ChosingDeck.unity`
+3. 🧭📍 `Game.unity`
+4. 🎬✅ `CreateCard.unity`
+
+### 🎛️⚙️ `Assets/Script/`
+
+Main C# codebase, grouped by game domains:
+- 🎲📘 Core game flow
+- 🧭🎴 Card/player systems
+- 🪄🎮 Drag and drop
+- 🧪📚 Effects logic
+- 📚🧠 Menu and panel controllers
+- 🛠️📦 Compiler subsystem
+
+Detailed script map is in section 12.
+
+### 🧰🔩 `Assets/Image/`
+
+Visual assets:
+- ❄️🧊 Card art
+- 🎮🃏 UI icons/buttons
+- ⚔️🛡️ Themed imagery
+
+### 🧱⚙️ `Assets/Resources/`
+
+Runtime-loaded assets via `Resources.Load`:
+- 🔥❄️ Audio clips
+- 🧠📚 Sprites and prefabs used dynamically at runtime
+
+### 🧭🛠️ `Assets/game-of-thrones/`
+
+Typeface assets (Game of Thrones style font).
+
+### 🔧🧩 `Assets/TextMesh Pro/`
+
+TMP package assets:
+- 🎨🖌️ Shaders
+- 🛠️✨ sprite assets
+- 🚀🌟 font resources
+
+---
+
+## 🎮📖 6) Scene Flow and Player Journey
+
+### 🛰️⚙️ Scene navigation overview
+
+Main journey:
+1. 📌💫 Main menu opens.
+2. 🧩✅ Player selects mode/decks in deck selection scene.
+3. 🗂️📌 Game scene runs the full match.
+
+Optional side journey:
+1. 🔎📍 From main menu, player can open the card compiler scene.
+2. 🪄✅ Player writes custom DSL code.
+3. 🎯📌 On successful compile, cards are saved into the compiler deck.
+4. 🛣️✅ Back in deck selection, compiler deck can be selected if it has enough cards.
+
+### 🗜️🧩 Runtime sequence step-by-step
+
+1. 🧪✨ `Main.unity`
+	 - 📦🧩 Initializes `DataBase` (predefined decks and cards).
+	 - 🎯🕹️ Music can be toggled.
+	 - 🧪🔬 User can navigate to play or card creation.
+
+2. ✅📝 `ChosingDeck.unity`
+	 - 🧵🧠 User enters player names.
+	 - 🌌🏰 Selects faction decks (Stark, Targaryen, Dead).
+	 - 🗺️🧭 Optionally uses compiler deck when valid.
+	 - 🎵🎧 Starts game scene.
+
+3. 📍✨ `Game.unity`
+	 - 🧱🧠 Decks are instantiated into runtime objects.
+	 - 🔮🃏 Each player receives leader + initial hand.
+	 - 💡⚙️ Turn loop begins.
+	 - 🛡️🐺 Cards are dragged onto valid rows.
+	 - 🐉🔥 Effects trigger and power updates dynamically.
+	 - 🗡️👑 Round transitions happen when players pass.
+	 - ❄️🧊 Winner panel appears when match end condition is met.
+
+4. 🛤️🎯 `CreateCard.unity`
+	 - 🏹🛡️ User writes DSL definitions.
+	 - ⚡🧩 Run button executes compiler pipeline.
+	 - 🎲📘 Semantic errors are displayed in panel.
+	 - 🧭🎴 Successful execution stores generated cards in compiler deck.
+
+---
+
+## 🧪🧠 7) Gameplay Systems Architecture
+
+### 🛠️🎛️ Central orchestrator
+
+`GameManager` is the global match coordinator:
+- 🪄🎮 Tracks current round and turn owner.
+- 🧪📚 Handles skip turn and skip round transitions.
+- 📚🧠 Triggers AI when required.
+- 🛠️📦 Computes overall winner state.
+- 🎮✨ Controls round/game-over panels.
+
+### 🛠️🧩 Player runtime state
+
+Each `Player` owns:
+- 🎮🃏 Name/faction
+- ⚔️🛡️ Deck list
+- 🔥❄️ Hand panel
+- 🧠📚 Field rows
+- 🎨🖌️ Increase slots
+- 🛠️✨ Climate slot
+- 🚀🌟 Cemetery list
+- 📦🧩 Round power array
+
+The `Player` class also handles:
+- 🎯🕹️ Card draw logic
+- 🧪🔬 Leader placement
+- 🧵🧠 Turn interaction gating (drag enabled/disabled)
+- 🌌🏰 Initial pre-battle card-change flow
+
+### 🎛️⚙️ Row/panel management
+
+`Panels` class handles panel-level state:
+- 🗺️🧭 Current cards in panel
+- 🎵🎧 Allowed positions
+- 🧱🧠 Max capacity
+- 🔮🃏 Unity/silver counters
+- 💡⚙️ Row power aggregation
+- 🛡️🐺 Removal and cleanup
+
+---
+
+## 🛠️📘 8) Card Model and Rules
+
+Card model is represented by `Card` and related derived runtime types.
+
+Main card fields:
+- 🐉🔥 Name
+- 🗡️👑 Faction
+- ❄️🧊 Power
+- 🏹🛡️ Description
+- ⚡🧩 Artwork and portrait
+- 🎲📘 Card type
+- 🧭🎴 Board position constraints
+- 🪄🎮 Effect delegate
+- 🧪📚 Optional audio clip
+
+### 🧰🔩 Card position enum
+
+Supported placement targets include:
+- 📚🧠 `M`, `R`, `S`
+- 🛠️📦 Combined rows: `MR`, `MS`, `RS`, `MRS`
+- 📚🧪 Special zones: `I` (increase), `C` (climate), `L` (leader)
+
+### 🧱⚙️ Card kind enum
+
+Supported types:
+- 🎮🃏 `golden`
+- ⚔️🛡️ `silver`
+- 🔥❄️ `climate`
+- 🧠📚 `clear`
+- 🎨🖌️ `bait`
+- 🛠️✨ `increase`
+- 🚀🌟 `leader`
+
+### 🧭🛠️ Predefined deck content
+
+`DataBase` initializes and stores core factions:
+- 📦🧩 Stark deck
+- 🎯🕹️ Targaryen deck
+- 🧪🔬 Dead (White Walkers) deck
+
+And a static custom deck:
+- 🧵🧠 `deckCompiler` for DSL-generated cards
+
+---
+
+## 🔥📚 9) Effects Engine
+
+Effects are implemented in static class `Effects` and dispatched by card usage logic.
+
+Representative effect categories:
+- 🌌🏰 Row buffs (`Increase`)
+- 🗺️🧭 Weather damage (`Climate`)
+- 🎵🎧 Remove max/min enemy card (`RemoveMax`, `RemoveMin`)
+- 🧱🧠 Draw cards (`DrawCard`)
+- 🔮🃏 Unit scaling (`MultiplyPower`)
+- 💡⚙️ Row clear (`ClearRow`)
+- 🛡️🐺 Field average normalization (`Average`)
+- 🐉🔥 Bait return mechanic (`ReturnToHand`)
+- 🗡️👑 Weather clear (`ClimateOut`)
+- ❄️🧊 Leader-specific global effects (`JonSnow`, `Daenerys`, `NightKing`)
+
+Effect invocation routing:
+- 🏹🛡️ `Drop.ActiveEffect(...)` decides which argument signature to use.
+- ⚡🧩 The dispatcher mixes type-based and card-name-based routing.
+
+---
+
+## 🏰📘 10) AI Behavior
+
+AI class `IA` controls automated turns.
+
+Primary process:
+1. 🔹🧭 Choose a card from current hand by heuristic.
+2. 🧭📍 Choose valid target panel/row.
+3. 🎬✅ Place card.
+4. 📌💫 Trigger effect.
+5. 🧩✅ End turn or pass round.
+
+Heuristic priorities observed:
+- 🎲📘 Strong hero cards first.
+- 🧭🎴 Increase cards with useful value.
+- 🪄🎮 Climate cards when opponent row has enough units.
+- 🧪📚 Strong standard unit fallback.
+
+AI integration:
+- 📚🧠 AI can be attached to either player.
+- 🛠️📦 `GameManager` delegates turn execution to AI when active.
+
+---
+
+## 🌟📘 11) Custom Card Compiler (DSL) Pipeline
+
+This is the most advanced subsystem in the repository.
+
+### 🔧🧩 High-level pipeline
+
+1. 🗂️📌 User writes code in compiler scene input field.
+2. 🔎📍 `Lexer` tokenizes the input.
+3. 🪄✅ `Parser` constructs AST-like object graph (`ProgramCompiler`, blocks, expressions).
+4. 🎯📌 Semantic analysis validates:
+	 - 🧭🌟 Type correctness
+	 - 🎮🃏 Field validity
+	 - ⚔️🛡️ Effect references and parameter compatibility
+5. 🛣️✅ Evaluation creates `CardCompiler` card objects.
+6. 🛤️📌 Generated cards are appended to `DataBase.deckCompiler`.
+
+### 🛰️⚙️ Compiler architecture layers
+
+- 🔥❄️ Lexical layer:
+	- 🧠📚 `Compiler/Lexer/Token.cs`
+	- 🎨🖌️ `Compiler/Lexer/Lexer.cs`
+
+- 🛠️✨ Parsing layer:
+	- 🚀🌟 `Compiler/Parser/Parser.cs`
+	- 📦🧩 Builds effect blocks, card blocks, statements, selectors, and activation trees.
+
+- 🎯🕹️ Semantic layer:
+	- 🧪🔬 `ISemantic` interface
+	- 🧵🧠 `CheckSemantic` across blocks
+	- 🌌🏰 Error accumulation in `Utils.errors`
+
+- 🗺️🧭 Execution layer:
+	- 🎵🎧 `ProgramCompiler.Evaluate(...)`
+	- 🧱🧠 `CardBlock.Evaluate(...)` -> `CardCompiler`
+	- 🔮🃏 Runtime visitor/scope resolution through `Scope` and `Visitor`
+
+### 🗜️🧩 DSL concepts represented in code
+
+Effect-related concepts:
+- 💡⚙️ `Effect`
+- 🛡️🐺 `Params`
+- 🐉🔥 `Action`
+- 🗡️👑 `Selector`
+- ❄️🧊 `Predicate`
+- 🏹🛡️ `PostAction`
+
+Card-related concepts:
+- ⚡🧩 `Name`
+- 🎲📘 `Type`
+- 🧭🎴 `Faction`
+- 🪄🎮 `Power`
+- 🧪📚 `Range`
+- 📚🧠 `OnActivation`
+
+Expression support:
+- 🛠️📦 Numeric operations
+- 🧩🎴 Logical operators
+- 🎮🃏 Conditionals
+- ⚔️🛡️ Loop blocks (`while`, `for`)
+- 🔥❄️ Context access to board/hand/deck/field
+
+### 🧱🔩 Compiler UI flow
+
+- 🧠📚 `LineNumberDisplay` tracks editor lines and source content.
+- 🎨🖌️ `Button_Run` resets state, compiles, validates, and reports errors.
+- 🛠️✨ Successful run updates compiler deck and displays success message.
+
+---
+
+## 🎯🧠 12) Full Script Map (File-by-File)
+
+This section explains all major scripts included in `Assets/Script`.
+
+### 🛠️🧩 Core gameplay
+
+- 🚀🌟 `Assets/Script/GameManager.cs`
+	- 📦🧩 Global match lifecycle manager.
+	- 🎯🕹️ Turn/round control, winner logic, game-over panel, AI activation.
+
+- 🧪🔬 `Assets/Script/IA.cs`
+	- 🧵🧠 AI decision and turn execution logic.
+
+### 🎛️⚙️ Card and player domain
+
+- 🌌🏰 `Assets/Script/Card && Player/Card.cs`
+	- 🗺️🧭 Card data model and enums.
+	- 🎵🎧 Runtime effect delegate wiring.
+	- 🧱🧠 Includes `CardCompiler` generated-card class.
+
+- 🔮🃏 `Assets/Script/Card && Player/Player.cs`
+	- 💡⚙️ Runtime player state and operations.
+	- 🛡️🐺 Draw, deck instancing, panel interactions, power tracking.
+
+- 🐉🔥 `Assets/Script/Card && Player/CardDisplay.cs`
+	- 🗡️👑 Unity UI bridge between card data and visual card object.
+
+- ❄️🧊 `Assets/Script/Card && Player/DeckManager.cs`
+	- 🏹🛡️ Basic deck prefab instancing helper.
+
+### 🧰🔩 Drag and drop interaction
+
+- ⚡🧩 `Assets/Script/Drag && Drop/Drag.cs`
+	- 🎲📘 Drag lifecycle behavior.
+
+- 🧭🎴 `Assets/Script/Drag && Drop/Drop.cs`
+	- 🪄🎮 Drop validation, placement rules, effect trigger entrypoint.
+
+- 🧪📚 `Assets/Script/Drag && Drop/DropCard.cs`
+	- 📚🧠 Hover card-info panel updates and bait-specific drop behavior.
+
+### 🧱⚙️ Effects layer
+
+- 🛠️📦 `Assets/Script/Effects/Effects.cs`
+	- 🚀🛠️ All concrete card effects.
+
+- 🎮🃏 `Assets/Script/Effects/EventClick.cs`
+	- ⚔️🛡️ Click event handling, including leader effect trigger path.
+
+### 🧭🛠️ Menus and panel control
+
+- 🔥❄️ `Assets/Script/Mains && Panels/MainMenu.cs`
+	- 🧠📚 Main menu actions, music toggle, scene navigation, DB init.
+
+- 🎨🖌️ `Assets/Script/Mains && Panels/Chose.cs`
+	- 🛠️✨ Deck and name selection; compiler deck gate logic.
+
+- 🚀🌟 `Assets/Script/Mains && Panels/Panels.cs`
+	- 📦🧩 Generic panel card list management and row power utilities.
+
+- 🎯🕹️ `Assets/Script/Mains && Panels/KeepMusic.cs`
+	- 🧪🔬 Background music singleton persistence across scenes.
+
+### 🔧🧩 Data initialization
+
+- 🧵🧠 `Assets/Script/DataBase/DataBase.cs`
+	- 🌌🏰 Creates all predefined cards and faction decks.
+	- 🗺️🧭 Hosts compiler deck and compilation card insertion.
+
+### 🛰️⚙️ Compiler entry and orchestration
+
+- 🎵🎧 `Assets/Script/Compiler/ProgramCompiler.cs`
+	- 🧱🧠 Program root containing effect and card block lists.
+
+- 🔮🃏 `Assets/Script/Compiler/Button_Run.cs`
+	- 💡⚙️ Compile button behavior.
+
+- 🛡️🐺 `Assets/Script/Compiler/Display_Compiler.cs`
+	- 🐉🔥 `LineNumberDisplay` UI behavior in compiler editor scene.
+
+### 🗜️🧩 Compiler lexical analysis
+
+- 🗡️👑 `Assets/Script/Compiler/Lexer/Token.cs`
+	- ❄️🧊 Token definitions and position metadata helpers.
+
+- 🏹🛡️ `Assets/Script/Compiler/Lexer/Lexer.cs`
+	- ⚡🧩 Regex-based tokenization over source lines.
+
+### 🧭⚙️ Compiler parsing and AST blocks
+
+- 🎲📘 `Assets/Script/Compiler/Parser/Parser.cs`
+	- 🧭🎴 Main parser with builders for effects/cards/instructions/selectors.
+
+- 🪄🎮 `Assets/Script/Compiler/Card/CardBlocks.cs`
+	- 🧪📚 Card block structures: card fields, OnActivation, selectors, post actions.
+
+- 📚🧠 `Assets/Script/Compiler/Effect/EffectBlocks.cs`
+	- 🛠️📦 Effect block structures: params, action, instructions, loops, variables.
+
+### 🛠️🧩 Compiler expressions and semantic model
+
+- 🎵🏰 `Assets/Script/Compiler/Expression/Binary_Expression.cs`
+	- 🎮🃏 Numeric expression tree components.
+
+- ⚔️🛡️ `Assets/Script/Compiler/Expression/Statements.cs`
+	- 🔥❄️ Statements, context bridge, atom/molecule structures.
+
+### 🎛️⚙️ Compiler scope and utilities
+
+- 🧠📚 `Assets/Script/Compiler/Scope/Scope.cs`
+	- 🎨🖌️ Scope and runtime visitor implementation.
+
+- 🛠️✨ `Assets/Script/Compiler/Utils/Interfaces.cs`
+	- 🚀🌟 Core interfaces (`IScope`, `IVisitor`, `ISemantic`, `IParsing`).
+
+- 📦🧩 `Assets/Script/Compiler/Utils/Utils.cs`
+	- 🎯🕹️ Shared lists, return types, operator helpers, semantic error registry.
+
+---
+
+## 🗺️✨ 13) Technologies and Dependencies
+
+### 🧰🔩 Engine and language
+
+- 🧪🔬 Unity Editor version:
+	- 🧵🧠 `2022.3.15f1`
+
+- 🌌🏰 C# / runtime context:
+	- 🗺️🧭 Unity C# scripting, generated `Assembly-CSharp` project
+
+### 🧱⚙️ Major package dependencies (from `Packages/manifest.json`)
+
+Core and editor integration:
+- 🎵🎧 `com.unity.collab-proxy`
+- 🧱🧠 `com.unity.ide.rider`
+- 🔮🃏 `com.unity.ide.visualstudio`
+- 💡⚙️ `com.unity.test-framework`
+
+Gameplay/UI features:
+- 🛡️🐺 `com.unity.feature.2d`
+- 🐉🔥 `com.unity.textmeshpro`
+- 🗡️👑 `com.unity.timeline`
+- ❄️🧊 `com.unity.ugui`
+- 🏹🛡️ `com.unity.visualscripting`
+
+Unity built-in modules enabled:
+- ⚡🧩 Audio, UI, UIElements, Physics, Physics2D, Animation, AI, Tilemap, Video, XR, and others via `com.unity.modules.*`.
+
+### 🧭🛠️ Asset and UI technology choices
+
+- 🎲📘 Text rendering:
+	- 🧭🎴 TextMesh Pro and legacy UI Text coexist.
+
+- 🪄🎮 Runtime content loading:
+	- 🧪📚 `Resources.Load` based loading for sprites/audio/prefabs.
+
+- 📚🧠 Input interaction model:
+	- 🛠️📦 Event system interfaces (`IBeginDragHandler`, `IDragHandler`, `IEndDragHandler`, `IDropHandler`, pointer handlers).
+
+---
+
+## 🚀📚 14) How to Open and Run the Project
+
+### 🔧🧩 Prerequisites
+
+1. ✅📝 Install Unity Hub.
+2. 📍✨ Install Unity Editor `2022.3.15f1`.
+3. 🛤️🎯 Use Windows-compatible environment (project currently configured for StandaloneWindows64).
+
+### 🛰️⚙️ Open in Unity
+
+1. 🔹🧭 Open Unity Hub.
+2. 🧭📍 Add existing project and select repository root folder.
+3. 🎬✅ Let Unity finish first import (can take time because of asset cache regeneration).
+
+### 🗜️🧩 Run the game in editor
+
+1. 📌💫 Open `Assets/Scenes/Main.unity`.
+2. 🧩✅ Press Play.
+3. 🗂️📌 Use menu buttons to:
+	 - 🗺️🛡️ Start game flow
+	 - 🎮🃏 Enter card compiler scene
+	 - ⚔️🛡️ Toggle music
+
+### 🧰⚙️ Recommended first functional test
+
+1. 🔎📍 Main menu -> Play.
+2. 🪄✅ Enter two names in deck scene.
+3. 🎯📌 Pick two faction decks.
+4. 🛣️✅ Start battle scene.
+5. 🧭✅ Place cards by drag and drop.
+6. ✅📝 Skip turns and confirm round transitions.
+
+---
+
+## 🏰🧩 15) How to Build the Game
+
+1. 📍✨ Open Unity Build Settings.
+2. 🛤️🎯 Verify scenes are listed and enabled:
+	 - 🔥❄️ `Assets/Scenes/Main.unity`
+	 - 🧠📚 `Assets/Scenes/ChosingDeck.unity`
+	 - 🎨🖌️ `Assets/Scenes/Game.unity`
+	 - 🛠️✨ `Assets/Scenes/CreateCard.unity`
+3. 🔹🧭 Select target platform:
+	 - 🚀🌟 Standalone Windows 64-bit.
+4. 🧭📍 Build into chosen output directory.
+
+Existing generated build output is present in `Builds/`.
+
+---
+
+## 🎮📖 16) Troubleshooting and Maintenance Notes
+
+### 🛠️🧩 If scene references or assets look broken
+
+- 📦🧩 Reimport project assets from Unity.
+- 🎯🕹️ Confirm `Resources` paths match expected names used in scripts.
+
+### 🎛️⚙️ If text does not render correctly
+
+- 🧪🔬 Ensure TextMesh Pro essentials are imported.
+- 🧵🧠 Check TMP resources in `Assets/TextMesh Pro/`.
+
+### 🧰🔩 If compiler scene reports many semantic errors
+
+- 🌌🏰 Validate field names and types in card/effect definitions.
+- 🗺️🧭 Check that referenced effect names are declared.
+- 🎵🎧 Verify parameter names and count match effect definitions.
+
+### 🧱⚙️ If gameplay logic seems inconsistent
+
+Potential technical debt areas to review:
+- 🧱🧠 Winner/tie handling edge cases in round methods.
+- 🔮🃏 Name-based effect dispatch table maintenance.
+- 💡⚙️ Runtime use of `Resources.Load` and string keys.
+
+### 🧭🛠️ Repository hygiene suggestions
+
+Investigate and clean root artifacts if unnecessary:
+- 🛡️🐺 `git commit -mVersion2.1`
+- 🐉🔥 `s`
+
+---
+
+## 🧪🧠 17) Suggested Next Improvements
+
+Short-term improvements:
+1. 🎬✅ Replace card-name condition lists with metadata-driven effect signatures.
+2. 📌💫 Add unit tests for compiler semantic checks and parser rules.
+3. 🧩✅ Move runtime card definitions to external JSON/ScriptableObject assets for easier balancing.
+4. 🗂️📌 Add deterministic AI behavior modes for easier debugging.
+5. 🔎📍 Improve separation between UI script logic and gameplay domain logic.
+
+Mid-term improvements:
+1. 🪄✅ Introduce save/load deck profiles.
+2. 🎯📌 Add localization support.
+3. 🛣️✅ Add card inspector and replay/debug tools for effect chains.
+4. 🎬📍 Replace `Resources.Load` with addressables for scalability.
+
+---
+
+## 🛠️📘 Closing Notes
+
+This codebase is an ambitious educational game project because it combines:
+- 🗡️👑 Real-time Unity gameplay systems
+- ❄️🧊 Tactical card mechanics
+- 🏹🛡️ A complete mini-compiler embedded into the game
+
+That combination makes it especially useful for studying game architecture, scripting language implementation, and integration of custom runtime logic into a playable Unity experience.
+
+
+
+
+
+
+
